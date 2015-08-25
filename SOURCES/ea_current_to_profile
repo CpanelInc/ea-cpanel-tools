@@ -1,0 +1,96 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+# cpanel - ea_current_to_profile                  Copyright(c) 2015 cPanel, Inc.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+
+use strict;
+
+use Cpanel::PackMan;
+use Cpanel::Config::Httpd;
+use Cpanel::JSON;
+use Cpanel::Time::Local;
+
+our $ea4_profiles_dir = '/etc/cpanel/ea4/profiles';
+our $_max_attempts    = 20;
+
+sub script {
+    my (@args) = @_;
+
+    my $custom_json;
+    my $new_name;
+
+    foreach my $arg (@args) {
+        if ( $arg eq "--help" ) {
+            print <<USAGE;
+    $0 [--help] [--output=profile_file]
+        Take the current ea rpms and create a custom profile.
+        Profile is written to /etc/cpanel/ea4/profiles/custom
+
+        --output=profile_file, where the profile is written to.
+           Note: forcefully overwrites the profile_file if it already
+           exists.
+USAGE
+
+            exit 0;
+        }
+
+        if ( $arg =~ m/--output=(.*)$/ ) {
+            $custom_json = $1;
+            my @path = split( /\//, $custom_json );
+            $new_name = $path[-1];
+        }
+    }
+
+    die "May only be run if you are using EasyApache 4" if ( !Cpanel::Config::Httpd::is_ea4() );
+    my @pkgs_have = grep { substr( $_, 0, 3 ) eq "ea-" } Cpanel::PackMan->instance->list( state => "installed" );
+
+    my $custom_dir = $ea4_profiles_dir . "/custom";
+
+    mkdir $custom_dir if !-d $custom_dir;
+    die "Cannot create $custom_dir" if !-d $custom_dir;
+
+    my @tags;
+
+    # this heuristic is fragile but at least attempts to create tags
+    foreach my $pkg (@pkgs_have) {
+        if ( $pkg =~ m/^ea-apache(\d)(\d)$/ )              { push( @tags, "Apache $1.$2" ); }
+        if ( $pkg =~ m/^ea-php(\d)(\d)$/ )                 { push( @tags, "PHP $1.$2" ); }
+        if ( $pkg =~ m/^ea-php(\d)(\d)-opcache$/ )         { push( @tags, "PHP $1.$2 OpCache" ); }
+        if ( $pkg =~ m/^ea-apache(\d)(\d)_mod_(mpm_.*)$/ ) { push( @tags, "MPM $1.$2 $3" ); }
+        if ( $pkg =~ m/^ea-apache(\d)(\d)_mod_(ruid.*)$/ ) { push( @tags, "$3 $1.$2" ); }
+    }
+
+    if ( !defined $custom_json ) {
+        my $ts = Cpanel::Time::Local::localtime2timestamp();
+        $new_name = "Current EA4 State at " . $ts;
+        my $fs_ts = substr( $ts, 0, 19 );
+        $fs_ts =~ s/ /_/g;
+        $custom_json = $custom_dir . "/" . "current_state_at_" . $fs_ts . ".json";
+    }
+
+    my $custom_profile = {
+        name    => $new_name,
+        desc    => "Auto Generated profile",
+        version => "1.0",
+        pkgs    => \@pkgs_have,
+        tags    => \@tags
+    };
+
+    my $OUT;
+
+    open ${OUT}, ">", $custom_json or die "Cannot create $custom_json";
+    print ${OUT} Cpanel::JSON::pretty_dump($custom_profile);
+    close ${OUT};
+
+    die "Could not create a new custom json file" if ( !-f $custom_json );
+
+    print $custom_json;
+
+    return 0;
+}
+
+exit( script(@ARGV) ) unless caller();
+
+1;
+

@@ -1,0 +1,65 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+# cpanel - ea_install_profile                     Copyright(c) 2015 cPanel, Inc.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+
+use strict;
+
+use Cpanel::JSON;
+use Cpanel::PackMan;
+use Cpanel::Config::Httpd;
+use Data::Dumper;
+
+sub usage {
+    my ($msg) = @_;
+
+    print "Error: $msg\n" if defined $msg;
+    print "usage: ea_install_profile [--install] profile_file\n";
+    print "if you do not pass --install, it will only do conflict resolution on the profile\n";
+
+    exit 0;
+}
+
+sub script {
+    my (@args) = @_;
+
+    die "May only be run if you are using EasyApache 4" if ( !Cpanel::Config::Httpd::is_ea4() );
+
+    my $profile;
+    my $install = 0;
+
+    my $idx = 0;
+    if ( $args[$idx] eq "--install" ) {
+        $idx++;
+        $install = 1;
+    }
+
+    usage() if ( !defined $args[$idx] );
+
+    $profile = $args[$idx];
+
+    if ( !-f $profile ) {
+        $profile = "/etc/cpanel/ea4/profiles/custom/" . $profile;
+        usage("Cannot find profile") if !-f $profile;
+    }
+
+    my $data = Cpanel::JSON::LoadFile($profile);
+
+    my $res = Cpanel::PackMan->instance->resolve_multi_op( $data->{'pkgs'} );
+
+    if ($install) {
+        print "Installing …\n";
+        print Cpanel::PackMan->instance->multi_op($res);
+    }
+    else {
+        print Dumper($res);
+    }
+
+    return 0;
+}
+
+exit( script(@ARGV) ) unless caller();
+
+1;
+
