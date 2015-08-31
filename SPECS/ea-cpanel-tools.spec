@@ -1,7 +1,7 @@
-Name:           ea-profiles-tools
+Name:           ea-cpanel-tools
 Version:        1.0
-Release:        1%{?dist}
-Summary:        EasyApache4 Tools for working with profiles
+Release:        2%{?dist}
+Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
 Group:          System Environment/Configuration
 URL:            http://www.cpanel.net
@@ -21,7 +21,7 @@ Autoreq:        0
 Requires: /usr/local/cpanel/3rdparty/bin/perl
 
 %description
-This package provides tools for working with profiles.
+This package provides tools for working with cPanel.
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -41,5 +41,8 @@ install -m 755 ../SOURCES/ea_install_profile $RPM_BUILD_ROOT/usr/local/bin
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Mon Aug 31 2015 Julian Brown<julian.brown@cpanel.net> - 1.0-2
+- Changed name of the rpm to ea-cpanel-tools
+
 * Fri Aug 28 2015 Julian Brown<julian.brown@cpanel.net> - 1.0-1
 - Initial Commit
