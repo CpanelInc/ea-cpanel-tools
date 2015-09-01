@@ -46,7 +46,7 @@ sub script {
 
     my $data = Cpanel::JSON::LoadFile($profile);
 
-    my $res = Cpanel::PackMan->instance->resolve_multi_op( $data->{'pkgs'} );
+    my $res = Cpanel::PackMan->instance->resolve_multi_op( $data->{'pkgs'}, 'ea' );
 
     if ($install) {
         print "Installing …\n";
