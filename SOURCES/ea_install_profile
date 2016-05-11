@@ -46,7 +46,9 @@ sub script {
 
     my $data = Cpanel::JSON::LoadFile($profile);
 
+    print "The system is resolving package dependencies and conflicts. This may take some time …\n";
     my $res = Cpanel::PackMan->instance->resolve_multi_op( $data->{'pkgs'}, 'ea' );
+    print " … done!\n";
 
     if ($install) {
         print "Installing …\n";

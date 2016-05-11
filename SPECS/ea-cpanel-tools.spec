@@ -1,6 +1,6 @@
 Name:           ea-cpanel-tools
 Version:        1.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
 Group:          System Environment/Configuration
@@ -41,6 +41,9 @@ install -m 755 ../SOURCES/ea_install_profile $RPM_BUILD_ROOT/usr/local/bin
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Wed May 11 2016 Dan Muey <dan@cpanel.net> - 1.0-4
+- Give some indication that package resolution is happening and may take a bit
+
 * Tue Sep 01 2015 Julian Brown<julian.brown@cpanel.net> - 1.0-3
 - Use the 'ea' namespace in the resolve_multi_op call.
 
