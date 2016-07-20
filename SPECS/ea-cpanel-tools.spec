@@ -1,6 +1,8 @@
 Name:           ea-cpanel-tools
 Version:        1.0
-Release:        4%{?dist}
+# Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
+%define release_prefix 5
+Release: %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
 Group:          System Environment/Configuration
@@ -41,6 +43,9 @@ install -m 755 ../SOURCES/ea_install_profile $RPM_BUILD_ROOT/usr/local/bin
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Mon Jun 20 2016 Dan Muey <dan@cpanel.net> - 1.0-5
+- EA-4383: Update Release value to OBS-proof versioning
+
 * Wed May 11 2016 Dan Muey <dan@cpanel.net> - 1.0-4
 - Give some indication that package resolution is happening and may take a bit
 
