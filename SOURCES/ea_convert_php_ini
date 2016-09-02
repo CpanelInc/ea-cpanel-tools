@@ -1,0 +1,1234 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+
+# cpanel - ea_convert_php_ini                     Copyright(c) 2016 cPanel, Inc.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+
+# !!! This should only be run during migration !!!
+#
+# Description
+#   Updates each user's 'php.ini' file so it's compatible with EA4.
+#
+# Conditions (ALL must be met for this script to run)
+#   1. This is being run by the migrate_ea3_to_ea4 script.
+#   2. The system default PHP version is assigned to the mod_suphp
+#      Apache handler.
+#   3. User is assigned to the system default PHP version.
+#   4. The user has defined the 'suPHP_ConfigPath' setting within
+#      an .htaccess file in the docroot of a vhost.
+#
+# Design
+#   You'll notice 4 packages in this script.  These are separate
+#   because:
+#    1. It's overkill right now to create a whole new RPM package
+#       which would contain the code we need to correctly parse
+#       PHP ini files, get it into cpanel & whm, etc.
+#    2. This used to be broken up into 2 scripts and designed to
+#       allow future cmd-line execution.  However, it was too slow.
+#       In an effort to speed it up (1.5 hrs to 5 mins against
+#       10k accounts), the files were merged (/bin/cat a b > c) and
+#       it was easier to combine the files and keep the packages
+#       intact.
+#
+#   The 4 packages in here are as follows:
+#    - Parse::PHP::Ini -- logic to parse/merge/render PHP ini files
+#    - ea_convert_php_ini_file -- logic to convert a single php ini file
+#    - ea_convert_php_ini_system -- logic to convert an entire
+#        cpanel system
+#    - main -- main script interface
+#
+# TODO:
+#   1. Allow user to manually run this script to convert the system at-will.
+#   2. Allow script to convert a vhost's ini files assigned to a php version
+#      other than the system default.
+#   3. Allow script to run if the php version is assigned to a non-suphp handler.
+#   4. Allow user to convert an individual ini file.
+#
+# !!! This should only be run during migration !!!
+
+package Parse::PHP::Ini;
+
+use strict;
+use warnings;
+use Cpanel::Fcntl     ();
+use Cpanel::ArrayFunc ();
+use Time::HiRes qw( CLOCK_REALTIME );
+
+# the special name we apply to things we find at file-scope within a php ini file.  this
+# name should not be a valid section name
+our $ROOT_NAME = '!_ROOT_!';
+
+sub new {
+    my $class = shift;
+    my %args  = @_;
+    require Tree::DAG_Node;    # this wasn't available on cpanel 11.54 and older
+    return bless( \%args, $class );
+}
+
+# Accessor method for profiling the parser
+# NOTE: Would be nice to have some sort of Aspect-oriented api for this
+sub add_timestamp {
+    my $self = shift;
+    return 1 unless $self->{debug};
+
+    my $label = shift;
+    my $ts    = Time::HiRes::clock_gettime();
+    push @{ $self->{timestamp} }, { label => $label, ts => $ts };
+
+    return 1;
+}
+
+# Get a list of profiling timestamps
+sub get_timestamps {
+    my $self = shift;
+    return ( defined $self->{timestamp} ? @{ $self->{timestamp} } : [] );
+}
+
+sub parse_init {
+    my $self = shift;
+    my %args = @_;
+    my %struct;
+
+    if ( $args{path} ) {
+        open( my $fh, '<', $args{path} ) or die Cpanel::Exception::create( 'IO::FileOpenError', { path => $args{path}, error => $!, mode => '<' } );
+        my @content;
+        my $tie = tie @content, 'Tie::File', $fh, recsep => "\n", mode => Cpanel::Fcntl::or_flags(qw(O_RDONLY));
+        $struct{fh}      = $fh;
+        $struct{content} = \@content;
+    }
+    elsif ( $args{str} ) {
+        my @content = split( /\n/, ${ $args{str} } );
+        $struct{content} = \@content;
+    }
+    else {
+        die Cpanel::Exception::create( 'MissingParameter', { name => 'path' } ) if ( !defined $args{path} && !defined $args{str} );
+    }
+
+    return \%struct;
+}
+
+sub parse_clean {
+    my ( $self, $struct ) = @_;
+
+    if ( $struct->{fh} ) {
+        untie $struct->{content};
+        delete $struct->{content};
+        close $struct->{fh};
+        delete $struct->{fh};
+    }
+
+    return 1;
+}
+
+# Returns the current PHP ini section.
+#
+# Parsing a PHP ini file ensures that everything it parses is container within
+# a section (e.g. [curl]).  The exception being, that we have a special section
+# called, $ROOT_NAME.  This section often contains comments and blank lines.
+#
+# Since everything must be in a section, the "mother" must always be of
+# type 'section'.
+# TODO: add checks to guarantee $node and $attr passed in
+sub get_current_section {
+    my ( $self, $node ) = @_;
+    my $type = $self->get_node_type($node);
+    return ( $type eq 'section' ? $node : $node->mother() );
+}
+
+# Finds a matching php ini section (e.g. [curl])
+# TODO: add checks to guarantee $tree and $match passed in
+sub get_matching_section {
+    my ( $self, $tree, $match ) = @_;
+
+    # $match matches the value attribute (lc of section name), not what's displayed in ini file
+    my $section;
+
+    $self->add_timestamp("Start: get_matching_section( $match )");
+
+    $match = lc $match;
+
+    $tree->walk_down(
+        {
+            _depth   => scalar $tree->ancestors,
+            callback => sub {
+                my ( $node, $opt ) = @_;
+
+                return 1 if ( defined $opt->{_depth} && $opt->{_depth} > 1 );    # all settings are inside sections, which are depth 1 (or undef for root)
+
+                my $type = $self->get_node_type($node);
+                my $attr = $node->attribute();
+                my $ret  = 1;
+
+                if ( $type eq 'section' && $attr->{value} eq $match ) {
+                    $section = $node;
+                    $ret     = 0;                                                # stop traversing, we found the section
+                }
+
+                return $ret;
+            }
+        }
+    );
+
+    $self->add_timestamp("End: get_matching_section( $match )");
+
+    return $section;
+}
+
+# Find a setting within a php ini section, if any
+# TODO: add checks to guarantee $section, $key, and $value passed in
+sub get_matching_setting {
+    my ( $self, $section, $key, $value ) = @_;
+    my $setting;
+
+    $self->add_timestamp("Start: get_matching_setting( section=$section setting=$key )");
+
+    $key = lc $key;
+
+    # For the most part, when PHP finds the same setting, it knows to
+    # override the value that it saw earlier.  However, the exception
+    # to this is when it finds 'extension' and 'zend_extension'.  These
+    # can be duplicated all over.
+
+    $section->walk_down(
+        {
+            _depth   => scalar $section->ancestors,
+            callback => sub {
+                my $node = shift;
+                my $type = $self->get_node_type($node);
+                my $attr = $node->attribute();
+
+                return 1 unless $type eq 'setting';
+
+                my $ret = 1;
+
+                if ( $key eq 'extension' || $key eq 'zend_extension' ) {
+                    if ( $value eq $attr->{value} ) {
+                        $setting = $node;
+                        $ret     = 0;
+                    }
+                }
+                else {
+                    if ( $key eq $attr->{key} ) {
+                        $setting = $node;
+                        $ret     = 0;
+                    }
+                }
+
+                return $ret;
+            }
+        }
+    );
+
+    $self->add_timestamp("End: get_matching_setting( section=$section setting=$key )");
+
+    return $setting;
+}
+
+sub is_root_node {
+    my ( $self, $node ) = @_;
+    return ( $node->name() eq $ROOT_NAME ? 1 : 0 );
+}
+
+sub make_root_node {
+    my $self = shift;
+    return $self->make_section_node( $ROOT_NAME, 0 );
+}
+
+# TODO: add checks to guarantee $name and $line passed in
+sub make_section_node {
+    my $self = shift;
+    my ( $name, $line ) = @_;
+
+    $self->add_timestamp("Start: make_section_node( name=$name )");
+
+    $line ||= 0;
+
+    my $node = Tree::DAG_Node->new();
+    $node->name($name);
+    $node->attribute( { type => 'section', value => lc $name, line => $line } );
+
+    $self->add_timestamp("End: make_section_node( name=$name )");
+
+    return $node;
+}
+
+# TODO: add checks to guarantee $value and $line passed in
+sub make_filler_node {
+    my $self = shift;
+    my ( $value, $line ) = @_;
+
+    $self->add_timestamp("Start: make_filler_node()");
+
+    $line ||= 0;
+
+    my $node = Tree::DAG_Node->new();
+    $node->name('filler');
+    $node->attribute( { type => 'filler', value => $value, line => $line } );
+
+    $self->add_timestamp("End: make_filler_node()");
+
+    return $node;
+}
+
+# TODO: add checks to guarantee $key, $value, and $line passed in
+sub make_setting_node {
+    my $self = shift;
+    my ( $key, $value, $line ) = @_;
+
+    $line ||= 0;
+
+    my $node = Tree::DAG_Node->new();
+    $node->name($key);
+    $node->attribute( { type => 'setting', key => lc $key, value => $value, line => $line } );
+
+    return $node;
+}
+
+# TODO: validate $in is a Tree::DAG_Node type
+sub dup_node {
+    my ( $self, $in ) = @_;
+    my $type = $self->get_node_type($in);
+    my $attr = $in->attribute();
+    my $out;
+
+    $self->add_timestamp("Start: dup_node( type=$type )");
+
+    if ( $type eq 'setting' ) {
+        $out = $self->make_setting_node( $in->name(), $attr->{value}, $attr->{line} );
+    }
+    elsif ( $type eq 'section' ) {
+        $out = $self->make_section_node( $in->name(), $attr->{line} );
+    }
+    elsif ( $type eq 'filler' ) {
+        $out = $self->make_filler_node( $attr->{value}, $attr->{line} );
+    }
+    else {
+        die Cpanel::Exception::create( 'InvalidParameter', "Programmer Error: Request node duplicate on unknown type: $type" );
+    }
+
+    $self->add_timestamp("End: dup_node( type=$type )");
+
+    return $out;
+}
+
+# TODO: add checks to guarantee $node and $attr passed in
+# TODO: add check to ensure $attr is a hash ref that contains all setting values
+# NOTE: We make a copy of %$attr for tinkering safety
+sub update_node {
+    my $self = shift;
+    my ( $node, $attr ) = @_;
+    my %copy = %$attr;
+    $node->attribute( \%copy );
+    return 1;
+}
+
+# TODO: validate $node existence and type
+sub get_node_type {
+    my ( $self, $node ) = @_;
+    my $attr = $node->attribute();
+    return $attr->{type};
+}
+
+# TODO: validate $node existence, Tree::DAG_Node type, and is a 'setting' type
+# TODO: validate each @exclude entry ('key' and 'value') is a regex (qr//)
+# TODO: generalize this method to is_excluded_node() (YAGNI?)
+sub is_excluded_setting {
+    my $self    = shift;
+    my $node    = shift;
+    my @exclude = @_;
+
+    my $excluded = 0;
+    my $attr     = $node->attribute();
+
+    $self->add_timestamp("Start: is_excluded_setting()");
+
+    # Exclusion criteria:
+    #   1. if only 'key' regex supplied, then the key must match
+    #   2. if only 'value' regex supplied, then only the value must match
+    #   3. if both 'key' and 'value' supplied, then both regexes must match
+    for my $href (@exclude) {
+        my @and;
+
+        push @and, ( $href->{key}   && $attr->{key} =~ $href->{key} )     ? 1 : 0;
+        push @and, ( $href->{value} && $attr->{value} =~ $href->{value} ) ? 1 : 0;
+
+        # the sum of the votes must be equal to the number of exclusions compared against
+        if ( Cpanel::ArrayFunc::sum(@and) == scalar keys %$href ) {
+            $excluded = 1;
+            last;
+        }
+    }
+
+    $self->add_timestamp("End: is_excluded_setting()");
+
+    return $excluded;
+}
+
+# Parses a PHP ini file and returns the Tree
+sub parse {
+    my $self = shift;
+    my %args = @_;
+
+    $self->add_timestamp("Start: parse()");
+
+    my $struct = $self->parse_init(%args);
+
+    # initialize parsing tree with our special ROOT node
+    my $root = $self->make_root_node();
+
+    my %section_cache;
+
+    # this is used so that we can easily access the previously inserted
+    # node (or perhaps use it to determine which ini section we're in)
+    my $current_node = $root;
+
+    # line count
+    my $count = 0;
+
+    # parse the ini file
+    for my $line ( @{ $struct->{content} } ) {
+        $count++;
+        chomp $line;
+
+        if ( $line =~ /^\s*\[(.+?(?=\]))\]/ ) {    # e.g. [curl]
+            my $name = "$1";
+            my $section = $self->get_matching_section( $root, $name );
+
+            # never seen this section before, create and add it
+            unless ($section) {
+                $section = _get_cache( \%section_cache, $name );
+                $section = $self->make_section_node( $name, $count ) unless $section;
+                $root->add_daughter($section);
+            }
+
+            $current_node = $section;
+            _set_cache( \%section_cache, $name, $section );
+        }
+        elsif ( $line =~ /^\s*([\w\.]+)\s*=\s*(.*)$/ ) {    # e.g. "allow_url_fopen = Off" (NOTE: You can have empty values)
+            my ( $key, $value ) = ( "$1", "$2" );
+            my $section = $self->get_current_section($current_node);
+
+            # don't add settings to the root node, they must go into the global PHP section
+            if ( $self->is_root_node($section) ) {
+                $section = $self->get_matching_section( $root, 'PHP' );
+
+                if ( !$section ) {
+                    $section = $self->make_section_node( 'PHP', $count );
+                    $root->add_daughter($section);
+                }
+            }
+
+            # add/update the setting in this section
+            my $setting = $self->get_matching_setting( $section, $key, $value );
+
+            if ($setting) {
+                my $tmp = $self->make_setting_node( $key, $value, $count );
+                my $attr = $tmp->attribute();
+                $self->update_node( $setting, $attr );
+            }
+            else {
+                $setting = $self->make_setting_node( $key, $value, $count );
+                $section->add_daughter($setting);
+            }
+
+            $current_node = $setting;
+        }
+        elsif ( $line =~ /^(\s*(?:;.*)?)$/ ) {    # comment or blank line
+            my $value = "$1\n";
+            my $attr  = $current_node->attribute();
+
+            if ( $attr->{type} eq 'filler' ) {
+                $attr->{value} .= $value;         # just append to previous filler, instead of creating a new one for each line
+            }
+            else {
+                my $filler = $self->make_filler_node( $value, $count );
+                my $section = $self->get_current_section($current_node);
+                $section->add_daughter($filler);
+                $current_node = $filler;
+            }
+        }
+        else {                                    # if we get here, we're not taking into account all possible php ini file formats
+            warn "Unable to parse line $count: $line";
+        }
+    }
+
+    $self->parse_clean($struct);
+    $self->add_timestamp("End: parse()");
+
+    return $root;
+}
+
+sub _get_cache {
+    my ( $cache, $key ) = @_;
+    $key = lc $key;
+    return $cache->{$key};
+}
+
+sub _set_cache {
+    my ( $cache, $key, $val ) = @_;
+    $key = lc $key;
+    $cache->{$key} = $val;
+    return 1;
+}
+
+# Creates a new tree that contains the properties of both.  If there's
+# a conflict, then the "right" tree's value wins.
+sub merge {
+    my $self = shift;
+    my ( $ltree, $rtree ) = @_;
+    my %args = @_;
+    my $exclude = $args{exclude} || [];
+
+    die Cpanel::Exception::create( 'MissingParameter', { name => 'ltree' } ) unless $ltree;
+    die Cpanel::Exception::create( 'MissingParameter', { name => 'rtree' } ) unless $rtree;
+    die Cpanel::Exception::create( 'InvalidParameter', "The “[_1]” parameter must be a “[_2]” object.", [ 'ltree', 'Tree::DAG_Node' ] ) unless ( ref $ltree eq 'Tree::DAG_Node' );
+    die Cpanel::Exception::create( 'InvalidParameter', "The “[_1]” parameter must be a “[_2]” object.", [ 'rtree', 'Tree::DAG_Node' ] ) unless ( ref $rtree eq 'Tree::DAG_Node' );
+
+    $self->add_timestamp("Start: merge()");
+
+    # start by duplicating the left tree (aka, the merge tree)
+    my $root = $ltree->copy_tree;
+    my %section_cache;
+
+    # now merge the right tree into the merge tree (top down, as opposed to
+    # bottom up)
+    $rtree->walk_down(
+        {
+            _depth   => scalar $rtree->ancestors,
+            callback => sub {
+                my $node = shift;
+                my $name = $node->name();
+
+                my $attr = $node->attribute();
+                my $type = $self->get_node_type($node);
+
+                return 1 if $self->is_root_node($node);                                             # the root node is a special container, nothing to merge, move on
+                return 1 if $type eq 'setting' && $self->is_excluded_setting( $node, @$exclude );
+
+                if ( $type eq 'section' ) {
+                    unless ( $self->get_matching_section( $root, $name ) ) {
+                        $root->add_daughter( $self->dup_node($node) ) unless $self->is_root_node($node);
+                    }
+                }
+                elsif ( $type eq 'setting' ) {
+                    my $node_section = $self->get_current_section($node);
+                    my $merge_section = _get_cache( \%section_cache, $node_section->name() );
+                    unless ($merge_section) {
+                        $merge_section = $self->get_matching_section( $root, $node_section->name() );
+                        _set_cache( \%section_cache, $node_section->name(), $merge_section );
+                    }
+
+                    # NOTE: We're reading top-down, so this section should have already been created above
+                    unless ($merge_section) {
+                        die Cpanel::Exception::create( 'InvalidParameter', "Programmer Error: The left merge tree is unable to merge a setting because it's missing section: “[_1]”.", [ $node_section->name() ] );
+                    }
+
+                    my $setting = $self->get_matching_setting( $merge_section, $name, $attr->{value} );
+
+                    if ($setting) {
+                        $self->update_node( $setting, $attr );
+                    }
+                    else {
+                        my $dup = $self->dup_node($node);
+                        $merge_section->add_daughter($dup);
+                    }
+                }
+                elsif ( $type eq 'filler' ) {
+
+                    # TODO: We're not going to merge blank lines and comments from the right, into the left.
+                    #       Why? if there's duplicate settings found, then the comment would be added at
+                    #         the end of the current section, and is going to be a dangle (TM) now -- e.g. not
+                    #         next to the setting anymore.  Since this would make merging far more
+                    #         complex than copying things from "left into right trees", I am leaving this
+                    #         alone for now.
+                }
+                else {
+                    die Cpanel::Exception::create( 'InvalidParameter', "Programmer Error: The left merge tree contains an invalid note type: “[_1]”.", [$type] );
+                }
+
+                return 1;
+            }
+        }
+    );
+
+    $self->add_timestamp("End: merge()");
+
+    return $root;
+}
+
+# Returns a reference to a string that contains a rendered ini file
+sub render {
+    my ( $self, $tree ) = @_;
+    my $str = '';
+
+    die Cpanel::Exception::create( 'MissingParameter', { name => 'tree' } ) unless $tree;
+    die Cpanel::Exception::create( 'InvalidParameter', "The “[_1]” parameter must be a “[_2]” object.", [ 'tree', 'Tree::DAG_Node' ] ) unless ( ref $tree eq 'Tree::DAG_Node' );
+
+    $self->add_timestamp("Start: render()");
+
+    # NOTE: use 'callback' not 'callbackback' to ensure we do a top-down traversal
+    $tree->walk_down(
+        {
+            _depth   => scalar $tree->ancestors,
+            callback => sub {
+                my $node = shift;
+                my $type = $self->get_node_type($node);
+                my $attr = $node->attribute();
+
+                if ( $type eq 'section' ) {
+                    $str .= '[' . $node->name() . "]\n" unless $self->is_root_node($node);
+                }
+                elsif ( $type eq 'setting' ) {
+                    $str .= $attr->{key} . ' = ' . $attr->{value} . "\n";
+                }
+                elsif ( $type eq 'filler' ) {
+                    $str .= $attr->{value};
+                }
+                else {
+                    die Cpanel::Exception::create( 'InvalidParameter', "Programmer Error: The tree being rendered contains an invalid node type: “[_1]”.", [$type] );
+                }
+
+                return 1;
+            }
+        }
+    );
+
+    $self->add_timestamp("End: render()");
+
+    return \$str;
+}
+
+package ea_convert_php_ini_file;
+
+use 5.014;    # for /a and /r options
+use strict;
+use warnings;
+use Cwd                    ();
+use Cpanel::Fcntl          ();
+use Cpanel::Exception      ();
+use Cpanel::ProgLang::Conf ();
+use Cpanel::SysPkgs::SCL   ();
+
+our %Cfg;
+our %SysIniCache;    # store parsed versions of the system ini files to speed up conversion
+
+# Retrieves the root directory of the SCL PHP package.  This is specified
+# in the scl prefixes directory.
+#
+# This is determine which Software Collection based PHP package we're converting
+# to.  If the user specified an explicit hint, then try to use that.
+# If we can't figure it out, or the user specified an invalid package, then
+# give up and spit out an error.
+sub get_scl_rootpath {
+    my $hint = shift;
+
+    usage("ERROR: You must specify a valid PHP package name.") if ( !$hint || $hint =~ /\Q[\w\-]+\E/a );
+
+    # This must be the directory where the SCL package is installed
+    my $path = Cpanel::SysPkgs::SCL::get_scl_prefix($hint);
+    die Cpanel::Exception::create( 'InvalidParameter', "The “[_1]” package does not exist or does not conform to the [asis,RedHat] [asis,Software Collection] standard.", 'PHP' ) unless $path;
+
+    return "$path/root";
+}
+
+# Determine the SCL package we want to use for the ea3 -> ea4 conversion
+sub guess_scl_package {
+    my ( $path, $hint ) = @_;
+
+    # TODO: Examine the $path of ini to automatically guess which
+    #       PHP package to use (EA-4827).  For example, if the
+    #       user specifies an ini file located in /home/joe/public_html,
+    #       then be smart enough to pick the php package assigned
+    #       to the domain that has that as a docroot.
+    #
+    #       For now, just explicitly use the $hint or system default
+
+    my $conf = defined $Cfg{state} ? $Cfg{state} : Cpanel::ProgLang::Conf->new( type => 'php' )->get_conf();
+    my $package;
+
+    if ( defined $hint && defined $conf->{$hint} ) {
+        $package = $hint;
+    }
+    else {
+        $package = $conf->{default};
+    }
+
+    die Cpanel::Exception::create( 'FeatureNotEnabled', q{“[_1]” is not installed on the system.}, ['PHP'] ) unless $package;
+
+    return $package;
+}
+
+sub get_php_ini {
+    my $path = shift;
+    my $ini;
+
+    if ( sysopen( my $fh, $path, Cpanel::Fcntl::or_flags(qw( O_NOFOLLOW O_RDONLY )) ) ) {
+        binmode $fh, ':utf8';
+        if ( -f $fh ) {
+            local $/ = undef;
+            my $txt = <$fh>;
+
+            my $parser = Parse::PHP::Ini->new();
+            $ini = $parser->parse( str => \$txt );
+        }
+        else {
+            warn "Skipping $path. Not a regular file";
+        }
+
+        close $fh;
+    }
+    else {
+        warn "Skipping $path.  Failed to open: $!";
+    }
+
+    return $ini;
+}
+
+# TODO: add optional arg to allow caller to determine which files to
+# to skip instead of hard-coding local.ini
+sub get_phpd_ini {
+    my $phpd   = shift;
+    my %args   = @_;
+    my $parser = Parse::PHP::Ini->new();
+    my $cwd    = Cwd::getcwd;
+    my $ini;
+
+    chdir $phpd or die Cpanel::Exception::create( 'IO::ChdirError', { error => $!, path => $phpd } );
+
+    if ( opendir( my $dh, '.' ) ) {
+
+        # traditionally speaking, we'd want to simply readdir() each entry.  this is more efficient.
+        # however, this doesn't guarantee that they are ordered asciibetically
+        # NOTE: skip the customization file
+        for my $file ( sort grep { /\.ini$/ && !/^local\.ini$/ } readdir($dh) ) {
+            my $entry = get_php_ini($file);
+            next unless $entry;
+            $ini = $ini ? $parser->merge( $ini, $entry ) : $entry;
+        }
+        closedir $dh;
+
+        $ini = $parser->make_root_node() unless $ini;    # return empty parse tree if empty dir
+    }
+    else {
+        chdir $cwd;
+        die Cpanel::Exception::create( 'IO::DirectoryOpenError', { path => $phpd, error => $! } );
+    }
+
+    chdir $cwd or die Cpanel::Exception::create( 'IO::DirectoryOpenError', { path => $cwd, error => $! } );
+
+    return $ini;
+}
+
+sub get_system_ini {
+    my $scl_package = shift;
+    my $scl_root    = get_scl_rootpath($scl_package);
+    my $ini         = $SysIniCache{$scl_root};
+    return $ini if $ini;
+
+    # get default system php.ini file, which MUST exist
+    my $path   = "$scl_root/etc/php.ini";
+    my $sysini = get_php_ini($path);
+    die "ERROR: Failed to read the system default PHP ini file, $path" unless $sysini;
+
+    # gather up all the php.d entries (skipping local.ini)
+    my $phpd = get_phpd_ini("$scl_root/etc/php.d");
+
+    # get php.d/local.ini, but ignore warnings since it may not exist
+    my $localini;
+    {
+        local $SIG{__WARN__} = sub { };
+        $localini = get_php_ini("$scl_root/etc/php.d/local.ini");
+    }
+
+    # now merge all of these ini files together in the correct order
+    my $parser = Parse::PHP::Ini->new();
+    $ini = $parser->merge( $phpd, $sysini );
+    $ini = $parser->merge( $ini, $localini ) if $localini;
+
+    $SysIniCache{$scl_root} = $ini;
+
+    return $ini;
+}
+
+sub get_converted_php_ini {
+    my ( $path, $scl_package ) = @_;
+    my $ini = get_system_ini($scl_package);
+
+    # get user's ini file, but ignore warnings since it may not exist
+    my $srcini;
+    {
+        local $SIG{__WARN__} = sub { };
+        $srcini = get_php_ini($path);
+    }
+
+    my @exclude = (
+        { key => qr/^extension$/i },
+        { key => qr/^zend_extension$/i },
+        { key => qr/^extension_dir$/i },
+    );
+
+    my $parser = Parse::PHP::Ini->new();
+    $ini = $parser->merge( $ini, $srcini, exclude => \@exclude ) if $srcini;
+
+    return $ini;
+}
+
+sub write_php_ini {
+    my ( $ini, $path ) = @_;
+    my $parser = Parse::PHP::Ini->new();
+    my $txtref = $parser->render($ini);
+
+    die "ERROR: An existing ini file already exists with that name.\n       Remove the file or use the -f option\n" if ( -e $path && !$Cfg{force} );
+
+    if ( sysopen( my $fh, $path, Cpanel::Fcntl::or_flags(qw( O_NOFOLLOW O_WRONLY O_TRUNC O_CREAT )) ) ) {
+        binmode $fh, ':utf8';
+
+        if ( -f $fh || !-e _ ) {
+            print $fh $$txtref;
+        }
+        else {
+            die "ERROR: Attempting to write to an invalid path: $path";
+        }
+
+        close $fh;
+    }
+    else {
+        die Cpanel::Exception::create( 'IO::FileOpenError', { path => $path, error => $!, mode => '>' } );
+    }
+
+    return 1;
+}
+
+sub main {
+    my %cfg = @_;
+
+    # remove from cfg hash to ensure we don't duplicate, and
+    # possible use the wrong arg
+    my $in   = delete $cfg{in};
+    my $out  = delete $cfg{out};
+    my $hint = delete $cfg{hint};
+
+    %Cfg = %cfg;
+
+    my $scl_package = guess_scl_package( $in, $hint );
+    my $ini = get_converted_php_ini( $in, $scl_package );
+    write_php_ini( $ini, $out );
+
+    return 1;
+}
+
+package ea_convert_php_ini_system;
+
+use strict;
+use warnings;
+use Cwd                                  ();
+use Getopt::Long                         ();
+use Cpanel::AccessIds::ReducedPrivileges ();
+use Cpanel::ProgLang::Conf               ();
+use Cpanel::WebServer                    ();
+use Cpanel::WebServer::Userdata          ();
+use Cpanel::ProgLang                     ();
+use Cpanel::SafeRun::Errors              ();
+use Cpanel::Config::userdata             ();
+use Cpanel::Version::Tiny                ();
+use Cpanel::Version::Compare             ();
+use File::Basename                       ();
+use Cpanel::Logger                       ();
+
+our $TMPDIR          = '/var/cpanel/tmp';
+our $DEFAULT_HANDLER = 'suphp';
+our %Cfg;
+
+sub logger {
+    my $msg = shift;
+
+    my %log = (
+        'message'   => $msg,
+        'level'     => 'info',
+        'output'    => $Cfg{verbose} ? 1 : 0,
+        'service'   => 'ea_convert_php_ini',
+        'backtrace' => 0,
+        'die'       => 0,
+    );
+
+    # use logger() instead of info() so that user can turn verbose on/off
+    Cpanel::Logger::logger( \%log );
+
+    return 1;
+}
+
+sub usage {
+    my $msg = shift;
+    my $fh = $msg ? \*STDERR : \*STDOUT;
+
+    print $fh "$msg\n\n" if $msg;
+    print $fh "Converts PHP ini files from EA3 to EA4\n";
+    print $fh "\nUsage: $0 --action <ini|sys> [OPTIONS]\n\n";
+    print $fh "Required:\n";
+
+    #print $fh "   --action ini -i <old.ini> -o <new.ini> # Convert a single ini file\n";
+    print $fh "   --action sys                           # Converts ini files in entire system\n";
+    print $fh "\n";
+    print $fh "Optional arguments:\n";
+    print $fh "  -h|--help                        # Show this help output\n";
+    print $fh "\n";
+
+    #print $fh "Optional --ini arguments:\n";
+    #print $fh "  -t|--hint <php package>          # Choose which package to inherit from\n";
+    #print $fh "  -f|--force                       # Overwrite -o argument if the file exists\n";
+    #print $fh "\n";
+    print $fh "Optional --sys arguments:\n";
+    print $fh "  -q|--quiet                       # Only display warnings/errors\n";
+    print $fh "  -n|--dryrun                      # Display actions, but don't convert files\n";
+    print $fh "\n";
+    print $fh "Example:\n";
+
+    #print $fh " $0 -a ini -i php.ini.old -o php.ini -f\n";
+    print $fh " $0 -a sys -n -q p -u user1 -u user2\n";
+
+    exit( $msg ? 1 : 0 );
+}
+
+# TODO: Use Params::Validate
+sub process_args {
+    my $argv = shift;
+
+    my %opts = (
+        sys => {
+            default => {
+                verbose => 1,
+                dryrun  => 0,
+                user    => [],
+                hint    => undef,
+            },
+            opts => {
+                'q|quiet'  => sub { $Cfg{verbose} = 0 },
+                'n|dryrun' => sub { $Cfg{dryrun}  = 1 },
+                'u|user=s@' => sub { shift; push @{ $Cfg{user} }, shift },    # undocumented/unsupported -- convert specific users on system
+                't|hint=s' => sub { shift; $Cfg{hint} = shift },              # undocumented/unsupported -- allow conversion to alternate php version
+            },
+            required => [],
+        },
+        'ini' => {
+            default => {
+                force => 0,
+                in    => undef,
+                out   => undef,
+                hint  => undef,
+            },
+            opts => {
+                'f|force' => sub { $Cfg{force} = 1 },
+                'i|in=s'   => sub { shift; $Cfg{in}   = shift },
+                'o|out=s'  => sub { shift; $Cfg{out}  = shift },
+                't|hint=s' => sub { shift; $Cfg{hint} = shift },    # undocumented/unsupported -- convert packages using a diff PHP than sys default
+            },
+            required => [qw( in out )],
+        },
+    );
+
+    # determine action type first so that we can validate args based on that action type
+    my $action;
+    Getopt::Long::Configure('pass_through');
+    Getopt::Long::GetOptionsFromArray(
+        $argv,
+        'h|help' => sub { usage() },
+        'a|action=s' => sub { shift; $action = lc shift },
+    );
+
+    usage("ERROR: You must specify a valid action argument") if ( !defined $action || !defined $opts{$action} );
+    usage("ERROR: Only supports the 'sys' action") if $action ne 'sys';    # hack until this code is updated to support cmd-line execution
+
+    # apply default settings so user can override
+    %Cfg = %{ $opts{$action}->{default} };
+
+    # grab action specific options
+    Getopt::Long::GetOptionsFromArray(
+        $argv,
+        %{ $opts{$action}->{opts} },
+    );
+
+    usage("ERROR: The $argv->[0] argument isn't a valid '$action' action") if @$argv;    # in case user passes unsupported 'cmd -- args'
+
+    # ensure required params are passed in
+    my %required = map { $_ => 1 } @{ $opts{$action}->{required} };
+    my @missing = grep { defined $required{$_} && !defined $Cfg{$_} } keys %Cfg;
+    usage("ERROR: You must pass the --$missing[0] argument for the '$action' action") if @missing;
+
+    # get system php version
+    my $pg = Cpanel::ProgLang::Conf->new( type => 'php' );
+    $Cfg{state}  = $pg->get_conf();
+    $Cfg{action} = $action;
+
+    return 1;
+}
+
+sub verbose {
+    my $msg = shift;
+    print "$msg\n" if $Cfg{verbose};
+    return 1;
+}
+
+# make it exceedingly not fun to run this via the command-line
+sub is_manual {
+    my $touch = "$TMPDIR/you_take_full_responsibility_do_not_do_this_manually.ea_convert_php_ini";
+    my $now   = time;
+    my $ctime = ( stat $touch )[10];
+    return ( defined $ctime && ( $now - $ctime ) < 30 ? 0 : 1 );
+}
+
+sub is_root {    # so we can mock root check
+    return ( $> == 0 ? 1 : 0 );
+}
+
+# This function ensures conditions 1 and 2 are met as
+# defined above (along with being root)
+sub sane_or_bail {
+    die "ERROR: This will only run during EA3 to EA4 migration" if is_manual();
+    die "ERROR: You must be root to run this" unless is_root();
+
+    my $default = $Cfg{state}{default};
+
+    # no default php version defined in the configuration file
+    unless ( defined $default ) {
+        logger("ERROR: Skipping conversion: The system default PHP version hasn't been configured");
+        die "ERROR: Skipping conversion: The system default PHP version hasn't been configured";
+    }
+
+    my $handler = $Cfg{state}{$default};
+
+    if ( $handler ne $DEFAULT_HANDLER ) {
+        logger("Skipping conversion: The system default PHP version isn't assigned to the '$handler' instead of $DEFAULT_HANDLER");
+        die "Skipping conversion: The system default PHP version isn't assigned to the '$handler' instead of $DEFAULT_HANDLER";
+    }
+
+    return 1;
+}
+
+sub do_rename {
+    my ( $old, $new ) = @_;
+    return ( $Cfg{dryrun} ? 1 : rename( $old, $new ) );
+}
+
+sub do_convert {
+    my ( $old, $new ) = @_;
+    my $ret;
+
+    if ( $Cfg{dryrun} ) {
+        $ret = 1;
+    }
+    else {
+        my %cfg = ( force => 0, in => $old, out => $new, hint => $Cfg{hint}, state => $Cfg{state} );
+        eval { ea_convert_php_ini_file::main(%cfg) };
+        $ret = $@ ? 0 : 1;
+    }
+
+    return $ret;
+}
+
+sub convert_ini {
+    my $user = shift;
+    my $new  = shift;
+    my $old  = "$new.ea3.bak";
+    my $ret  = 1;
+
+    if ( -s $new ) {
+        if ( do_rename( $new, $old ) ) {
+            local $@;
+
+            if ( do_convert( $old, $new ) ) {
+                logger("[$user] Converted $new for EasyApache 4 compatibility");
+            }
+            else {
+                my $err = "$@" =~ s/^\s*Error:\s*//ir;
+                warn "\nWARNING: [$user] Failed to convert $new\n$err\n";
+                do_rename( $old, $new );
+                $ret = 0;
+            }
+        }
+        else {
+            warn "WARNING: [$user] Skipping $new -- Unable to backup: $!";
+            $ret = 0;
+        }
+    }
+    else {
+        verbose("[$user] Skipping $new -- missing/empty");
+    }
+
+    return $ret;
+}
+
+# Retrieve the suphp_configpath directory.
+# Apache directive syntax: http://httpd.apache.org/docs/current/configuring.html#syntax
+# NOTE: This does not take into account usage of trailing '\' to indicate multiple lines
+# NOTE: This assumes there's only a single entry path defined
+sub get_suphp_configpath {
+    my $htaccess = shift;
+    my $path;
+    my $basedir = File::Basename::dirname($htaccess);
+
+    if ( sysopen( my $fh, $htaccess, Cpanel::Fcntl::or_flags(qw( O_RDONLY )) ) ) {
+        while ( !$path && ( my $line = <$fh> ) ) {
+            if ( $line =~ /^\s*suPHP_ConfigPath\s*(\S+)\s*$/i ) {
+                my $val = "$1";
+                next if $val =~ /^\s*\\\s*$/;    # multi-line not supported
+                $val =~ s/(?:^['"]+)|(?:['"]*$)//g;
+                $val =~ s/\/+$//g;
+                $path = "$val/php.ini";
+                $path = "$basedir/$path" unless $path =~ /^\//;
+            }
+        }
+
+        close $fh;
+    }
+
+    return $path;
+}
+
+# Verifies that a file is within a given directory
+sub is_within {
+    my ( $path, $basedir ) = @_;
+    $basedir =~ s/\/+$//g;
+    my $subdir = substr( $path, 0, length($basedir) + 1 );    # grab trailing slash in $path
+    return ( $subdir eq "$basedir/" ? 1 : 0 );
+}
+
+# Performs some sanity checks/verification on the path specified within
+# an .htaccess file.
+#
+# Expectation: $fullpath is a full path (dirs and all) that points to a file
+sub get_safe_path {
+    my ( $fullpath, $homedir ) = @_;
+    my $safe;
+
+    if ( -f $fullpath ) {
+        my $dir = File::Basename::dirname($fullpath);
+        my $cwd = Cwd::getcwd;
+
+        if ( chdir $dir ) {    # so abs_path uses correct basedir
+            my $ln = readlink($fullpath);
+            my $actual = Cwd::abs_path( $ln || $fullpath );
+            $safe = $actual if ( $actual && is_within( $actual, $homedir ) );    # don't set $safe if circular symlink
+            chdir $cwd or die Cpanel::Exception::create( 'IO::ChdirError', { path => $cwd, error => $! } );
+        }
+    }
+
+    return $safe;
+}
+
+sub convert_user {
+    my $user = shift;
+    my $php  = Cpanel::ProgLang->new( type => 'php' );
+    my $ws   = Cpanel::WebServer->new();
+    my $aref = $ws->get_vhost_lang_packages( lang => $php, user => $user );
+    my %seen;    # prevent converting the same file repeatedly (e.g. symlinks to same file)
+    my $count = 0;
+
+    if ( !@$aref || !$aref->[0]->{homedir} ) {
+        warn "WARNING: [$user] Skipping -- The home directory isn't configured in cPanel";
+        return -1;
+    }
+
+    # first update the php.ini file sitting in the user's home directory (if any)
+    my $homedir = $aref->[0]->{homedir};
+    my $path    = get_suphp_configpath("$homedir/.htaccess");
+
+    if ($path) {
+        my $safe = get_safe_path( $path, $homedir );
+
+        if ($safe) {
+            $seen{$safe} = 1;
+            $count++ if convert_ini( $user, $safe );
+        }
+        else {
+            verbose("[$user] Skipping home directory -- suPHP_ConfigPath setting doesn't exist or is outside of home directory");
+        }
+    }
+    else {
+        verbose("[$user] Skipping home directory -- The suPHP_ConfigPath directive is not defined in an .htaccess file");
+    }
+
+    # now perform this same work on each php.ini file within the docroot of the domains
+    for my $rec (@$aref) {
+        my $docroot = $rec->{documentroot};
+
+        unless ($docroot) {
+            warn "WARNING: [$user] Skipping $rec->{vhost}, document root undefined";
+            next;
+        }
+
+        # if the .htaccess file in home directory is convertible, then
+        # all of the documentroots under the home directory are also
+        # convertible.
+        $path = get_suphp_configpath("$docroot/.htaccess");
+
+        if ($path) {
+            my $safe = get_safe_path( $path, $homedir );
+
+            if ($safe) {
+                if ( defined $seen{$path} ) {
+                    verbose("[$user] Skipping $rec->{vhost} -- Found duplicate ini file");
+                }
+                else {
+                    $seen{$path} = 1;
+                    $count++ if convert_ini( $user, $path );
+                }
+            }
+            else {
+                verbose("[$user] Skipping $rec->{vhost} -- suPHP_ConfigPath setting does not exist or is outside of home directory");
+            }
+        }
+        else {
+            verbose("[$user] Skipping $rec->{vhost} -- The suPHP_ConfigPath directive is not defined in an .htaccess file");
+        }
+    }
+
+    return $count;
+}
+
+# Intent: only convert suphp configured ini files
+sub convert_system {
+    unlink "$TMPDIR/you_take_full_responsibility_do_not_do_this_manually.ea_convert_php_ini";
+
+    my $aref = Cpanel::Config::userdata::load_user_list();
+    my $cnt  = $#{ $Cfg{user} } + 1;                         # micro optimization
+    my %lu   = map { $_ => 1 } @{ $Cfg{user} };              # micro optimization
+
+    for my $user (@$aref) {
+        next if ( $user eq 'nobody' or $user eq 'root' );
+        next if ( $cnt > 0 && !defined $lu{$user} );         # ~3-5% faster with 10k hosts
+        my $ud = Cpanel::WebServer::Userdata->new( user => $user );
+        my $sub = sub { return convert_user($user) };
+        Cpanel::AccessIds::ReducedPrivileges::call_as_user( $sub, $ud->id() );
+    }
+
+    return 1;
+}
+
+sub main {
+    my $argv = shift;
+
+    # Tree::DAG_Node wasn't introduced until 11.56
+    if ( Cpanel::Version::Compare::compare( $Cpanel::Version::Tiny::VERSION, '<', '11.56' ) ) {
+        warn "ERROR: You should only run this on cPanel & WHM version 11.56 and newer";
+        exit 1;
+    }
+
+    logger("Beginning EA3 to EA4 php ini conversion");
+    process_args($argv);
+    sane_or_bail();
+    convert_system();
+    logger("Completed EA3 to EA4 php ini conversion");
+
+    exit 0;
+}
+
+package main;
+
+use strict;
+use warnings;
+ea_convert_php_ini_system::main( \@ARGV ) unless caller();
+
+1;
+
+__END__
