@@ -1,18 +1,20 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 5
-Release: %{release_prefix}%{?dist}.cpanel
+%define release_prefix 6
+Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
-Group:          System Environment/Configuration
+Group:          Applications/File
 URL:            http://www.cpanel.net
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Source1:        ea_current_to_profile
+Source2:        ea_install_profile
+Source3:        ea_convert_php_ini
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
 # unfortunately they cannot be satisfied via the requires: tags.
-
 Autoreq:        0
 
 # I require the file specifically because cPanel is using perl 5.14
@@ -26,23 +28,25 @@ Requires: /usr/local/cpanel/3rdparty/bin/perl
 This package provides tools for working with cPanel.
 
 %install
-rm -rf $RPM_BUILD_ROOT
-install -m 755 -d $RPM_BUILD_ROOT/usr/local/bin
-echo -n "Current working dir = "
-pwd
-
-install -m 755 ../SOURCES/ea_current_to_profile $RPM_BUILD_ROOT/usr/local/bin
-install -m 755 ../SOURCES/ea_install_profile $RPM_BUILD_ROOT/usr/local/bin
+rm -rf %{buildroot}
+%{__mkdir_p} %{buildroot}/usr/local/bin
+%{__install} %{SOURCE1} %{buildroot}/usr/local/bin
+%{__install} %{SOURCE2} %{buildroot}/usr/local/bin
+%{__install} %{SOURCE3} %{buildroot}/usr/local/bin
 
 %files
-%defattr(-,root,root)
-/usr/local/bin/ea_current_to_profile
-/usr/local/bin/ea_install_profile
+%defattr(0755,root,root,0755)
+/usr/local/bin/*
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %changelog
+* Fri Jul 08 2016 S. Kurt Newman <kurt.newman@cpanel.net> - 1.0-6
+- Added ea_convert_php_ini script (EA-4772)
+- Updated rpm spec file to conform to standard macros
+- Fixed several rpmlint errors
+
 * Mon Jun 20 2016 Dan Muey <dan@cpanel.net> - 1.0-5
 - EA-4383: Update Release value to OBS-proof versioning
 
