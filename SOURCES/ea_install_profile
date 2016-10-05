@@ -1,8 +1,10 @@
 #!/usr/local/cpanel/3rdparty/bin/perl
-# cpanel - ea_install_profile                     Copyright(c) 2015 cPanel, Inc.
+# cpanel - ea_install_profile                     Copyright(c) 2016 cPanel, Inc.
 #                                                           All rights Reserved.
 # copyright@cpanel.net                                         http://cpanel.net
 # This code is subject to the cPanel license. Unauthorized copying is prohibited
+
+package ea_install_profile;
 
 use strict;
 
@@ -47,7 +49,9 @@ sub script {
     my $data = Cpanel::JSON::LoadFile($profile);
 
     print "The system is resolving package dependencies and conflicts. This may take some time …\n";
-    my $res = Cpanel::PackMan->instance->resolve_multi_op( $data->{'pkgs'}, 'ea' );
+    my $resolve_method = defined &Cpanel::PackMan::resolve_multi_op_ns ? 'resolve_multi_op_ns' : 'resolve_multi_op';
+    my $res = Cpanel::PackMan->instance->$resolve_method( $data->{'pkgs'}, 'ea' );
+
     print " … done!\n";
 
     if ($install) {
