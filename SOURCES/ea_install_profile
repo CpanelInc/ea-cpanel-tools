@@ -46,7 +46,25 @@ sub script {
         usage("Cannot find profile") if !-f $profile;
     }
 
+    print "Loading profile …\n";
+    my %server_pkgs;
+    @server_pkgs{ Cpanel::PackMan->instance->list( 'prefix' => 'ea-' ) } = ();
+
     my $data = Cpanel::JSON::LoadFile($profile);
+
+    # 1. detect any packages in the profile that do not exist on the server
+    my %not_on_server = ( map { !exists $server_pkgs{$_} ? ( $_ => undef ) : () } @{ $data->{pkgs} } );
+
+    # 2. remove %not_on_server from $profile->{pkgs}
+    $data->{pkgs} = [ grep { !exists $not_on_server{$_} } @{ $data->{pkgs} } ];
+
+    # 3. Tell them about the ones we are ignoring
+    my $derps = 0;
+    for my $derppkg ( sort keys %not_on_server ) {
+        warn "    * Warning! ignored package: $derppkg. It is in the profile’s package list but does not exist on this server.\n";
+        $derps++;
+    }
+    print "\n" if $derps;
 
     print "The system is resolving package dependencies and conflicts. This may take some time …\n";
     my $resolve_method = defined &Cpanel::PackMan::resolve_multi_op_ns ? 'resolve_multi_op_ns' : 'resolve_multi_op';
