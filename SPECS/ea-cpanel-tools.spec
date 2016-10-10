@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 6
+%define release_prefix 8
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -42,6 +42,12 @@ rm -rf %{buildroot}
 rm -rf %{buildroot}
 
 %changelog
+* Wed Oct 05 2016 Dan Muey <dan@cpanel.net> - 1.0-8
+- EA-5320: filter out profile packages that do not exist on the server
+
+* Wed Sep 28 2016 Dan Muey <dan@cpanel.net> - 1.0-7
+- EA-5065: Have ea_install_profile to use new resolution method if it can
+
 * Fri Jul 08 2016 S. Kurt Newman <kurt.newman@cpanel.net> - 1.0-6
 - Added ea_convert_php_ini script (EA-4772)
 - Updated rpm spec file to conform to standard macros
