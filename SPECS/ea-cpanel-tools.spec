@@ -1,12 +1,13 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 8
+%define release_prefix 9
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
 Group:          Applications/File
 URL:            http://www.cpanel.net
+Vendor: cPanel, Inc.
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source1:        ea_current_to_profile
 Source2:        ea_install_profile
@@ -42,6 +43,9 @@ rm -rf %{buildroot}
 rm -rf %{buildroot}
 
 %changelog
+* Fri Dec 16 2016 Jacob Perkins <jacob.perkins@cpanel.net> - 1.0-9
+- Added vendor field (EA-5493)
+
 * Wed Oct 05 2016 Dan Muey <dan@cpanel.net> - 1.0-8
 - EA-5320: filter out profile packages that do not exist on the server
 
