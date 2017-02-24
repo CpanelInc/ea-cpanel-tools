@@ -1,0 +1,24 @@
+{
+   "name" : "PHP DSO",
+   "on" : "add",
+   "url" : "https://go.cpanel.net/EA4RecDSO",
+   "options" : [
+      {
+         "recommended" : true,
+         "type" : "add_pkgs_or",
+         "value" : [
+            "ea-apache24-mod_ruid2",
+            "ea-apache24-mod_mpm_itk"
+         ]
+      },
+      {
+         "value" : true,
+         "type" : "single_user"
+      },
+      {
+         "value" : "Run under suPHP. While this does address the security concern in question it is extremely slow and taxing on your server.",
+         "type" : "string",
+         "recommended" : false
+      }
+   ]
+}
