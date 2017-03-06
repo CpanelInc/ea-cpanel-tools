@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 10
+%define release_prefix 11
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -54,6 +54,9 @@ ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71-php
 rm -rf %{buildroot}
 
 %changelog
+* Mon Mar 06 2017 Dan Muey <dan@cpanel.net> - 1.0-11
+- EA-6021: revamp EA4 Recommendations data for new spec
+
 * Fri Feb 24 2017 Dan Muey <dan@cpanel.net> - 1.0-10
 - EA-5964: add initial EA4 Recommendations data
 
