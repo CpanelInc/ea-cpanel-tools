@@ -1,21 +1,23 @@
 {
    "on" : "add",
-   "desc" : "PHP DSO runs as the user by default. In a shared hosting environment, this is a security issue.",
-   "url" : "https://go.cpanel.net/EA4RecDSO",
    "name" : "PHP DSO",
+   "desc" : "PHP DSO runs as the user by default. In a shared hosting environment, this is a security issue.",
+   "level" : "danger",
+   "url" : "https://go.cpanel.net/EA4RecDSO",
    "options" : [
       {
+         "recommended" : true,
+         "text" : "We strongly recommend that you install one of the following packages unless this is a single-user system:",
+         "level" : "success",
          "items" : [
             "ea-apache24-mod_ruid2",
             "ea-apache24-mod_mpm_itk"
-         ],
-         "recommended" : true,
-         "text" : "We strongly recommend that you install one of the following packages unless this is a single-user system:"
+         ]
       },
       {
-         "text" : "If you use suPHP, you will add some security, but may experience performance issues on your server.",
          "recommended" : false,
-         "level" : "danger"
+         "text" : "If you use suPHP, you will add some security, but may experience performance issues on your server.",
+         "level" : "warning"
       }
    ]
 }
