@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 12
+%define release_prefix 13
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -54,6 +54,9 @@ ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71-php
 rm -rf %{buildroot}
 
 %changelog
+* Mon Mar 27 2017 Charan Angara <charan@cpanel.net> - 1.0-13
+- EA-6101: Rephrased description in PHP DSO recommendation.
+
 * Tue Mar 07 2017 Dan Muey <dan@cpanel.net> - 1.0-12
 - EA-6025: Add top level 'level' and adjust options' 'level' of PHP DSO recommendation
 

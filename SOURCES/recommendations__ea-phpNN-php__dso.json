@@ -1,7 +1,7 @@
 {
    "on" : "add",
    "name" : "PHP DSO",
-   "desc" : "PHP DSO runs as the user by default. In a shared hosting environment, this is a security issue.",
+   "desc" : "PHP DSO runs as the user [asis,nobody] by default. In a shared hosting environment, this is a security issue.",
    "level" : "danger",
    "url" : "https://go.cpanel.net/EA4RecDSO",
    "options" : [
