@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 13
+%define release_prefix 14
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -13,6 +13,7 @@ Source1:        ea_current_to_profile
 Source2:        ea_install_profile
 Source3:        ea_convert_php_ini
 Source4:        recommendations__ea-phpNN-php__dso.json
+Source5:        ea_sync_user_phpini_settings
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -35,6 +36,7 @@ rm -rf %{buildroot}
 %{__install} %{SOURCE1} %{buildroot}/usr/local/bin
 %{__install} %{SOURCE2} %{buildroot}/usr/local/bin
 %{__install} %{SOURCE3} %{buildroot}/usr/local/bin
+%{__install} %{SOURCE5} %{buildroot}/usr/local/bin
 
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php
 %{__install} %{SOURCE4} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php/dso.json
@@ -54,6 +56,9 @@ ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71-php
 rm -rf %{buildroot}
 
 %changelog
+* Tue Apr 25 2017 Dan Muey <dan@cpane;.net> - 1.0-14
+- ZC-2549: Add ea_sync_user_phpini_settings script
+
 * Mon Mar 27 2017 Charan Angara <charan@cpanel.net> - 1.0-13
 - EA-6101: Rephrased description in PHP DSO recommendation.
 
