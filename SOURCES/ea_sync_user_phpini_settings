@@ -1,0 +1,175 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+# cpanel - ea_sync_user_phpini_settings              Copyright 2017 cPanel, Inc.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+
+package ea_sync_user_phpini_settings;
+
+use strict;
+
+use Cpanel::Config::Httpd   ();
+use Getopt::Param::Tiny     ();
+use Cpanel::PwCache         ();
+use Cpanel::AccessIds       ();
+use Cwd                     ();
+use Path::Iter              ();
+use Cpanel::ProgLang        ();
+use Cpanel::PHP::Config     ();
+use Cpanel::ArrayFunc::Uniq ();
+use Cpanel::Version         ();
+
+#### barf ##
+# <facepalm> paths before ULC in INC can cause the user-run-code to error out with things like:
+#    Can't locate Cpanel/Exception/CORE.pm:   /root/perl5/lib/perl5//x86_64-linux-64int/Cpanel/Exception/CORE.pm: Permission denied at /usr/local/cpanel/Cpanel/Exception.pm line 43.
+#    Can't locate Cpanel/Carp.pm:   /root/perl5/lib/perl5//x86_64-linux-64int/Cpanel/Carp.pm: Permission denied at (eval .*) line 1.
+# etc, on and on down the rabbit hole depending on how you try to hack around it
+while ( $INC[0] ne '/usr/local/cpanel' ) { shift @INC }
+#### /barf ##
+
+our ( $php_version_info, $php, $ini_hr );
+
+exit( run(@ARGV) ) unless caller;
+
+sub run {
+    my (@args) = @_;
+
+    die "This script only operates when you are under EasyApache 4\n" if !Cpanel::Config::Httpd::is_ea4();
+
+    if ( Cpanel::Version::get_short_release_number() < 62 ) {
+        print "Nothing to do (only applies to v62 and newer)\n";
+        exit(0);
+    }
+
+    my $param = Getopt::Param::Tiny->new( { array_ref => \@args, help_coderef => \&_help, known_only => ['user'], no_args_help => 1, validate => \&_validate, } );
+
+    my $starting_dir = Cwd::cwd();
+    $php_version_info = Cpanel::PHP::Config::get_php_version_info();
+    die "There are no PHP packages installed via ea4\n" if !@{ $php_version_info->{versions} };
+
+    $php = Cpanel::ProgLang->new( type => 'php' );
+    $ini_hr = {};
+
+    for my $user ( $param->param('user') ) {
+        print "Operating on “$user” …\n";
+        _process_user($user);
+        print " … done!\n";
+    }
+
+    chdir($starting_dir) or die "Could not chdir back to $starting_dir: $!\n";
+
+    return 0;    # exit clean
+}
+
+###############
+#### helpers ##
+###############
+
+sub _process_user {
+    my ($user) = @_;
+
+    my $user_ar      = [ Cpanel::PwCache::getpwnam($user) ];
+    my $user_homedir = $user_ar->[7];
+
+    my $user_php = Cpanel::PHP::Config::get_php_config_for_users( [$user] );
+    my $user_dir_to_package_map = {};
+    for my $dom ( sort keys %{$user_php} ) {
+        next if exists $user_dir_to_package_map->{ $user_php->{$dom}{documentroot} };
+        $user_dir_to_package_map->{ $user_php->{$dom}{documentroot} } = $user_php->{$dom}{phpversion};
+    }
+
+    my $count = Cpanel::AccessIds::do_as_user( $user, sub { return _proc_dir( $user_homedir, $user_dir_to_package_map ) } );
+
+    if ( !$count->{errors} && !$count->{processed} ) {
+        print "\tNo php.ini files found.\n";
+    }
+    else {
+        $count->{processed} ||= 0;
+        $count->{errors}    ||= 0;
+        print "\tSuccessfully processed php.ini files: $count->{processed}\n";
+        print "\tphp.ini files that had errors during processing: $count->{errors}\n";
+    }
+}
+
+sub _proc_dir {
+    my ( $user_homedir, $user_dir_to_package_map ) = @_;
+    my $count;
+    chdir($user_homedir) or die "failed to chdir($user_homedir): $!\n";
+    my @errors;
+    my $fetch = Path::Iter::get_iterator( '.', { stop_when_opendir_fails => 1, errors => \@errors } );
+    while ( my $next_path = $fetch->() ) {
+        if ( $next_path =~ m{(?:^|/)php\.ini$} ) {
+            print "\tProcessing $user_homedir/$next_path …\n";
+
+            eval {
+                my $path_parent = $next_path;
+                $path_parent =~ s{/?php\.ini$}{};
+                my $package = $user_dir_to_package_map->{ $path_parent ? "$user_homedir/$path_parent" : $user_homedir } || $php_version_info->{default};
+                $ini_hr->{$package} ||= $php->get_ini( 'package' => $package );
+                $ini_hr->{$package}->set_directives( path => $next_path, directives => { _ea_sync_user_phpini_settings => 1 }, userfiles => 1 );
+            };
+            if ($@) {
+                warn "ERROR: $@\n" if $@;
+                $count->{errors}++;
+            }
+            else {
+                $count->{processed}++;
+            }
+            print "\t … done!\n";
+        }
+    }
+    if (@errors) {
+        warn "\tThe following errors occured while traversing “$user_homedir” (some php.ini files may not have been processed):\n";
+        for my $err (@errors) {
+            warn "\t\t$err->{function}(" . join( ", ", @{ $err->{args} } ) . ") – $err->{error}\n";
+        }
+    }
+
+    return $count;
+}
+
+sub _validate {
+    my ($param) = @_;
+    my $ok      = 1;                       # innocnent until proven guilty ;)
+    my @users   = $param->param('user');
+
+    if ( grep m/^(?:--user|)$/, @users ) {
+        warn "--user requires a value (--user=<USER>)\n";
+        $ok = 0;
+    }
+
+    if ( @users > Cpanel::ArrayFunc::Uniq::uniq(@users) ) {
+        warn "Each <USER> must be unique!\n";
+        $ok = 0;
+    }
+
+    for my $user ( Cpanel::ArrayFunc::Uniq::uniq(@users) ) {
+        next if $user =~ m/^(?:--user|)$/;    # already looked for this once
+        if ( !Cpanel::PwCache::getpwnam($user) ) {
+            warn "“$user” is not a user on this system\n";
+            $ok = 0;
+        }
+    }
+
+    return 1 if $ok;
+    return;
+}
+
+sub _help {
+    my ($param) = @_;
+
+    print <<"END_HELP";
+Usage: $0 --user=<USER> [--user=<USER>, …]
+
+For given users sync any php.ini files in their home directory to corresponding .user.ini and, on some versions, .htaccess.
+
+Options:
+   --help          this screen
+   --user=<USERS>  specify the user to operate on, may be given more than once
+
+END_HELP
+    exit( $param->param('help') ? 0 : 1 );
+}
+
+1;
+
