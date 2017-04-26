@@ -159,7 +159,7 @@ sub _help {
     my ($param) = @_;
 
     print <<"END_HELP";
-Usage: $0 --user=<USER> [--user=<USER>, …]
+Usage: $0 --user=<USER> [--user=<USER2> [--user=<USER3> …]]
 
 For given users sync any php.ini files in their home directory to corresponding .user.ini and, on some versions, .htaccess.
 
