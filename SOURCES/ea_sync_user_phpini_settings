@@ -15,7 +15,6 @@ use Cpanel::AccessIds       ();
 use Cwd                     ();
 use Path::Iter              ();
 use Cpanel::ProgLang        ();
-use Cpanel::PHP::Config     ();
 use Cpanel::ArrayFunc::Uniq ();
 use Cpanel::Version         ();
 
@@ -36,7 +35,9 @@ sub run {
 
     die "This script only operates when you are under EasyApache 4\n" if !Cpanel::Config::Httpd::is_ea4();
 
-    if ( Cpanel::Version::get_short_release_number() < 62 ) {
+    # Handle v58 grossfully (not a typo)
+    eval 'require Cpanel::PHP::Config;';
+    if ( $@ || !defined &Cpanel::Version::get_short_release_number || Cpanel::Version::get_short_release_number() < 62 ) {
         print "Nothing to do (only applies to v62 and newer)\n";
         exit(0);
     }

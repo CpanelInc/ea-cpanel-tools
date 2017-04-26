@@ -15,6 +15,7 @@ use Test::Trap;
 
 use Cpanel::PwCache                  ();
 use Cpanel::Config::Httpd            ();
+use Cpanel::PHP::Config              ();
 use Cpanel::Version                  ();
 use Cpanel::ProgLang::Supported::php ();
 
