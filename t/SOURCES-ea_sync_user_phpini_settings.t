@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 65 + 1;
+use Test::More tests => 67 + 1;
 use Test::NoWarnings;
 use File::Temp ();
 use File::Slurp 'write_file';
@@ -47,7 +47,7 @@ note "run() logic, arg handling";
         is_deeply( \@_process_user_args, [], "pre v62: no users are processed" );
         $trap->exit_is( 0, 'pre v62 exits clean' );
         $trap->stdout_unlike( qr/Usage/, "pre v62 does not do help" );
-        $trap->stdout_like( qr/Nothing to do \(only applies to v62 and newer\)\n/, "pre v62 has explantion" );
+        $trap->stdout_like( qr/Nothing to do \(only applies to v64 and newer\)\n/, "pre v62 has explantion" );
 
     }
     #### un happy paths do help and exit ##
@@ -129,6 +129,11 @@ note "run() logic, arg handling";
     # --user=A --user=B --user=C
     trap { $return = ea_sync_user_phpini_settings::run( "--user=validu2", "--user=validu", "--user=validu3" ); return $return };
     is_deeply( \@_process_user_args, [ ['validu2'], ['validu'], ['validu3'] ], "multiple --user=<VALIDUSER>: those users are processed in the order given" );
+
+    # --all-users
+    trap { $return = ea_sync_user_phpini_settings::run("--all-users"); return $return };
+    is( $return, 0, "using --all-users: would exit clean" );
+    $trap->stdout_unlike( qr/Usage/, "--all-users: does not do help" );
 
     # because $trap->return_is( 0, "multiple --user=<VALIDUSER>: would exit clean" ) is broken
     $trap->did_return( 0, "one --user=<VALIDUSER>: returns" );
