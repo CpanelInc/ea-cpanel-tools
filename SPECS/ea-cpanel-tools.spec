@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 14
+%define release_prefix 15
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -56,7 +56,10 @@ ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71-php
 rm -rf %{buildroot}
 
 %changelog
-* Tue Apr 25 2017 Dan Muey <dan@cpane;.net> - 1.0-14
+* Fri Apr 28 2017 Cory McIntire <cory@cpanel.net> - 1.0-15
+- ZC-2563: Add a --all-users flag
+
+* Tue Apr 25 2017 Dan Muey <dan@cpanel.net> - 1.0-14
 - ZC-2549: Add ea_sync_user_phpini_settings script
 
 * Mon Mar 27 2017 Charan Angara <charan@cpanel.net> - 1.0-13

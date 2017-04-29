@@ -33,16 +33,18 @@ exit( run(@ARGV) ) unless caller;
 sub run {
     my (@args) = @_;
 
+    die "This script can only be run by root\n" if $> != 0;
+
     die "This script only operates when you are under EasyApache 4\n" if !Cpanel::Config::Httpd::is_ea4();
 
     # Handle v58 grossfully (not a typo)
     eval 'require Cpanel::PHP::Config;';
     if ( $@ || !defined &Cpanel::Version::get_short_release_number || Cpanel::Version::get_short_release_number() < 62 ) {
-        print "Nothing to do (only applies to v62 and newer)\n";
+        print "Nothing to do (only applies to v64 and newer)\n";
         exit(0);
     }
 
-    my $param = Getopt::Param::Tiny->new( { array_ref => \@args, help_coderef => \&_help, known_only => ['user'], no_args_help => 1, validate => \&_validate, } );
+    my $param = Getopt::Param::Tiny->new( { array_ref => \@args, help_coderef => \&_help, known_only => [ 'user', 'all-users' ], no_args_help => 1, validate => \&_validate, } );
 
     my $starting_dir = Cwd::cwd();
     $php_version_info = Cpanel::PHP::Config::get_php_version_info();
@@ -51,7 +53,20 @@ sub run {
     $php = Cpanel::ProgLang->new( type => 'php' );
     $ini_hr = {};
 
-    for my $user ( $param->param('user') ) {
+    my @users;
+    if ( $param->param('all-users') ) {
+        require Cpanel::Config::LoadUserDomains;
+        require Cpanel::PwCache;
+
+        Cpanel::PwCache::Build::init_passwdless_pwcache();
+        my %user_map = Cpanel::Config::LoadUserDomains::loaduserdomains( undef, 0, 1 );
+        @users = sort keys %user_map;
+    }
+    else {
+        @users = $param->param('user');
+    }
+
+    for my $user (@users) {
         print "Operating on “$user” …\n";
         _process_user($user);
         print " … done!\n";
@@ -131,8 +146,14 @@ sub _proc_dir {
 
 sub _validate {
     my ($param) = @_;
-    my $ok      = 1;                       # innocnent until proven guilty ;)
+    my $ok      = 1;                            # innocnent until proven guilty ;)
     my @users   = $param->param('user');
+    my $all     = $param->param('all-users');
+
+    if ( $all && @users ) {
+        warn "You cannot specifiy both --all-users and --user options.\n";
+        $ok = 0;
+    }
 
     if ( grep m/^(?:--user|)$/, @users ) {
         warn "--user requires a value (--user=<USER>)\n";
@@ -160,13 +181,14 @@ sub _help {
     my ($param) = @_;
 
     print <<"END_HELP";
-Usage: $0 --user=<USER> [--user=<USER2> [--user=<USER3> …]]
+Usage: $0 --user=<USER> [--user=<USER2> [--user=<USER3> …]] | --all-users
 
 For given users sync any php.ini files in their home directory to corresponding .user.ini and, on some versions, .htaccess.
 
 Options:
    --help          this screen
    --user=<USERS>  specify the user to operate on, may be given more than once
+   --all-users     process all users
 
 END_HELP
     exit( $param->param('help') ? 0 : 1 );
