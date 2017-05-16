@@ -685,8 +685,6 @@ sub get_php_ini {
     return $ini;
 }
 
-# TODO: add optional arg to allow caller to determine which files to
-# to skip instead of hard-coding local.ini
 sub get_phpd_ini {
     my $phpd   = shift;
     my %args   = @_;
@@ -697,11 +695,7 @@ sub get_phpd_ini {
     chdir $phpd or die Cpanel::Exception::create( 'IO::ChdirError', { error => $!, path => $phpd } );
 
     if ( opendir( my $dh, '.' ) ) {
-
-        # traditionally speaking, we'd want to simply readdir() each entry.  this is more efficient.
-        # however, this doesn't guarantee that they are ordered asciibetically
-        # NOTE: skip the customization file
-        for my $file ( sort grep { /\.ini$/ && !/^local\.ini$/ } readdir($dh) ) {
+        for my $file ( sort grep { /\.ini$/ } readdir($dh) ) { # sort asciibetically like PHP does
             my $entry = get_php_ini($file);
             next unless $entry;
             $ini = $ini ? $parser->merge( $ini, $entry ) : $entry;
@@ -731,20 +725,11 @@ sub get_system_ini {
     my $sysini = get_php_ini($path);
     die "ERROR: Failed to read the system default PHP ini file, $path" unless $sysini;
 
-    # gather up all the php.d entries (skipping local.ini)
     my $phpd = get_phpd_ini("$scl_root/etc/php.d");
-
-    # get php.d/local.ini, but ignore warnings since it may not exist
-    my $localini;
-    {
-        local $SIG{__WARN__} = sub { };
-        $localini = get_php_ini("$scl_root/etc/php.d/local.ini");
-    }
 
     # now merge all of these ini files together in the correct order
     my $parser = Parse::PHP::Ini->new();
     $ini = $parser->merge( $phpd, $sysini );
-    $ini = $parser->merge( $ini, $localini ) if $localini;
 
     $SysIniCache{$scl_root} = $ini;
 
