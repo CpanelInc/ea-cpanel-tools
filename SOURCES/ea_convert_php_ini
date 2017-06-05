@@ -91,6 +91,7 @@ sub parse_init {
     my %struct;
 
     if ( $args{path} ) {
+        require Tie::File;
         open( my $fh, '<', $args{path} ) or die Cpanel::Exception::create( 'IO::FileOpenError', { path => $args{path}, error => $!, mode => '<' } );
         my @content;
         my $tie = tie @content, 'Tie::File', $fh, recsep => "\n", mode => Cpanel::Fcntl::or_flags(qw(O_RDONLY));
@@ -405,7 +406,7 @@ sub parse {
             $current_node = $section;
             _set_cache( \%section_cache, $name, $section );
         }
-        elsif ( $line =~ /^\s*([\w\.]+)\s*=\s*(.*)$/ ) {    # e.g. "allow_url_fopen = Off" (NOTE: You can have empty values)
+        elsif ( $line =~ /^\s*([\/\-\w\.]+)\s*=\s*(.*)$/ ) {    # e.g. "allow_url_fopen = Off" (NOTE: You can have empty values)
             my ( $key, $value ) = ( "$1", "$2" );
             my $section = $self->get_current_section($current_node);
 
@@ -599,9 +600,9 @@ sub render {
     return \$str;
 }
 
-package ea_convert_php_ini_file;
+package ea_convert_php_ini_file;    # This package is used by the suphp conf yum hook script in ea-apache24-config, do not modify it without adjusting that too.
 
-use 5.014;    # for /a and /r options
+use 5.014;                          # for /a and /r options
 use strict;
 use warnings;
 use Cwd                    ();
@@ -611,7 +612,7 @@ use Cpanel::ProgLang::Conf ();
 use Cpanel::SysPkgs::SCL   ();
 
 our %Cfg;
-our %SysIniCache;    # store parsed versions of the system ini files to speed up conversion
+our %SysIniCache;                   # store parsed versions of the system ini files to speed up conversion
 
 # Retrieves the root directory of the SCL PHP package.  This is specified
 # in the scl prefixes directory.
@@ -695,14 +696,14 @@ sub get_phpd_ini {
     chdir $phpd or die Cpanel::Exception::create( 'IO::ChdirError', { error => $!, path => $phpd } );
 
     if ( opendir( my $dh, '.' ) ) {
-        for my $file ( sort grep { /\.ini$/ } readdir($dh) ) { # sort asciibetically like PHP does
+        for my $file ( sort grep { /\.ini$/ } readdir($dh) ) {    # sort asciibetically like PHP does
             my $entry = get_php_ini($file);
             next unless $entry;
             $ini = $ini ? $parser->merge( $ini, $entry ) : $entry;
         }
         closedir $dh;
 
-        $ini = $parser->make_root_node() unless $ini;    # return empty parse tree if empty dir
+        $ini = $parser->make_root_node() unless $ini;             # return empty parse tree if empty dir
     }
     else {
         chdir $cwd;
@@ -917,7 +918,7 @@ sub process_args {
     Getopt::Long::Configure('pass_through');
     Getopt::Long::GetOptionsFromArray(
         $argv,
-        'h|help' => sub { usage() },
+        'h|help'     => sub { usage() },
         'a|action=s' => sub { shift; $action = lc shift },
     );
 
