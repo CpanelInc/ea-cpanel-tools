@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 16
+%define release_prefix 17
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -56,6 +56,9 @@ ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71-php
 rm -rf %{buildroot}
 
 %changelog
+* Mon Jun 05 2017 Dan Muey <dan@cpanel.net> - 1.0-17
+- EA-6344: ea_convert_php_ini fixups: add missing require, allow it to parse suphp conf handlers, add usage comment to package
+
 * Mon May 15 2017 Dan Muey <dan@cpanel.net> - 1.0-16
 - ZC-2606: no longer treat local.ini as special
 
