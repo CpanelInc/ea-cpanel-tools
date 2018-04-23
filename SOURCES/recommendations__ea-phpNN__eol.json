@@ -2,6 +2,7 @@
    "on" : "add",
    "name" : "EOL Version",
    "desc" : "This version has reached [output,acronym,EOL,End of Life].",
+   "url" : "https://php.net/eol.php",
    "level" : "danger",
    "options" : [
       {
