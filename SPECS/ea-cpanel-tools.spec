@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 18
+%define release_prefix 19
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -61,6 +61,9 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php55
 rm -rf %{buildroot}
 
 %changelog
+* Mon Jul 30 2018 Tim Mullin <tim@cpanel.net> - 1.0-19
+- EA-7549: If the php config file is a symlink, and the force option is used, remove the symlink so the file can be written.
+
 * Wed Apr 18 2018 Daniel Muey <dan@cpanel.net> - 1.0-18
 - EA-7173: Add recommendation for EOL PHPs
 
