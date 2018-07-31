@@ -767,6 +767,9 @@ sub write_php_ini {
 
     die "ERROR: An existing ini file already exists with that name.\n       Remove the file or use the -f option\n" if ( -e $path && !$Cfg{force} );
 
+    # If it exists as a symlink, remove the symlink so we can write it to the proper location
+    unlink $path if ( -l $path );
+
     if ( sysopen( my $fh, $path, Cpanel::Fcntl::or_flags(qw( O_NOFOLLOW O_WRONLY O_TRUNC O_CREAT )) ) ) {
         binmode $fh, ':utf8';
 
