@@ -4,6 +4,9 @@
    "desc" : "This version has reached [output,acronym,EOL,End of Life].",
    "url" : "https://php.net/eol.php",
    "level" : "danger",
+   "filter" : [
+      "eol"
+   ],
    "options" : [
       {
          "recommended" : true,
