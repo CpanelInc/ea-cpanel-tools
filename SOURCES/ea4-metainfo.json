@@ -1,0 +1,7 @@
+{
+   "additional_packages" : [
+      "ea-tomcat85",
+      "ea-nodejs10"
+   ],
+   "default_php" : "ea-php72"
+}

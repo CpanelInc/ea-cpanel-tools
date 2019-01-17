@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 20
+%define release_prefix 21
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -15,6 +15,7 @@ Source3:        ea_convert_php_ini
 Source4:        recommendations__ea-phpNN-php__dso.json
 Source5:        ea_sync_user_phpini_settings
 Source6:        recommendations__ea-phpNN__eol.json
+Source7:        ea4-metainfo.json
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -39,6 +40,9 @@ rm -rf %{buildroot}
 %{__install} %{SOURCE3} %{buildroot}/usr/local/bin
 %{__install} %{SOURCE5} %{buildroot}/usr/local/bin
 
+mkdir -p %{buildroot}/etc/cpanel/ea4
+%{__install} %{SOURCE7} %{buildroot}/etc/cpanel/ea4/ea4-metainfo.json
+
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php
 %{__install} %{SOURCE4} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php/dso.json
 ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php55-php
@@ -58,11 +62,15 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 
 %defattr(0644,root,root,0755)
 /etc/cpanel/ea4/recommendations
+/etc/cpanel/ea4/ea4-metainfo.json
 
 %clean
 rm -rf %{buildroot}
 
 %changelog
+* Thu Jan 17 2019 Daniel Muey <dan@cpanel.net> - 1.0-21
+- ZC-4650: Add ea4-metainfo.json file
+
 * Mon Dec 24 2018 Daniel Muey <dan@cpanel.net> - 1.0-20
 - ZC-4595: add PHP 5.6 and 7.0 EOL recommendations, add `filter` to recommendations hash
 
