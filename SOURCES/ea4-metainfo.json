@@ -4,5 +4,5 @@
       "ea-nodejs10"
    ],
    "default_php_package" : "ea-php72",
-   "default_php_handler" : "suphp"
+   "default_php_handler" : "cgi"
 }
