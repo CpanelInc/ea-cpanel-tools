@@ -17,9 +17,15 @@ sub usage {
     my ($msg) = @_;
 
     print "Error: $msg\n" if defined $msg;
-    print "usage: ea_install_profile [--install] profile_file\n";
-    print "if you do not pass --install, it will only do conflict resolution on the profile\n";
-
+    print "usage: ea_install_profile [--firstinstall|--install] profile_file\n";
+    print "\n";
+    print "   With no flags, $0 will only do conflict resolution on the profile.\n";
+    print "\n";
+    print "   --install: Resolve conflicts and install the profile.\n";
+    print "   --firstinstall: Attempt to do the install without conflict resolution and fallback\n";
+    print "                   to doing --install if it fails.  This is only intended to be used\n";
+    print "                   on a fresh cPanel install.\n";
+    print "\n";
     exit 0;
 }
 
@@ -29,9 +35,14 @@ sub script {
     die "May only be run if you are using EasyApache 4" if ( !Cpanel::Config::Httpd::is_ea4() );
 
     my $profile;
-    my $install = 0;
+    my $install      = 0;
+    my $firstinstall = 0;
 
     my $idx = 0;
+    if ( $args[$idx] eq "--firstinstall" ) {
+        $idx++;
+        $firstinstall = 1;
+    }
     if ( $args[$idx] eq "--install" ) {
         $idx++;
         $install = 1;
@@ -66,10 +77,25 @@ sub script {
     }
     print "\n" if $derps;
 
+    if ($firstinstall) {
+        print "The system is running in first install mode and will install the requested packages without resolving conflicts …\n";
+        local $@;
+        eval { Cpanel::PackMan->instance->sys->install( @{ $data->{pkgs} } ); };
+        print " … done!\n";
+        if ($@) {
+            warn "First install method failed ($@).";
+            warn "The system will fall back to doing a full install.";
+            $install = 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
     print "The system is resolving package dependencies and conflicts. This may take some time …\n";
     my $resolve_method = defined &Cpanel::PackMan::resolve_multi_op_ns ? 'resolve_multi_op_ns' : 'resolve_multi_op';
-    my $res = Cpanel::PackMan->instance->$resolve_method( $data->{'pkgs'}, 'ea' );
 
+    my $res = Cpanel::PackMan->instance->$resolve_method( $data->{'pkgs'}, 'ea' );
     print " … done!\n";
 
     if ($install) {
