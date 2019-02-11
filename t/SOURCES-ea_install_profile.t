@@ -7,13 +7,14 @@
 
 use strict;
 use warnings;
-use Test::More tests => 12 + 1;
+use Test::More tests => 15 + 1;
 use Test::NoWarnings;
 use File::Temp ();
 use File::Slurp 'write_file';
 use Test::Trap;
 
-use Cpanel::PackMan ();
+use Cpanel::PackMan      ();
+use Cpanel::PackMan::Sys ();
 BEGIN { delete $Cpanel::PackMan::{'resolve_multi_op_ns'}; }
 
 use FindBin;
@@ -60,5 +61,20 @@ $pkgs_to_resolve = undef;    # just to be on the safe side
 
 is( $resolve_multi_op_ns, 1, 'resolve_multi_op_ns() called if it is available' );
 is( $resolve_multi_op,    1, 'resolve_multi_op() not called if resolve_multi_op_ns() is available' );
+
+$resolve_multi_op_ns = 0;
+$resolve_multi_op    = 0;
+
+my @pkgs;
+my $class;
+*Cpanel::PackMan::Sys::install = sub { ( $class, @pkgs ) = @_; return 1; };
+trap { ea_install_profile::script( "--firstinstall", "$dir/profile.$$.json" ); };
+is_deeply( \@pkgs, ['ea-im4reel'], "--firstinstall passes the correct packages" );
+*Cpanel::PackMan::Sys::install = sub { die "failed"; };
+
+Test::NoWarnings::had_no_warnings();
+trap { ea_install_profile::script( "--firstinstall", "$dir/profile.$$.json" ); };
+like( join( " ", @{ $trap->warn() } ), qr/The system will fall back to doing a full install/, "If --firstinstall fails we fallback to the full version" );
+Test::NoWarnings::clear_warnings();
 
 # note "TODO: moar tests!";

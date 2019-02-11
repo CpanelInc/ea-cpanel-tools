@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 21
+%define release_prefix 22
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -68,6 +68,9 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 rm -rf %{buildroot}
 
 %changelog
+* Wed Feb 6 2019 J. Nick Koston <nick@cpanel.net> - 1.0-22
+- EA-8200: Add --firstinstall flag to ea_install_profile
+
 * Thu Jan 17 2019 Daniel Muey <dan@cpanel.net> - 1.0-21
 - ZC-4650: Add ea4-metainfo.json file
 
