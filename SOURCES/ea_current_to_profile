@@ -43,7 +43,7 @@ USAGE
     }
 
     die "May only be run if you are using EasyApache 4" if ( !Cpanel::Config::Httpd::is_ea4() );
-    my @pkgs_have = grep { substr( $_, 0, 3 ) eq "ea-" } Cpanel::PackMan->instance->list( state => "installed" );
+    my @pkgs_have = Cpanel::PackMan->instance->list( state => "installed", 'prefix' => 'ea-' );
     @pkgs_have = grep !/ea-profiles-cpanel/, @pkgs_have;
 
     my $custom_dir = $ea4_profiles_dir . "/custom";
