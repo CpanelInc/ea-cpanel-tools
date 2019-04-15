@@ -1,7 +1,8 @@
 {
    "additional_packages" : [
       "ea-tomcat85",
-      "ea-nodejs10"
+      "ea-nodejs10",
+      "ea-nginx"
    ],
    "default_php_package" : "ea-php72",
    "default_php_handler" : "cgi"
