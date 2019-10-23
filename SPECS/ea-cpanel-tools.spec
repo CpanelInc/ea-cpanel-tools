@@ -58,7 +58,13 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php56
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 
 mkdir -p %{buildroot}/etc/yum/vars
-touch %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+%if 0%{?rhel} == 7
+    echo "CentOS_7" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+%endif
+
+%if 0%{?rhel} == 6
+    echo "CentOS_6.5_standard" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+%endif
 
 %files
 %defattr(0755,root,root,0755)
@@ -68,26 +74,7 @@ touch %{buildroot}/etc/yum/vars/ea4_repo_uri_os
 /etc/cpanel/ea4/recommendations
 /etc/cpanel/ea4/ea4-metainfo.json
 
-%defattr(0644,root,root,0755)
-/etc/yum/vars/ea4_repo_uri_os
-
-%post
-# we need to determine the value, should it be
-# CentOS_7, CentOS_6.5_standard, or at some point
-# CentOS_8
-# I had to do this in post, because it will not let me call perl from
-# install, and anything I do in pre does not survive into install
-
-ver=`/usr/local/cpanel/3rdparty/bin/perl -MCpanel::Sys::OS -e 'print substr (Cpanel::Sys::OS::getreleaseversion (), 0, 1);'`
-if [ "$ver" = "6" ]; then
-    ea_os="CentOS_6.5_standard"
-elif [ "$ver" = "7" ]; then
-    ea_os="CentOS_7"
-fi
-
-echo $ea_os > /etc/yum/vars/ea4_repo_uri_os
-chown root: /etc/yum/vars/ea4_repo_uri_os
-chmod 0644 /etc/yum/vars/ea4_repo_uri_os
+%attr(0644,root,root) /etc/yum/vars/ea4_repo_uri_os
 
 %clean
 rm -rf %{buildroot}
