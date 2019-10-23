@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 24
+%define release_prefix 25
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -34,6 +34,7 @@ This package provides tools for working with cPanel.
 
 %install
 rm -rf %{buildroot}
+
 %{__mkdir_p} %{buildroot}/usr/local/bin
 %{__install} %{SOURCE1} %{buildroot}/usr/local/bin
 %{__install} %{SOURCE2} %{buildroot}/usr/local/bin
@@ -56,6 +57,15 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php55
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php56
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 
+mkdir -p %{buildroot}/etc/yum/vars
+%if 0%{?rhel} == 7
+    echo "CentOS_7" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+%endif
+
+%if 0%{?rhel} == 6
+    echo "CentOS_6.5_standard" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+%endif
+
 %files
 %defattr(0755,root,root,0755)
 /usr/local/bin/*
@@ -64,10 +74,15 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 /etc/cpanel/ea4/recommendations
 /etc/cpanel/ea4/ea4-metainfo.json
 
+%attr(0644,root,root) /etc/yum/vars/ea4_repo_uri_os
+
 %clean
 rm -rf %{buildroot}
 
 %changelog
+* Tue Oct 22 2019 Julian Brown <julian.brown@cpanel.net> - 1.0-25
+- ZC-5740: Add yum var ea4_repo_uri_os
+
 * Thu Apr 11 2019 Daniel Muey <dan@cpanel.net> - 1.0-24
 - ZC-4963: Add `ea-nginx` to Affition Packages list
 
