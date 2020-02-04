@@ -27,6 +27,7 @@ allow_url_include:
   multiple: 0
   note: 'This option allows the use of URL-aware fopen wrappers with the following functions: include(), include_once(), require(), require_once().'
   added: 5.2.0
+  deprecated: 7.4.0
   section: 'Filesystem'
   type: boolean
 always_populate_raw_post_data:
