@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 26
+%define release_prefix 27
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -16,6 +16,8 @@ Source4:        recommendations__ea-phpNN-php__dso.json
 Source5:        ea_sync_user_phpini_settings
 Source6:        recommendations__ea-phpNN__eol.json
 Source7:        ea4-metainfo.json
+Source8:        phpini_directives.yaml
+Source9:        phpini_directive_links.yaml
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -67,6 +69,10 @@ mkdir -p %{buildroot}/etc/yum/vars
     echo "CentOS_6.5_standard" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
 %endif
 
+%{__mkdir_p} %{buildroot}/usr/local/cpanel/whostmgr/etc/
+%{__install} %{SOURCE8} %{buildroot}/usr/local/cpanel/whostmgr/etc/
+%{__install} %{SOURCE9} %{buildroot}/usr/local/cpanel/whostmgr/etc/
+
 %files
 %defattr(0755,root,root,0755)
 /usr/local/bin/*
@@ -74,6 +80,8 @@ mkdir -p %{buildroot}/etc/yum/vars
 %defattr(0644,root,root,0755)
 /etc/cpanel/ea4/recommendations
 /etc/cpanel/ea4/ea4-metainfo.json
+/usr/local/cpanel/whostmgr/etc/phpini_directive_links.yaml
+/usr/local/cpanel/whostmgr/etc/phpini_directives.yaml
 
 %attr(0644,root,root) /etc/yum/vars/ea4_repo_uri_os
 
@@ -81,6 +89,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Tue Feb 04 2020 Daniel Muey <dan@cpanel.net> - 1.0-27
+- ZC-5894: Move PHP.ini directive data to RPM
+
 * Thu Jan 02 2020 Cory McIntire <cory@cpanel.net> - 1.0-26
 - EA-8784: Add PHP 7.1 to EOL recommendations
 
