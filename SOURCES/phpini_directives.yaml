@@ -3527,6 +3527,14 @@ zend.enable_gc:
   added: 5.3.0
   section: 'Zend'
   type: boolean
+zend.exception_ignore_args:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  added: 7.4.0
+  section: 'Zend'
+  type: boolean
 zend.multibyte:
   changeable: PHP_INI_ALL
   default: 0
