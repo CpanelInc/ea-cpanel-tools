@@ -1,0 +1,3641 @@
+---
+SMTP:
+  changeable: PHP_INI_ALL
+  default: localhost
+  multiple: 0
+  note: 'Used under Windows only: host name or IP address of the SMTP server PHP should use for mail sent with the mail() function.'
+  section: 'Mail'
+  type: string
+allow_call_time_pass_reference:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: 'Whether to warn when arguments are passed by reference at function call time. This method is deprecated and is likely to be unsupported in future versions of PHP/Zend.'
+  deprecated: 5.4.0
+  section: 'Core'
+  type: boolean
+allow_url_fopen:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: 'This option enables the URL-aware fopen wrappers that enable accessing URL object like files. Default wrappers are provided for the access of remote files using the ftp or http protocol, some extensions like zlib may register additional wrappers.'
+  section: 'Filesystem'
+  type: boolean
+allow_url_include:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: 'This option allows the use of URL-aware fopen wrappers with the following functions: include(), include_once(), require(), require_once().'
+  added: 5.2.0
+  deprecated: 7.4.0
+  section: 'Filesystem'
+  type: boolean
+always_populate_raw_post_data:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: 'Always populate the $HTTP_RAW_POST_DATA containing the raw POST data. Otherwise, the variable is populated only with unrecognized MIME type of the data.'
+  section: 'Core'
+  type: integer
+apc.cache_by_default:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: boolean
+apc.enable_cli:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.enabled:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: boolean
+apc.file_update_protection:
+  changeable: PHP_INI_SYSTEM
+  default: 2
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.filters:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: string
+apc.gc_ttl:
+  changeable: PHP_INI_SYSTEM
+  default: 3600
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.max_file_size:
+  changeable: PHP_INI_SYSTEM
+  default: 1M
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.mmap_file_mask:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: string
+apc.num_files_hint:
+  changeable: PHP_INI_SYSTEM
+  default: 1000
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.optimization:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.shm_segments:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.shm_size:
+  changeable: PHP_INI_SYSTEM
+  default: 30
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.slam_defense:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.ttl:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.user_entries_hint:
+  changeable: PHP_INI_SYSTEM
+  default: 100
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apc.user_ttl:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Alternative PHP Cache'
+  type: integer
+apd.dumpdir:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Advanced PHP Debugger'
+  type: string
+apd.statement_tracing:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Advanced PHP Debugger'
+  type: boolean
+arg_separator.input:
+  changeable: PHP_INI_PERDIR
+  default: '&'
+  multiple: 0
+  note: 'List of separator(s) used by PHP to parse input URLs into variables.'
+  section: 'Core'
+  type: string
+arg_separator.output:
+  changeable: PHP_INI_ALL
+  default: '&'
+  multiple: 0
+  note: 'The separator used in PHP generated URLs to separate arguments.'
+  section: 'Core'
+  type: string
+asp_tags:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: 'Enables the use of ASP-like <% %> tags in addition to the usual <?php ?> tags. This includes the variable-value printing shorthand of <%= $value %>.'
+  section: 'Core'
+  type: boolean
+  deprecated: 7.0.0
+assert.active:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Options & Information'
+  type: boolean
+assert.bail:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Options & Information'
+  type: boolean
+assert.callback:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Options & Information'
+  type: string
+assert.quiet_eval:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Options & Information'
+  type: boolean
+assert.warning:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Options & Information'
+  type: boolean
+auto_append_file:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: 'Specifies the name of a file that is automatically parsed after the main file. The file is included as if it was called with the include() function, so include_path is used. The special value none disables auto-appending.'
+  section: 'Core'
+  type: string
+auto_detect_line_endings:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: 'When turned on, PHP will examine the data read by fgets() and file() to see if it is using Unix, MS-Dos or Macintosh line-ending conventions.'
+  section: 'Filesystem'
+  type: boolean
+auto_globals_jit:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.0.0
+  section: 'Core'
+  type: boolean
+auto_prepend_file:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: 'Specifies the name of a file that is automatically parsed before the main file. The file is included as if it was called with the include() function, so include_path is used. The special value none disables auto-prepending.'
+  section: 'Core'
+  type: string
+bcmath.scale:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: 'Number of decimal digits for all bcmath functions.'
+  section: 'BCMath'
+  type: integer
+bcompiler.enabled:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+birdstep.max_links:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Core'
+blenc.key_file:
+  changeable: PHP_INI_ALL
+  default: /usr/local/etc/blenckeys
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+browscap:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Misc'
+  type: string
+cgi.check_shebang_line:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.2.1
+  section: 'Core'
+  type: boolean
+cgi.discard_path:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Core'
+  type: boolean
+cgi.fix_pathinfo:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: "Provides real PATH_INFO/PATH_TRANSLATED support for CGI. PHP's previous behaviour was to set PATH_TRANSLATED to SCRIPT_FILENAME, and to not grok what PATH_INFO is. For more information on PATH_INFO, see the cgi specs. Setting this to 1 will cause PHP CGI to fix it's paths to conform to the spec. A setting of zero causes PHP to behave as before. Default is zero. You should fix your scripts to use SCRIPT_FILENAME rather than PATH_TRANSLATED."
+  section: 'Core'
+  type: boolean
+cgi.force_redirect:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+cgi.nph:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+cgi.redirect_status_env:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+cgi.rfc2616_headers:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+child_terminate:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Apache'
+  type: boolean
+cli.pager:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Readline'
+  type: string
+cli.prompt:
+  changeable: PHP_INI_ALL
+  default: '\\b \\>'
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Readline'
+  type: string
+cli_server.color:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Core'
+  type: boolean
+com.allow_dcom:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'COM & .Net'
+  type: boolean
+com.autoregister_casesensitive:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'COM & .Net'
+  type: boolean
+com.autoregister_typelib:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'COM & .Net'
+  type: boolean
+com.autoregister_verbose:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'COM & .Net'
+  type: boolean
+com.code_page:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'COM & .Net'
+  type: string
+com.typelib_file:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'COM & .Net'
+  type: string
+crack.default_dictionary:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+curl.cainfo:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.3.7
+  section: 'cUrl'
+  type: string
+daffodildb.default_host:
+  changeable: PHP_INI_ALL
+  default: localhost
+  multiple: 0
+  note: ''
+  section: 'Daffodil DB'
+  type: string
+daffodildb.default_password:
+  changeable: PHP_INI_ALL
+  default: daffodil
+  multiple: 0
+  note: ''
+  section: 'Daffodil DB'
+  type: string
+daffodildb.default_socket:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Daffodil DB'
+  type: string
+daffodildb.default_user:
+  changeable: PHP_INI_ALL
+  default: DAFFODIL
+  multiple: 0
+  note: ''
+  section: 'Daffodil DB'
+  type: string
+daffodildb.port:
+  changeable: PHP_INI_ALL
+  default: 3456
+  multiple: 0
+  note: ''
+  section: 'Daffodil DB'
+  type: integer
+date.default_latitude:
+  changeable: PHP_INI_ALL
+  default: 31.7667
+  multiple: 0
+  note: ''
+  section: 'Date and Time'
+  type: float
+date.default_longitude:
+  changeable: PHP_INI_ALL
+  default: 35.2333
+  multiple: 0
+  note: ''
+  section: 'Date and Time'
+  type: float
+date.sunrise_zenith:
+  changeable: PHP_INI_ALL
+  default: 90.583333
+  multiple: 0
+  note: ''
+  section: 'Date and Time'
+  type: float
+date.sunset_zenith:
+  changeable: PHP_INI_ALL
+  default: 90.583333
+  multiple: 0
+  note: ''
+  section: 'Date and Time'
+  type: float
+date.timezone:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Date and Time'
+  type: string
+dba.default_handler:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+dbx.colnames_case:
+  changeable: PHP_INI_SYSTEM
+  default: unchanged
+  multiple: 0
+  note: ''
+  section: 'Database Abstraction'
+  type: string
+default_charset:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+default_mimetype:
+  changeable: PHP_INI_ALL
+  default: text/html
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+default_socket_timeout:
+  changeable: PHP_INI_ALL
+  default: 60
+  multiple: 0
+  note: ''
+  section: 'Filesystem'
+  type: integer
+define_syslog_variables:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  deprecated: 5.4.0
+  section: 'Network'
+  type: boolean
+disable_classes:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Safe Mode'
+  type: string
+disable_functions:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 0
+  note: 'This directive allows you to disable certain functions for security reasons. It takes on a comma-delimited list of function names. disable_functions is not affected by Safe Mode.'
+  section: 'Safe Mode'
+  type: string
+display_errors:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: 'This determines whether errors should be printed to the screen as part of the output or if they should be hidden from the user.'
+  section: 'Error Handling and Logging'
+  type: boolean
+display_startup_errors:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: "Even when display_errors is on, errors that occur during PHP's startup sequence are not displayed. It's strongly recommended to keep display_startup_errors off, except for debugging."
+  section: 'Error Handling and Logging'
+  type: boolean
+doc_root:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+docref_ext:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: string
+docref_root:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: string
+enable_dl:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: 'This directive is really only useful in the Apache module version of PHP. You can turn dynamic loading of PHP extensions with dl() on and off per virtual server or per directory. The main reason for turning dynamic loading off is security. With dynamic loading, it is possible to ignore all open_basedir restrictions. The default is to allow dynamic loading, except when using safe mode. This feature is deprecated, and will be removed at a future time.'
+  section: 'Options & Information'
+  type: boolean
+enable_post_data_reading:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Core'
+  type: boolean
+engine:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: 'Turns PHP parsing on or off. This directive is really only useful in the Apache module version of PHP.'
+  section: 'Apache'
+  type: boolean
+error_append_string:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: string
+error_log:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: string
+error_prepend_string:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: string
+error_reporting:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: integer
+exif.decode_jis_intel:
+  changeable: PHP_INI_ALL
+  default: JIS
+  multiple: 0
+  note: ''
+  section: 'Exif'
+  type: string
+exif.decode_jis_motorola:
+  changeable: PHP_INI_ALL
+  default: JIS
+  multiple: 0
+  note: ''
+  section: 'Exif'
+  type: string
+exif.decode_unicode_intel:
+  changeable: PHP_INI_ALL
+  default: UCS-2LE
+  multiple: 0
+  note: ''
+  section: 'Exif'
+  type: string
+exif.decode_unicode_motorola:
+  changeable: PHP_INI_ALL
+  default: UCS-2BE
+  multiple: 0
+  note: ''
+  section: 'Exif'
+  type: string
+exif.encode_jis:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Exif'
+  type: string
+exif.encode_unicode:
+  changeable: PHP_INI_ALL
+  default: ISO-8859-15
+  multiple: 0
+  note: ''
+  section: 'Exif'
+  type: string
+exit_on_timeout:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Core'
+  type: boolean
+expect.logfile:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Expect'
+  type: string
+expect.loguser:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Expect'
+  type: boolean
+expect.timeout:
+  changeable: PHP_INI_ALL
+  default: 10
+  multiple: 0
+  note: ''
+  section: 'Expect'
+  type: integer
+expose_php:
+  changeable: PHPINI_ONLY
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+extension:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 1
+  note: ''
+  section: 'Core'
+  type: string
+extension_dir:
+  changeable: PHP_INI_SYSTEM
+  default: /path/to/php
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+fastcgi.impersonate:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+fastcgi.logging:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+fbsql.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+fbsql.autocommit:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+fbsql.batchsize:
+  changeable: PHP_INI_ALL
+  default: 1000
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+fbsql.batchSize:
+  changeable: PHP_INI_ALL
+  default: 1000
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Core'
+  type: integer
+fbsql.batchsize:
+  changeable: PHP_INI_ALL
+  default: 1000
+  multiple: 0
+  note: ''
+  added: 5.1.0
+  section: 'Core'
+  type: integer
+fbsql.default_database:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+fbsql.default_database_password:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+fbsql.default_host:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+fbsql.default_password:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+fbsql.default_user:
+  changeable: PHP_INI_SYSTEM
+  default: _SYSTEM
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+fbsql.generate_warnings:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+fbsql.max_connections:
+  changeable: PHP_INI_SYSTEM
+  default: 128
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+fbsql.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: 128
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+fbsql.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+fbsql.max_results:
+  changeable: PHP_INI_SYSTEM
+  default: 128
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+file_uploads:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: 'Whether or not to allow HTTP file uploads.'
+  section: 'Core'
+  type: boolean
+filter.default:
+  changeable: PHP_INI_ALL
+  default: unsafe_raw
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+filter.default_flags:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+from:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Filesystem'
+  type: string
+gd.jpeg_ignore_warning:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Image'
+  type: boolean
+geoip.custom_directory:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'GeoIP'
+  type: string
+geoip.database_standard:
+  changeable: PHP_INI_ALL
+  default: 'GeoIP.dat'
+  multiple: 0
+  note: ''
+  section: 'GeoIP'
+  type: string
+highlight.bg:
+  changeable: PHP_INI_ALL
+  default: '#FFFFFF'
+  multiple: 0
+  note: ''
+  deprecated: 5.4.0
+  section: 'Misc'
+  type: string
+highlight.comment:
+  changeable: PHP_INI_ALL
+  default: '#FF8000'
+  multiple: 0
+  note: ''
+  section: 'Misc'
+  type: string
+highlight.default:
+  changeable: PHP_INI_ALL
+  default: '#0000BB'
+  multiple: 0
+  note: ''
+  section: 'Misc'
+  type: string
+highlight.html:
+  changeable: PHP_INI_ALL
+  default: '#000000'
+  multiple: 0
+  note: ''
+  section: 'Misc'
+  type: string
+highlight.keyword:
+  changeable: PHP_INI_ALL
+  default: '#007700'
+  multiple: 0
+  note: ''
+  section: 'Misc'
+  type: string
+highlight.string:
+  changeable: PHP_INI_ALL
+  default: '#DD0000'
+  multiple: 0
+  note: ''
+  section: 'Misc'
+  type: string
+html_errors:
+  changeable: PHP_INI_ALL
+  default: Off
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: boolean
+http.allowed_methods:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.allowed_methods_log:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.cache_log:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.composite_log:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.etag.mode:
+  changeable: PHP_INI_ALL
+  default: MD5
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.etag_mode:
+  changeable: PHP_INI_ALL
+  default: MD5
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.force_exit:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+http.log.allowed_methods:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.log.cache:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.log.composite:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.log.not_found:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.log.redirect:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+http.ob_deflate_auto:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+http.ob_deflate_flags:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+http.ob_inflate_auto:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+http.ob_inflate_flags:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+http.only_exceptions:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+http.redirect_log:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+hyperwave.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+hyperwave.default_port:
+  changeable: PHP_INI_ALL
+  default: 418
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ibase.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: boolean
+ibase.dateformat:
+  changeable: PHP_INI_ALL
+  default: '%Y-%m-%d'
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: string
+ibase.default_charset:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: string
+ibase.default_db:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: string
+ibase.default_password:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: string
+ibase.default_user:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: string
+ibase.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: integer
+ibase.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: integer
+ibase.timeformat:
+  changeable: PHP_INI_ALL
+  default: '%H:%M:%S'
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: string
+ibase.timestampformat:
+  changeable: PHP_INI_ALL
+  default: '%Y-%m-%d %H:%M:%S'
+  multiple: 0
+  note: ''
+  section: 'Firebird/InterBase'
+  type: string
+ibm_db2.binmode:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'IBM DB2, Cloudscape, and Apache Derby'
+  type: integer
+ibm_db2.instance_name:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'IBM DB2, Cloudscape, and Apache Derby'
+  type: string
+iconv.input_encoding:
+  changeable: PHP_INI_ALL
+  default: ISO-8859-1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+iconv.internal_encoding:
+  changeable: PHP_INI_ALL
+  default: ISO-8859-1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+iconv.output_encoding:
+  changeable: PHP_INI_ALL
+  default: ISO-8859-1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+ifx.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: boolean
+ifx.blobinfile:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: boolean
+ifx.byteasvarchar:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: boolean
+ifx.charasvarchar:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: boolean
+ifx.default_host:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: string
+ifx.default_password:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: string
+ifx.default_user:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: string
+ifx.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: integer
+ifx.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: integer
+ifx.nullformat:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: boolean
+ifx.textasvarchar:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  deprecated: 5.2.1
+  section: 'Informix'
+  type: boolean
+ignore_repeated_errors:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: boolean
+ignore_repeated_source:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: 'Ignore source of message when ignoring repeated messages. When this setting is On you will not log errors with repeated messages from different files or sourcelines.'
+  section: 'Error Handling and Logging'
+  type: boolean
+ignore_user_abort:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Misc'
+  type: boolean
+implicit_flush:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Output Control'
+  type: boolean
+include_path:
+  changeable: PHP_INI_ALL
+  default: .
+  multiple: 0
+  note: "Specifies a list of directories where the require(), include(), fopen(), file(), readfile() and file_get_contents() functions look for files. The format is like the system's PATH environment variable: a list of directories separated with a colon in Unix or semicolon in Windows."
+  section: 'Core'
+  type: string
+ingres.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.array_index_start:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ingres.auto:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.blob_segment_length:
+  changeable: PHP_INI_ALL
+  default: 4096
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ingres.cursor_mode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ingres.default_database:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+ingres.default_password:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+ingres.default_user:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+ingres.describe:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.fetch_buffer_size:
+  changeable: PHP_INI_ALL
+  default: 100
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ingres.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ingres.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ingres.report_db_warnings:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.timeout:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ingres.reuse_connection:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.scrollable:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.trace:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.trace_connect:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+ingres.utf8:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+intl.default_locale:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Intl'
+  type: string
+intl.error_level:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Intl'
+  type: integer
+intl.use_exceptions:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.5.0
+  section: 'Intl'
+  type: integer
+ircg.control_user:
+  changeable: PHP_INI_ALL
+  default: nobody
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+ircg.keep_alive_interval:
+  changeable: PHP_INI_ALL
+  default: 60
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ircg.max_format_message_sets:
+  changeable: PHP_INI_ALL
+  default: 12
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ircg.shared_mem_size:
+  changeable: PHP_INI_ALL
+  default: 6000000
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+ircg.work_dir:
+  changeable: PHP_INI_ALL
+  default: /tmp/ircg
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+java.class.path:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Java'
+java.home:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Java'
+java.library.path:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Java'
+java.library:
+  changeable: PHP_INI_ALL
+  default: JAVALIB
+  multiple: 0
+  note: ''
+  section: 'Java'
+last_modified:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Apache'
+  type: boolean
+ldap.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+log_errors:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: boolean
+log_errors_max_len:
+  changeable: PHP_INI_ALL
+  default: 1024
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: integer
+magic_quotes_gpc:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: "Sets the magic_quotes state for GPC (Get/Post/Cookie) operations. When magic_quotes are on, all ' (single-quote), \" (double quote), \\ (backslash) and NULs are escaped with a backslash automatically."
+  deprecated: 5.3.0
+  section: 'Options & Information'
+  type: boolean
+magic_quotes_runtime:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  deprecated: 5.4.0
+  section: 'Options & Information'
+  type: boolean
+magic_quotes_sybase:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: boolean
+mail.add_x_header:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Core'
+  type: boolean
+mail.force_extra_parameters:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+mail.log:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Core'
+  type: string
+mailparse.def_charset:
+  changeable: PHP_INI_ALL
+  default: us-ascii
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+max_execution_time:
+  changeable: PHP_INI_ALL
+  default: 90
+  multiple: 0
+  note: 'This sets the maximum time in seconds a script is allowed to run before it is terminated by the parser. This helps prevent poorly written scripts from tying up the server. The default setting is 90.'
+  section: 'Options & Information'
+  type: integer
+max_input_nesting_level:
+  changeable: PHP_INI_SYSTEM|PHP_INI_PERDIR
+  default: 64
+  multiple: 0
+  note: ''
+  section: 'Options & Information'
+  type: integer
+max_input_time:
+  changeable: PHP_INI_PERDIR
+  default: -1
+  multiple: 0
+  note: 'This sets the maximum time in seconds a script is allowed to parse input data, like POST, GET and file uploads.'
+  section: 'Options & Information'
+  type: integer
+max_input_vars:
+  changeable: PHP_INI_PERDIR
+  default: 1000
+  multiple: 0
+  note: 'This sets the maximum number of input variables allowed per request and can be used to deter denial of service attacks involving hash collisions on the input variable names.'
+  added: 5.3.9
+  section: 'Options & Information'
+  type: integer
+maxdb.default_db:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MaxDB'
+  type: string
+maxdb.default_host:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MaxDB'
+  type: string
+maxdb.default_pw:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MaxDB'
+  type: string
+maxdb.default_user:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MaxDB'
+  type: string
+maxdb.long_readlen:
+  changeable: PHP_INI_ALL
+  default: 200
+  multiple: 0
+  note: ''
+  section: 'MaxDB'
+  type: integer
+mbstring.detect_order:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Multibyte String'
+  type: string
+mbstring.encoding_translation:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Multibyte String'
+  type: boolean
+mbstring.func_overload:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Multibyte String'
+  type: string
+mbstring.http_input:
+  changeable: PHP_INI_ALL
+  default: pass
+  multiple: 0
+  note: ''
+  deprecated: 5.6.0
+  section: 'Multibyte String'
+  type: string
+mbstring.http_output:
+  changeable: PHP_INI_ALL
+  default: pass
+  multiple: 0
+  note: ''
+  deprecated: 5.6.0
+  section: 'Multibyte String'
+  type: string
+mbstring.http_output_conv_mimetypes:
+  changeable: PHP_INI_ALL
+  default: '^(text/|application/xhtml\+xml)'
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Multibyte String'
+  type: string
+mbstring.internal_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.6.0
+  section: 'Multibyte String'
+  type: string
+mbstring.language:
+  changeable: PHP_INI_PERDIR
+  default: neutral
+  multiple: 0
+  note: ''
+  section: 'Multibyte String'
+  type: string
+mbstring.script_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.4.0
+  section: 'Multibyte String'
+  type: string
+mbstring.strict_detection:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Multibyte String'
+  type: boolean
+mbstring.substitute_character:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Multibyte String'
+  type: string
+mcrypt.algorithms_dir:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+mcrypt.modes_dir:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+memory_limit:
+  changeable: PHP_INI_ALL
+  default: 128M
+  multiple: 0
+  note: 'This sets the maximum amount of memory in bytes that a script is allowed to allocate. This helps prevent poorly written scripts for eating up all available memory on a server. Note that to have no memory limit, set this directive to -1.'
+  section: 'Core'
+  type: integer
+mime_magic.debug:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Mimetype'
+  type: boolean
+mime_magic.magicfile:
+  changeable: PHP_INI_SYSTEM
+  default: /path/to/php/magic.mime
+  multiple: 0
+  note: ''
+  section: 'Mimetype'
+  type: string
+msql.allow_persistent:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'mSQL'
+  type: boolean
+msql.max_links:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'mSQL'
+  type: integer
+msql.max_persistent:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'mSQL'
+  type: integer
+mssql.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: boolean
+mssql.batchsize:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.charset:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: string
+mssql.compatability_mode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: boolean
+mssql.connect_timeout:
+  changeable: PHP_INI_ALL
+  default: 5
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.datetimeconvert:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: boolean
+mssql.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.max_procs:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.min_error_severity:
+  changeable: PHP_INI_ALL
+  default: 10
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.min_message_severity:
+  changeable: PHP_INI_ALL
+  default: 10
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.secure_connection:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: boolean
+mssql.textlimit:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.textsize:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mssql.timeout:
+  changeable: PHP_INI_ALL
+  default: 60
+  multiple: 0
+  note: ''
+  section: 'Microsoft SQL'
+  type: integer
+mysql.allow_local_infile:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: boolean
+mysql.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: boolean
+mysql.connect_timeout:
+  changeable: PHP_INI_ALL
+  default: 60
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: integer
+mysql.default_host:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: string
+mysql.default_password:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: string
+mysql.default_port:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: string
+mysql.default_socket:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: string
+mysql.default_user:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: string
+mysql.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: integer
+mysql.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: integer
+mysql.trace_mode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+  type: boolean
+mysqli.allow_local_infile:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.2.4
+  section: 'MySQL Improved'
+mysqli.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Improved'
+  type: boolean
+mysqli.cache_size:
+  changeable: PHP_INI_SYSTEM
+  default: 2000
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Improved'
+  type: integer
+mysqli.default_host:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL Improved'
+  type: string
+mysqli.default_port:
+  changeable: PHP_INI_ALL
+  default: 3306
+  multiple: 0
+  note: ''
+  section: 'MySQL Improved'
+  type: integer
+mysqli.default_pw:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL Improved'
+  type: string
+mysqli.default_socket:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL Improved'
+  type: string
+mysqli.default_user:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'MySQL Improved'
+  type: string
+mysqli.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'MySQL Improved'
+  type: integer
+mysqli.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Improved'
+  type: integer
+mysqli.reconnect:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'MySQL Improved'
+  type: integer
+mysqlnd.collect_memory_statistics:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Native Driver'
+  type: boolean
+mysqlnd.collect_statistics:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Native Driver'
+  type: boolean
+mysqlnd.debug:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Native Driver'
+  type: string
+mysqlnd.log_mask:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'MySQL Native Driver'
+  type: integer
+mysqlnd.mempool_default_size:
+  changeable: PHP_INI_ALL
+  default: 16000
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'MySQL Native Driver'
+  type: integer
+mysqlnd.net_cmd_buffer_size:
+  changeable: PHP_INI_ALL
+  default: 4096
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Native Driver'
+  type: integer
+mysqlnd.net_read_buffer_size:
+  changeable: PHP_INI_SYSTEM
+  default: 32768
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'MySQL Native Driver'
+  type: integer
+mysqlnd.net_read_timeout:
+  changeable: PHP_INI_SYSTEM
+  default: 31536000
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'MySQL Native Driver'
+  type: integer
+mysqlnd.sha256_server_public_key:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.5.0
+  section: 'MySQL Native Driver'
+  type: string
+mysqlnd.trace_alloc:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.5.0
+  section: 'MySQL Native Driver'
+  type: string
+namazu.debugmode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Namazu'
+  type: boolean
+namazu.lang:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Namazu'
+  type: string
+namazu.loggingmode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Namazu'
+  type: integer
+namazu.sortmethod:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Namazu'
+  type: string
+namazu.sortorder:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Namazu'
+  type: string
+nsapi.read_timeout:
+  changeable: PHP_INI_ALL
+  default: 60
+  multiple: 0
+  note: ''
+  section: 'NSAPI'
+  type: integer
+oci8.connection_class:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Oracle'
+  type: string
+oci8.default_prefetch:
+  changeable: PHP_INI_SYSTEM
+  default: 10
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: integer
+oci8.events:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Oracle'
+  type: boolean
+oci8.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: integer
+oci8.old_oci_close_semantics:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: boolean
+oci8.persistent_timeout:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: integer
+oci8.ping_interval:
+  changeable: PHP_INI_SYSTEM
+  default: 60
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: integer
+oci8.privileged_connect:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: boolean
+oci8.statement_cache_size:
+  changeable: PHP_INI_SYSTEM
+  default: 20
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: integer
+odbc.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: boolean
+odbc.check_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: boolean
+odbc.default_db:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: string
+odbc.default_pw:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: string
+odbc.default_user:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: string
+odbc.defaultbinmode:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: integer
+odbc.default_cursortype:
+  changeable: PHP_INI_ALL
+  default: 3
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'ODBC'
+  type: integer
+odbc.defaultlrl:
+  changeable: PHP_INI_ALL
+  default: 4096
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: integer
+odbc.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: integer
+odbc.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'ODBC'
+  type: integer
+open_basedir:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Safe Mode'
+  type: string
+opendirectory.max_refs:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'OpenDirectory'
+  type: integer
+opendirectory.separator:
+  changeable: PHP_INI_ALL
+  default: /
+  multiple: 0
+  note: ''
+  section: 'OpenDirectory'
+  type: string
+oracle.allow_persistent:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Oracle'
+  type: boolean
+oracle.max_links:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Oracle'
+  type: integer
+oracle.max_persistent:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Oracle'
+  type: integer
+output_buffering:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Output Control'
+  type: integer
+output_handler:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Output Control'
+  type: string
+pam.servicename:
+  changeable: PHP_INI_ALL
+  default: php
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+pcre.backtrack_limit:
+  changeable: PHP_INI_ALL
+  default: 100000
+  multiple: 0
+  note: ''
+  section: 'Regular Expression'
+  type: integer
+pcre.recursion_limit:
+  changeable: PHP_INI_ALL
+  default: 100000
+  multiple: 0
+  note: ''
+  section: 'Regular Expression'
+  type: integer
+pdo_mysql.default_socket:
+  changeable: PHP_INI_SYSTEM
+  default: /var/lib/mysql/mysql.sock
+  multiple: 0
+  note: ''
+  section: 'MySQL'
+pdo_odbc.connection_pooling:
+  changeable: PHP_INI_ALL
+  default: strict
+  multiple: 0
+  note: ''
+  section: 'ODBC and DB2'
+  type: string
+pdo_odbc.db2_instance_name:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'ODBC and DB2'
+  type: string
+pfpro.defaulthost:
+  changeable: PHP_INI_ALL
+  default: test-payflow.verisign.com
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Verisign Payflow Pro'
+  type: string
+pfpro.defaultport:
+  changeable: PHP_INI_ALL
+  default: 443
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Verisign Payflow Pro'
+  type: integer
+pfpro.defaulttimeout:
+  changeable: PHP_INI_ALL
+  default: 30
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Verisign Payflow Pro'
+  type: integer
+pfpro.proxyaddress:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Verisign Payflow Pro'
+  type: string
+pfpro.proxylogon:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Verisign Payflow Pro'
+  type: string
+pfpro.proxypassword:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Verisign Payflow Pro'
+  type: string
+pfpro.proxyport:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 5.1.0
+  section: 'Verisign Payflow Pro'
+  type: string
+pgsql.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL'
+  type: boolean
+pgsql.auto_reset_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL'
+  type: integer
+pgsql.ignore_notice:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL'
+  type: integer
+pgsql.log_notice:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL'
+  type: integer
+pgsql.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL'
+  type: integer
+pgsql.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL'
+  type: integer
+phar.cache_list:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Phar'
+  type: string
+phar.extract_list:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Phar'
+  type: string
+phar.readonly:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Phar'
+  type: boolean
+phar.require_hash:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Phar'
+  type: boolean
+post_max_size:
+  changeable: PHP_INI_PERDIR
+  default: 8M
+  multiple: 0
+  note: 'Sets max size of post data allowed. This setting also affects file upload. To upload large files, this value must be larger than upload_max_filesize. Generally speaking, memory_limit should be larger than post_max_size.'
+  section: 'Core'
+  type: integer
+precision:
+  changeable: PHP_INI_ALL
+  default: 14
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+printer.default_printer:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 4.1.1
+  section: 'Core'
+realpath_cache_size:
+  changeable: PHP_INI_SYSTEM
+  default: 16K
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+realpath_cache_ttl:
+  changeable: PHP_INI_SYSTEM
+  default: 120
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+register_argc_argv:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+register_globals:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: 'Whether or not to register the EGPCS (Environment, GET, POST, Cookie, Server) variables as global variables.'
+  deprecated: '5.3.0'
+  section: 'Core'
+  type: boolean
+register_long_arrays:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+report_memleaks:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: 'If this parameter is set to Off, then memory leaks will not be shown (on stdout or in the log). This has only effect in a debug compile, and if error_reporting includes E_WARNING in the allowed list'
+  section: 'Error Handling and Logging'
+  type: boolean
+report_zend_debug:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: boolean
+request_order:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Core'
+  type: string
+runkit.internal_override:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Runkit'
+  type: boolean
+runkit.superglobal:
+  changeable: PHP_INI_PERDIR
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Runkit'
+  type: string
+safe_mode:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: "Whether to enable PHP's safe mode."
+  deprecated: '5.4.0'
+  section: 'Safe Mode'
+  type: boolean
+safe_mode_allowed_env_vars:
+  changeable: PHP_INI_SYSTEM
+  default: PHP_
+  multiple: 0
+  note: ''
+  deprecated: '5.4.0'
+  section: 'Safe Mode'
+  type: string
+safe_mode_exec_dir:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: '5.4.0'
+  section: 'Safe Mode'
+  type: string
+safe_mode_gid:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  deprecated: '5.4.0'
+  section: 'Safe Mode'
+  type: boolean
+safe_mode_include_dir:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: '5.4.0'
+  section: 'Safe Mode'
+  type: string
+safe_mode_protected_env_vars:
+  changeable: PHP_INI_SYSTEM
+  default: LD_LIBRARY_PATH
+  multiple: 0
+  note: ''
+  deprecated: '5.4.0'
+  section: 'Safe Mode'
+  type: string
+sendmail_from:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Mail'
+  type: string
+sendmail_path:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Mail'
+  type: string
+serialize_precision:
+  changeable: PHP_INI_ALL
+  default: 17
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+session.auto_start:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: boolean
+session.bug_compat_42:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  deprecated: 5.4.0
+  section: 'Session Handling'
+  type: boolean
+session.bug_compat_warn:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  deprecated: 5.4.0
+  section: 'Session Handling'
+  type: boolean
+session.cache_expire:
+  changeable: PHP_INI_ALL
+  default: 180
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: integer
+session.cache_limiter:
+  changeable: PHP_INI_ALL
+  default: nocache
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.cookie_domain:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.cookie_httponly:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.cookie_lifetime:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: integer
+session.cookie_path:
+  changeable: PHP_INI_ALL
+  default: /
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.cookie_secure:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.entropy_file:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.entropy_length:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: integer
+session.gc_divisor:
+  changeable: PHP_INI_ALL
+  default: 100
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: integer
+session.gc_maxlifetime:
+  changeable: PHP_INI_ALL
+  default: 1440
+  multiple: 0
+  note: 'This specifies the number of seconds after which data will be seen as "garbage" and potentially cleaned up.'
+  section: 'Session Handling'
+  type: integer
+session.gc_probability:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: integer
+session.hash_bits_per_character:
+  changeable: PHP_INI_ALL
+  default: 4
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: integer
+session.hash_function:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.name:
+  changeable: PHP_INI_ALL
+  default: PHPSESSID
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.referer_check:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.save_handler:
+  changeable: PHP_INI_ALL
+  default: files
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.save_path:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: 'session.save_path defines the argument which is passed to the save handler. If you choose the default files handler, this is the path where the files are created.'
+  section: 'Session Handling'
+  type: string
+  cpanel_default: '/var/cpanel/php/sessions'
+session.serialize_handler:
+  changeable: PHP_INI_ALL
+  default: php
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+session.upload_progress.cleanup:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Session Handling'
+  type: boolean
+session.upload_progress.enabled:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Session Handling'
+  type: boolean
+session.upload_progress.freq:
+  changeable: PHP_INI_PERDIR
+  default: 1%
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Session Handling'
+  type: string
+session.upload_progress.min_freq:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Session Handling'
+  type: integer
+session.upload_progress.name:
+  changeable: PHP_INI_PERDIR
+  default: PHP_SESSION_UPLOAD_PROGRESS
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Session Handling'
+  type: string
+session.upload_progress.prefix:
+  changeable: PHP_INI_PERDIR
+  default: upload_progress_
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Session Handling'
+  type: string
+session.use_cookies:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: boolean
+session.use_only_cookies:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: boolean
+session.use_strict_mode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.5.2
+  section: 'Session Handling'
+  type: boolean
+session.use_trans_sid:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: boolean
+session_pgsql.create_table:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: boolean
+session_pgsql.db:
+  changeable: PHP_INI_SYSTEM
+  default: host=localhost dbname=php_session user=nobody
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: string
+session_pgsql.disable:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: boolean
+session_pgsql.failover_mode:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: integer
+session_pgsql.gc_interval:
+  changeable: PHP_INI_SYSTEM
+  default: 3600
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: integer
+session_pgsql.keep_expired:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: boolean
+session_pgsql.sem_file_name:
+  changeable: PHP_INI_SYSTEM
+  default: /tmp/php_session_pgsql
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: string
+session_pgsql.serializable:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: boolean
+session_pgsql.short_circuit:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: boolean
+session_pgsql.use_app_vars:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: boolean
+session_pgsql.vacuum_interval:
+  changeable: PHP_INI_SYSTEM
+  default: 21600
+  multiple: 0
+  note: ''
+  section: 'PostgreSQL Session'
+  type: integer
+short_open_tag:
+  changeable: PHP_INI_PERDIR
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+simple_cvs.authMethod:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+simple_cvs.compressionLevel:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+simple_cvs.cvsRoot:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+simple_cvs.host:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+simple_cvs.moduleName:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+simple_cvs.userName:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+simple_cvs.workingDir:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+smtp_port:
+  changeable: PHP_INI_ALL
+  default: 25
+  multiple: 0
+  note: ''
+  section: 'Mail'
+  type: integer
+soap.wsdl_cache_dir:
+  changeable: PHP_INI_ALL
+  default: /tmp
+  multiple: 0
+  note: ''
+  section: 'SOAP'
+  type: string
+soap.wsdl_cache_enabled:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'SOAP'
+  type: boolean
+soap.wsdl_cache_limit:
+  changeable: PHP_INI_ALL
+  default: 5
+  multiple: 0
+  note: ''
+  section: 'SOAP'
+  type: integer
+soap.wsdl_cache_ttl:
+  changeable: PHP_INI_ALL
+  default: 86400
+  multiple: 0
+  note: ''
+  section: 'SOAP'
+  type: integer
+sql.safe_mode:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: boolean
+sqlite.assoc_case:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'SQLite'
+  type: integer
+sqlite3.extension_dir:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.3.11
+  section: 'SQLite3'
+  type: string
+sybase.allow_persistent:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: boolean
+sybase.compatability_mode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: boolean
+sybase.interface_file:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: string
+sybase.max_links:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sybase.max_persistent:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sybase.min_error_severity:
+  changeable: PHP_INI_ALL
+  default: 10
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sybase.min_message_severity:
+  changeable: PHP_INI_ALL
+  default: 10
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sybct.allow_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  deprecated: 4.0.3
+  section: 'Sybase'
+  type: boolean
+sybct.deadlock_retry_count:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sybct.hostname:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  deprecated: 4.0.3
+  section: 'Sybase'
+  type: string
+sybct.login_timeout:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sybct.max_links:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  deprecated: 4.0.3
+  section: 'Sybase'
+  type: integer
+sybct.max_persistent:
+  changeable: PHP_INI_SYSTEM
+  default: -1
+  multiple: 0
+  note: ''
+  deprecated: 4.0.3
+  section: 'Sybase'
+  type: integer
+sybct.min_client_severity:
+  changeable: PHP_INI_ALL
+  default: 10
+  multiple: 0
+  note: ''
+  deprecated: 4.0.3
+  section: 'Sybase'
+  type: integer
+sybct.min_server_severity:
+  changeable: PHP_INI_ALL
+  default: 10
+  multiple: 0
+  note: ''
+  deprecated: 4.0.3
+  section: 'Sybase'
+  type: integer
+sybct.packet_size:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sybct.timeout:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Sybase'
+  type: integer
+sys_temp_dir:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.5.0
+  section: 'Core'
+  type: string
+sysvshm.init_mem:
+  changeable: PHP_INI_ALL
+  default: 10000
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: integer
+tidy.clean_output:
+  changeable: PHP_INI_PERDIR
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Tidy'
+  type: boolean
+tidy.default_config:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Tidy'
+  type: string
+track_errors:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: boolean
+unicode.fallback_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: string
+unicode.from_error_mode:
+  changeable: PHP_INI_ALL
+  default: 2
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: integer
+unicode.from_error_subst_char:
+  changeable: PHP_INI_ALL
+  default: 3f
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: string
+unicode.http_input_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: string
+unicode.output_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: string
+unicode.runtime_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: string
+unicode.script_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: string
+unicode.semantics:
+  changeable: PHP_INI_SYSTEM
+  default: off
+  multiple: 0
+  note: ''
+  section: 'Unicode'
+  type: boolean
+unserialize_callback_func:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+upload_max_filesize:
+  changeable: PHP_INI_PERDIR
+  default: 2M
+  multiple: 0
+  note: 'The maximum size of an uploaded file.'
+  section: 'Core'
+  type: integer
+upload_tmp_dir:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+url_rewriter.tags:
+  changeable: PHP_INI_ALL
+  default: 'a=href,area=href,frame=src,form=,fieldset='
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: string
+user_agent:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: 'Define the user agent for PHP to send.'
+  section: 'Filesystem'
+  type: string
+user_dir:
+  changeable: PHP_INI_SYSTEM
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+user_ini.cache_ttl:
+  changeable: PHP_INI_SYSTEM
+  default: 300
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Core'
+  type: integer
+user_ini.filename:
+  changeable: PHP_INI_SYSTEM
+  default: '.user.ini'
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Core'
+  type: string
+valkyrie.auto_validate:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Valkyrie'
+  type: boolean
+valkyrie.config_path:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Valkyrie'
+  type: string
+variables_order:
+  changeable: PHP_INI_PERDIR
+  default: EGPCS
+  multiple: 0
+  note: ''
+  section: 'Core'
+  type: string
+xbithack:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'Apache'
+  type: boolean
+xmlrpc_error_number:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'XML-RPC'
+  type: integer
+xmlrpc_errors:
+  changeable: PHP_INI_SYSTEM
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'XML-RPC'
+  type: boolean
+xmms.path:
+  changeable: PHP_INI_ALL
+  default: /usr/bin/xmms
+  multiple: 0
+  note: ''
+  section: 'XMMS'
+  type: string
+xmms.session:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  section: 'XMMS'
+  type: boolean
+y2k_compliance:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  deprecated: 5.4.0
+  section: 'Core'
+  type: boolean
+yaz.keepalive:
+  changeable: PHP_INI_ALL
+  default: 120
+  multiple: 0
+  note: ''
+  section: 'YAZ'
+  type: integer
+yaz.log_file:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'YAZ'
+  type: string
+yaz.log_mask:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'YAZ'
+  type: string
+yaz.max_links:
+  changeable: PHP_INI_ALL
+  default: 100
+  multiple: 0
+  note: ''
+  section: 'YAZ'
+  type: integer
+zend.detect_unicode:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: 'Added as detect_unicode in 5.1.0'
+  added: 5.4.0
+  section: 'Zend'
+  type: boolean
+zend.enable_gc:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  added: 5.3.0
+  section: 'Zend'
+  type: boolean
+zend.exception_ignore_args:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  added: 7.4.0
+  section: 'Zend'
+  type: boolean
+zend.multibyte:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Zend'
+  type: boolean
+zend.script_encoding:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 5.4.0
+  section: 'Zend'
+  type: string
+zend.ze1_compatibility_mode:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: ''
+  added: 5.0.0
+  deprecated: 5.3.0
+  section: 'Zend'
+  type: boolean
+zend_extension:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 1
+  note: ''
+  section: 'Zend'
+  type: string
+zend_extension_debug:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 1
+  note: ''
+  section: 'Zend'
+  type: string
+zend_extension_debug_ts:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 1
+  note: ''
+  deprecated: 5.3.0
+  section: 'Zend'
+  type: string
+zend_extension_ts:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 1
+  note: ''
+  deprecated: 5.3.0
+  section: 'Zend'
+  type: string
+zend_extension_manager.optimizer:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+zend_extension_manager.optimizer_ts:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+zend_optimizer.version:
+  changeable: PHPINI_ONLY
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: string
+zend_optimizer.optimization_level:
+  changeable: PHPINI_ONLY
+  default: 15
+  multiple: 0
+  note: ''
+  section: 'Zend'
+  type: integer
+zlib.output_compression:
+  changeable: PHP_INI_ALL
+  default: 0
+  multiple: 0
+  note: 'Whether to transparently compress pages. If this option is set to "On" in php.ini or the Apache configuration, pages are compressed if the browser sends an "Accept-Encoding: gzip" or "deflate" header.'
+  section: 'Zlib'
+  type: boolean
+zlib.output_compression_level:
+  changeable: PHP_INI_ALL
+  default: -1
+  multiple: 0
+  note: ''
+  section: 'Zlib'
+  type: integer
+zlib.output_handler:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  section: 'Zlib'
+  type: string
