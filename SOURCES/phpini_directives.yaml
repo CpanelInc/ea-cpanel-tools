@@ -1611,9 +1611,9 @@ mailparse.def_charset:
   type: string
 max_execution_time:
   changeable: PHP_INI_ALL
-  default: 90
+  default: 30
   multiple: 0
-  note: 'This sets the maximum time in seconds a script is allowed to run before it is terminated by the parser. This helps prevent poorly written scripts from tying up the server. The default setting is 90.'
+  note: 'This sets the maximum time in seconds a script is allowed to run before it is terminated by the parser. This helps prevent poorly written scripts from tying up the server. The default setting is 30.'
   section: 'Options & Information'
   type: integer
 max_input_nesting_level:
