@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 27
+%define release_prefix 28
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -89,6 +89,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Wed Apr 08 2020 Tim Mullin <tim@cpanel.net> - 1.0-28
+- EA-8930: Update max_execution_time default to 30
+
 * Tue Feb 04 2020 Daniel Muey <dan@cpanel.net> - 1.0-27
 - ZC-5894: Move PHP.ini directive data to RPM
 
