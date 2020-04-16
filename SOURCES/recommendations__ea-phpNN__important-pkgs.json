@@ -1,0 +1,22 @@
+{
+   "on" : "remove",
+   "name" : "Important Package",
+   "desc" : "If you remove this package, you will completely remove this version of PHP.",
+   "url" : false,
+   "level" : "danger",
+   "filter" : [
+      "important"
+   ],
+   "options" : [
+      {
+         "recommended" : true,
+         "text" : "Keep this package and version of PHP.",
+         "level" : "success"
+      },
+      {
+         "recommended" : false,
+         "text" : "Remove this package and version of PHP. This will change the PHP version's users to the default PHP. If this PHP version is the default, then the system will choose the newest installed PHP version as the default.",
+         "level" : "warning"
+      }
+   ]
+}
