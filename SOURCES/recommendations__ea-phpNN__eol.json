@@ -15,7 +15,7 @@
       },
       {
          "recommended" : false,
-         "text" : "If you do continue to use it you are susceptible to bugs and security issues that remain.",
+         "text" : "If you do continue to use it, you will be susceptible to any remaining bugs or security issues.",
          "level" : "warning"
       }
    ]
