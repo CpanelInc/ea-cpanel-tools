@@ -1,7 +1,7 @@
 {
    "on" : "remove",
    "name" : "Important Package",
-   "desc" : "If you remove this package, you will completely remove this version of PHP.",
+   "desc" : "If you remove this package, this version of PHP will not function properly.",
    "url" : false,
    "level" : "danger",
    "filter" : [
@@ -10,12 +10,12 @@
    "options" : [
       {
          "recommended" : true,
-         "text" : "Keep this package and version of PHP.",
+         "text" : "Keep this package. This version of PHP will continue to function.",
          "level" : "success"
       },
       {
          "recommended" : false,
-         "text" : "Remove this package and version of PHP. This will change the PHP version's users to the default PHP. If this PHP version is the default, then the system will choose the newest installed PHP version as the default.",
+         "text" : "Remove this package. This will break this version of PHP.",
          "level" : "warning"
       }
    ]
