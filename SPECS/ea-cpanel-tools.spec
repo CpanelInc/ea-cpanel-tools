@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 29
+%define release_prefix 30
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -18,6 +18,7 @@ Source6:        recommendations__ea-phpNN__eol.json
 Source7:        ea4-metainfo.json
 Source8:        phpini_directives.yaml
 Source9:        phpini_directive_links.yaml
+Source10:       recommendations__ea-phpNN__important-pkgs.json
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -47,11 +48,20 @@ mkdir -p %{buildroot}/etc/cpanel/ea4
 %{__install} %{SOURCE7} %{buildroot}/etc/cpanel/ea4/ea4-metainfo.json
 
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php
+mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php-cli
+mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php-common
 %{__install} %{SOURCE4} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php/dso.json
-ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php55-php
-ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php56-php
-ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70-php
-ln -s ea-php54-php %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71-php
+%{__install} %{SOURCE10} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php-cli/important.json
+%{__install} %{SOURCE10} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php-common/important.json
+for pkg in php php-cli php-common; do
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php55-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php56-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php72-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php73-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php74-${pkg}
+done
 
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54
 %{__install} %{SOURCE6} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54/eol.json
@@ -89,6 +99,10 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Apr 16 2020 Daniel Muey <dan@cpanel.net> - 1.0-30
+- ZC-4935: Add recommendation for -php-cli and -php-common removal
+- ZC-6604: Add recommendations for PHP 7.2, 7.3, 7.4
+
 * Wed Apr 15 2020 Tim Mullin <tim@cpanel.net> - 1.0-29
 - EA-8960: Update end-of-life PHP phrase
 

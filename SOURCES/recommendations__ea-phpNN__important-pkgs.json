@@ -1,0 +1,22 @@
+{
+   "on" : "remove",
+   "name" : "Important Package",
+   "desc" : "If you remove this package, this version of PHP will not function properly.",
+   "url" : false,
+   "level" : "danger",
+   "filter" : [
+      "important"
+   ],
+   "options" : [
+      {
+         "recommended" : true,
+         "text" : "Keep this package. This version of PHP will continue to function.",
+         "level" : "success"
+      },
+      {
+         "recommended" : false,
+         "text" : "Remove this package. This will break this version of PHP.",
+         "level" : "warning"
+      }
+   ]
+}
