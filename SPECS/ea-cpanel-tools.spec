@@ -101,7 +101,6 @@ rm -rf %{buildroot}
 %changelog
 * Thu Apr 16 2020 Daniel Muey <dan@cpanel.net> - 1.0-30
 - ZC-4935: Add recommendation for -php-cli and -php-common removal
-- ZC-6604: Add recommendations for PHP 7.2, 7.3, 7.4
 
 * Wed Apr 15 2020 Tim Mullin <tim@cpanel.net> - 1.0-29
 - EA-8960: Update end-of-life PHP phrase
