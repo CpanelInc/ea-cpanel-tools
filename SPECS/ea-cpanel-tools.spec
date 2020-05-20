@@ -71,8 +71,13 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71
 
 mkdir -p %{buildroot}/etc/yum/vars
-%if 0%{?rhel} >= 7
-    echo "CentOS_7" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+%if 0%{?rhel} > 6
+    %if 0%{?rhel} == 8
+        echo "CentOS_8" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+    %endif
+    %if 0%{?rhel} == 7
+        echo "CentOS_7" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+    %endif
 %endif
 
 %if 0%{?rhel} == 6
