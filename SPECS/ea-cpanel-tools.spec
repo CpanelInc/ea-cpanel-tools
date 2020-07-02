@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 30
+%define release_prefix 31
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -71,8 +71,13 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71
 
 mkdir -p %{buildroot}/etc/yum/vars
-%if 0%{?rhel} == 7
-    echo "CentOS_7" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+%if 0%{?rhel} > 6
+    %if 0%{?rhel} == 8
+        echo "CentOS_8" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+    %endif
+    %if 0%{?rhel} == 7
+        echo "CentOS_7" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+    %endif
 %endif
 
 %if 0%{?rhel} == 6
@@ -99,6 +104,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Wed May 20 2020 Julian Brown <julian.brown@cpanel.net> - 1.0-31
+- ZC-6837: Build on CentOS 8
+
 * Thu Apr 16 2020 Daniel Muey <dan@cpanel.net> - 1.0-30
 - ZC-4935: Add recommendation for -php-cli and -php-common removal
 
