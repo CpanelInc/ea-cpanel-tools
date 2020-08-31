@@ -7,6 +7,6 @@
       "ea-nodejs10",
       "ea-nginx"
    ],
-   "default_php_package" : "ea-php72",
+   "default_php_package" : "ea-php73",
    "default_php_handler" : "cgi"
 }
