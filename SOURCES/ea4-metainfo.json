@@ -2,6 +2,7 @@
    "additional_packages" : [
       "ea-modsec2-rules-owasp-crs",
       "ea-modsec30-rules-owasp-crs",
+      "ea-modsec30-connector-nginx",
       "ea-tomcat85",
       "ea-nodejs10",
       "ea-nginx"
