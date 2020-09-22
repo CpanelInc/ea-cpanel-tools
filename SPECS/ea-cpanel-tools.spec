@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 32
+%define release_prefix 35
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -104,6 +104,15 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Aug 31 2020 Daniel Muey <dan@cpanel.net> - 1.0-35
+- ZC-7001: Make PHP 7.3 the default PHP
+
+* Mon Aug 31 2020 Daniel Muey <dan@cpanel.net> - 1.0-34
+- ZC-7471: Add ea-modsec30-connector-nginx to ea4-metainfo.json’s additional_packages
+
+* Thu Aug 27 2020 Daniel Muey <dan@cpanel.net> - 1.0-33
+- ZC-7463: Add ea-modsec30-rules-owasp-crs to ea4-metainfo.json’s additional_packages
+
 * Mon Aug 10 2020 Daniel Muey <dan@cpanel.net> - 1.0-32
 - ZC-7320: Add `ea-modsec2-rules-owasp-crs` to the additional packages list
 
