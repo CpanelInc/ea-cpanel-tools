@@ -1,0 +1,22 @@
+{
+   "on" : "add",
+   "name" : "EOL Version",
+   "desc" : "This version has reached [output,acronym,EOL,End of Life].",
+   "url" : "https://www.ruby-lang.org/en/downloads/branches/",
+   "level" : "danger",
+   "filter" : [
+      "eol"
+   ],
+   "options" : [
+      {
+         "recommended" : true,
+         "text" : "We strongly recommend that you use a version that is still supported upstream.",
+         "level" : "success"
+      },
+      {
+         "recommended" : false,
+         "text" : "If you do continue to use it, you will be susceptible to any remaining bugs or security issues.",
+         "level" : "warning"
+      }
+   ]
+}
