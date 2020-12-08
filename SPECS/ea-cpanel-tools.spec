@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 38
+%define release_prefix 39
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -70,6 +70,7 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php55
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php56
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71
+ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php72
 
 mkdir -p %{buildroot}/etc/yum/vars
 %if 0%{?rhel} > 6
@@ -105,6 +106,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Dec 07 2020 Cory McIntire <cory@cpanel.net> - 1.0-39
+- EA-9444: Add PHP 7.2 to EOL recommendations
+
 * Wed Oct 28 2020 Daniel Muey <dan@cpanel.net> - 1.0-38
 - ZC-7308: Updates for PHP 8
 
