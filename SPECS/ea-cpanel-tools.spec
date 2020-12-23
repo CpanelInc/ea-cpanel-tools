@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 39
+%define release_prefix 40
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -19,6 +19,7 @@ Source7:        ea4-metainfo.json
 Source8:        phpini_directives.yaml
 Source9:        phpini_directive_links.yaml
 Source10:       recommendations__ea-phpNN__important-pkgs.json
+Source11:       recommendations__ea-rubyNN__eol.json
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -72,6 +73,11 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php72
 
+%if 0%{?rhel} > 6
+    mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger
+    %{__install} %{SOURCE11} %{buildroot}/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger/eol.json
+%endif
+
 mkdir -p %{buildroot}/etc/yum/vars
 %if 0%{?rhel} > 6
     %if 0%{?rhel} == 8
@@ -106,6 +112,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Fri Dec 18 2020 Daniel Muey <dan@cpanel.net> - 1.0-40
+- ZC-7904: Add eol recommendation for ruby24 on C7 and beyond (6 only has ruby24)
+
 * Mon Dec 07 2020 Cory McIntire <cory@cpanel.net> - 1.0-39
 - EA-9444: Add PHP 7.2 to EOL recommendations
 
