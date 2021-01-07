@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 40
+%define release_prefix 41
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -112,6 +112,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Jan 07 2021 Daniel Muey <dan@cpanel.net> - 1.0-41
+- ZC-6815: Add ea-nginx-standalone to additional_packages
+
 * Fri Dec 18 2020 Daniel Muey <dan@cpanel.net> - 1.0-40
 - ZC-7904: Add eol recommendation for ruby24 on C7 and beyond (6 only has ruby24)
 
