@@ -11,6 +11,6 @@
    ],
    "default_directoryindex" : "index.php index.php8 index.php7 index.php5 index.perl index.pl index.plx index.ppl index.cgi index.jsp index.jp index.phtml index.shtml index.xhtml index.html index.htm index.js",
    "default_php_handler" : "cgi",
-   "default_php_package" : "ea-php73",
+   "default_php_package" : "ea-php74",
    "default_phpfpm_security_limit_extensions" : ".phtml .php .php3 .php4 .php5 .php6 .php7 .php8"
 }
