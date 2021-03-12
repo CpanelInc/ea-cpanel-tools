@@ -896,6 +896,14 @@ geoip.database_standard:
   note: ''
   section: 'GeoIP'
   type: string
+hard_timeout:
+  changeable: PHP_INI_SYSTEM
+  default: 2
+  multiple: 0
+  note: ''
+  deprecated: 7.1.0
+  section: 'Core'
+  type: integer
 highlight.bg:
   changeable: PHP_INI_ALL
   default: '#FFFFFF'
@@ -1175,6 +1183,7 @@ iconv.input_encoding:
   default: ISO-8859-1
   multiple: 0
   note: ''
+  deprecated: 5.6.0
   section: 'Core'
   type: string
 iconv.internal_encoding:
@@ -1182,6 +1191,7 @@ iconv.internal_encoding:
   default: ISO-8859-1
   multiple: 0
   note: ''
+  deprecated: 5.6.0
   section: 'Core'
   type: string
 iconv.output_encoding:
@@ -1189,6 +1199,7 @@ iconv.output_encoding:
   default: ISO-8859-1
   multiple: 0
   note: ''
+  deprecated: 5.6.0
   section: 'Core'
   type: string
 ifx.allow_persistent:
@@ -1692,6 +1703,7 @@ mbstring.func_overload:
   default: 0
   multiple: 0
   note: ''
+  deprecated: 7.2.0
   section: 'Multibyte String'
   type: string
 mbstring.http_input:
@@ -2785,6 +2797,14 @@ session.cookie_path:
   note: ''
   section: 'Session Handling'
   type: string
+session.cookie_samesite:
+  changeable: PHP_INI_ALL
+  default: NULL
+  multiple: 0
+  note: ''
+  added: 7.3.0
+  section: 'Session Handling'
+  type: string
 session.cookie_secure:
   changeable: PHP_INI_ALL
   default: NULL
@@ -2841,6 +2861,13 @@ session.hash_function:
   note: ''
   section: 'Session Handling'
   type: string
+session.lazy_write:
+  changeable: PHP_INI_ALL
+  default: 1
+  multiple: 0
+  note: ''
+  section: 'Session Handling'
+  type: integer
 session.name:
   changeable: PHP_INI_ALL
   default: PHPSESSID
@@ -2875,6 +2902,38 @@ session.serialize_handler:
   default: php
   multiple: 0
   note: ''
+  section: 'Session Handling'
+  type: string
+session.sid_bits_per_character:
+  changeable: PHP_INI_ALL
+  default: 4
+  multiple: 0
+  note: ''
+  added: 7.1.0
+  section: 'Session Handling'
+  type: integer
+session.sid_length:
+  changeable: PHP_INI_ALL
+  default: 32
+  multiple: 0
+  note: ''
+  added: 7.1.0
+  section: 'Session Handling'
+  type: integer
+session.trans_sid_hosts:
+  changeable: PHP_INI_ALL
+  default: "$_SERVER['HTTP_HOST']"
+  multiple: 0
+  note: ''
+  added: 7.1.0
+  section: 'Session Handling'
+  type: string
+session.trans_sid_tags:
+  changeable: PHP_INI_ALL
+  default: "a=href,area=href,frame=src,form="
+  multiple: 0
+  note: ''
+  added: 7.1.0
   section: 'Session Handling'
   type: string
 session.upload_progress.cleanup:
@@ -3136,6 +3195,14 @@ sqlite.assoc_case:
   note: ''
   section: 'SQLite'
   type: integer
+sqlite3.defensive:
+  changeable: PHP_INI_SYSTEM
+  default: 1
+  multiple: 0
+  note: ''
+  added: 7.2.17
+  section: 'SQLite'
+  type: integer
 sqlite3.extension_dir:
   changeable: PHP_INI_SYSTEM
   default: NULL
@@ -3303,6 +3370,7 @@ track_errors:
   default: 0
   multiple: 0
   note: ''
+  deprecated: 7.2.0
   section: 'Error Handling and Logging'
   type: boolean
 unicode.fallback_encoding:
