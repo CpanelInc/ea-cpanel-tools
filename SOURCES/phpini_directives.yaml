@@ -901,7 +901,7 @@ hard_timeout:
   default: 2
   multiple: 0
   note: ''
-  deprecated: 7.1.0
+  added: 7.1.0
   section: 'Core'
   type: integer
 highlight.bg:
@@ -1699,7 +1699,7 @@ mbstring.encoding_translation:
   section: 'Multibyte String'
   type: boolean
 mbstring.func_overload:
-  changeable: PHP_INI_PERDIR
+  changeable: PHP_INI_SYSTEM
   default: 0
   multiple: 0
   note: ''
