@@ -44,6 +44,3 @@ echo "Ubuntu" > $DEB_INSTALL_ROOT/etc/yum/vars/ea4_repo_uri_os
 mkdir -p $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/
 install -m 644 $SOURCE8 $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/
 install -m 644 $SOURCE9 $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/
-
-echo "LAST: 001"
-ls -ld $DEB_INSTALL_ROOT/usr/local/bin/*
