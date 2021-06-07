@@ -1,0 +1,5 @@
+{
+    "remove_from_requires"  : [ "/usr/local/cpanel/3rdparty/bin/perl" ],
+    "dont_relativise_ontar" : 1,
+    "fix_dh_usrlocal"       :1
+}
