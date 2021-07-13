@@ -100,7 +100,13 @@ sub script {
 
     if ($install) {
         print "Installing …\n";
-        print Cpanel::PackMan->instance->multi_op($res);
+        my $actions = Cpanel::PackMan->instance->multi_op($res);
+        if (!$actions) {
+            print " … nothing to do.\n";
+        }
+        else {
+            print " … done!\n";
+        }
     }
     else {
         print Dumper($res);
