@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 44
+%define release_prefix 45
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -112,6 +112,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Aug 16 2021 Travis Holloway <t.holloway@cpanel.net> - 1.0-45
+- EA-10037: Update open_basedir to have correct Changeable value in phpini_directives.yaml
+
 * Thu Jul 01 2021 Daniel Muey <dan@cpanel.net> - 1.0-44
 - ZC-9029: have post install output be clear that it was complete
 
