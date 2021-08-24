@@ -2344,7 +2344,7 @@ odbc.max_persistent:
   section: 'ODBC'
   type: integer
 open_basedir:
-  changeable: PHP_INI_SYSTEM
+  changeable: PHP_INI_ALL
   default: NULL
   multiple: 0
   note: ''
