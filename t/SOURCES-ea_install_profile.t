@@ -66,13 +66,18 @@ $resolve_multi_op_ns = 0;
 $resolve_multi_op    = 0;
 
 my @pkgs;
-my $class;
-*Cpanel::PackMan::Sys::install = sub { ( $class, @pkgs ) = @_; return 1; };
+my $fail_syscmd = 0;
+my ( $class, $line_handler, $subcmd, $flag );
+*Cpanel::PackMan::Sys::syscmd = sub {
+    ( $class, $line_handler, $subcmd, $flag, @pkgs ) = @_;
+    die "failed" if $fail_syscmd;
+    return 1;
+};
 trap { ea_install_profile::script( "--firstinstall", "$dir/profile.$$.json" ); };
 is_deeply( \@pkgs, ['ea-im4reel'], "--firstinstall passes the correct packages" );
-*Cpanel::PackMan::Sys::install = sub { die "failed"; };
 
 Test::NoWarnings::had_no_warnings();
+$fail_syscmd = 1;
 trap { ea_install_profile::script( "--firstinstall", "$dir/profile.$$.json" ); };
 like( join( " ", @{ $trap->warn() } ), qr/The system will fall back to doing a full install/, "If --firstinstall fails we fallback to the full version" );
 Test::NoWarnings::clear_warnings();
