@@ -42,3 +42,8 @@ install -m 644 $SOURCE11 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-rub
 mkdir -p $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/
 install -m 644 $SOURCE8 $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/
 install -m 644 $SOURCE9 $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/
+
+mkdir -p $hooks_base/ea-__WILDCARD__
+mkdir -p $hooks_base_pre/ea-__WILDCARD__
+install -m 755 $SOURCE12 $hooks_base/ea-__WILDCARD__
+install -m 755 $SOURCE12 $hooks_base_pre/ea-__WILDCARD__
