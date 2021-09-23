@@ -1,6 +1,5 @@
 {
    "additional_packages" : [
-      "ea-apache24-mod-passenger",
       "ea-modsec2-rules-owasp-crs",
       "ea-modsec30-rules-owasp-crs",
       "ea-modsec30-connector-nginx",
