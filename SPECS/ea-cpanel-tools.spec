@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 46
+%define release_prefix 47
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -133,6 +133,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Sep 23 2021 Dan Muey <dan@cpanel.net> - 1.0-47
+- ZC-9303: Add ea-apache24-mod-passenger to additional packages list for EA4 UI
+
 * Tue Sep 07 2021 Dan Muey <dan@cpanel.net> - 1.0-46
 - ZC-9253: install nobody hook via ea-cpanel-tools so its available for pre-txn profile install
 
