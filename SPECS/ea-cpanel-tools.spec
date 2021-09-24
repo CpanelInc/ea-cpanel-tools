@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 47
+%define release_prefix 48
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -133,6 +133,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Sep 23 2021 Dan Muey <dan@cpanel.net> - 1.0-48
+- ZC-9307: Rolling “ea-cpanel-tools” back to “0a3c415”: ea-apache24-mod-passenger shows up under Apache modules so additional packages was not necessary
+
 * Thu Sep 23 2021 Dan Muey <dan@cpanel.net> - 1.0-47
 - ZC-9303: Add ea-apache24-mod-passenger to additional packages list for EA4 UI
 
