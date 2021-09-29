@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 45
+%define release_prefix 48
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -20,6 +20,7 @@ Source8:        phpini_directives.yaml
 Source9:        phpini_directive_links.yaml
 Source10:       recommendations__ea-phpNN__important-pkgs.json
 Source11:       recommendations__ea-rubyNN__eol.json
+Source12:       001-ensure-nobody
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -32,6 +33,18 @@ Autoreq:        0
 # limitation.
 
 Requires: /usr/local/cpanel/3rdparty/bin/perl
+
+%if 0%{?rhel} > 7
+    %define hooks_base $RPM_BUILD_ROOT%{_sysconfdir}/dnf/universal-hooks/multi_pkgs/transaction
+    %define hooks_base_sys %{_sysconfdir}/dnf/universal-hooks/multi_pkgs/transaction
+    %define hooks_base_pre $RPM_BUILD_ROOT%{_sysconfdir}/dnf/universal-hooks/multi_pkgs/pre_transaction
+    %define hooks_base_pre_sys %{_sysconfdir}/dnf/universal-hooks/multi_pkgs/pre_transaction
+%else
+    %define hooks_base $RPM_BUILD_ROOT%{_sysconfdir}/yum/universal-hooks/multi_pkgs/posttrans
+    %define hooks_base_sys %{_sysconfdir}/yum/universal-hooks/multi_pkgs/posttrans
+    %define hooks_base_pre $RPM_BUILD_ROOT%{_sysconfdir}/yum/universal-hooks/multi_pkgs/pretrans
+    %define hooks_base_pre_sys %{_sysconfdir}/yum/universal-hooks/multi_pkgs/pretrans
+%endif
 
 %description
 This package provides tools for working with cPanel.
@@ -78,6 +91,11 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php72
     %{__install} %{SOURCE11} %{buildroot}/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger/eol.json
 %endif
 
+mkdir -p %{hooks_base}/ea-__WILDCARD__
+mkdir -p %{hooks_base_pre}/ea-__WILDCARD__
+install %{SOURCE12} %{hooks_base}/ea-__WILDCARD__/001-ensure-nobody
+install %{SOURCE12} %{hooks_base_pre}/ea-__WILDCARD__/001-ensure-nobody
+
 mkdir -p %{buildroot}/etc/yum/vars
 %if 0%{?rhel} > 6
     %if 0%{?rhel} == 8
@@ -108,10 +126,22 @@ mkdir -p %{buildroot}/etc/yum/vars
 
 %attr(0644,root,root) /etc/yum/vars/ea4_repo_uri_os
 
+%attr(0755,root,root) %{hooks_base_sys}/ea-__WILDCARD__/001-ensure-nobody
+%attr(0755,root,root) %{hooks_base_pre_sys}/ea-__WILDCARD__/001-ensure-nobody
+
 %clean
 rm -rf %{buildroot}
 
 %changelog
+* Thu Sep 23 2021 Dan Muey <dan@cpanel.net> - 1.0-48
+- ZC-9307: Rolling “ea-cpanel-tools” back to “0a3c415”: ea-apache24-mod-passenger shows up under Apache modules so additional packages was not necessary
+
+* Thu Sep 23 2021 Dan Muey <dan@cpanel.net> - 1.0-47
+- ZC-9303: Add ea-apache24-mod-passenger to additional packages list for EA4 UI
+
+* Tue Sep 07 2021 Dan Muey <dan@cpanel.net> - 1.0-46
+- ZC-9253: install nobody hook via ea-cpanel-tools so its available for pre-txn profile install
+
 * Mon Aug 16 2021 Travis Holloway <t.holloway@cpanel.net> - 1.0-45
 - EA-10037: Update open_basedir to have correct Changeable value in phpini_directives.yaml
 

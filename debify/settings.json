@@ -1,5 +1,31 @@
 {
     "remove_from_requires"  : [ "/usr/local/cpanel/3rdparty/bin/perl" ],
     "dont_relativise_ontar" : 1,
+    "override_vars" : {
+        "hooks_base": "$DEB_INSTALL_ROOT/etc/apt/universal-hooks/multi_pkgs/Post-Invoke",
+        "hooks_base_sys": "/etc/apt/universal-hooks/multi_pkgs/Post-Invoke",
+        "hooks_base_pre": "$DEB_INSTALL_ROOT/etc/apt/universal-hooks/multi_pkgs/Pre-Install-Pkgs",
+        "hooks_base_pre_sys": "/etc/apt/universal-hooks/multi_pkgs/Pre-Install-Pkgs"
+    },
+    "adjust_install_file_src": [
+        [
+            "etc/yum/universal-hooks/multi_pkgs/posttrans/ea-__WILDCARD__/001-ensure-nobody",
+            "etc/apt/universal-hooks/multi_pkgs/Post-Invoke/ea-__WILDCARD__/001-ensure-nobody"
+        ],
+        [
+            "etc/yum/universal-hooks/multi_pkgs/pretrans/ea-__WILDCARD__/001-ensure-nobody",
+            "etc/apt/universal-hooks/multi_pkgs/Pre-Install-Pkgs/ea-__WILDCARD__/001-ensure-nobody"
+        ]
+    ],
+    "adjust_install_file_dst": [
+        [
+            "etc/yum/universal-hooks/multi_pkgs/posttrans/ea-__WILDCARD__",
+            "etc/apt/universal-hooks/multi_pkgs/Post-Invoke/ea-__WILDCARD__"
+        ],
+        [
+            "etc/yum/universal-hooks/multi_pkgs/pretrans/ea-__WILDCARD__",
+            "etc/apt/universal-hooks/multi_pkgs/Pre-Install-Pkgs/ea-__WILDCARD__"
+        ]
+    ],
     "fix_dh_usrlocal"       :1
 }
