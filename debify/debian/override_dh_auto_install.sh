@@ -47,3 +47,6 @@ mkdir -p $hooks_base/ea-__WILDCARD__
 mkdir -p $hooks_base_pre/ea-__WILDCARD__
 install -m 755 $SOURCE12 $hooks_base/ea-__WILDCARD__
 install -m 755 $SOURCE12 $hooks_base_pre/ea-__WILDCARD__
+
+mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/option-flags/
+install -m 644 $SOURCE13 $DEB_INSTALL_ROOT/etc/cpanel/ea4/option-flags/README.md
