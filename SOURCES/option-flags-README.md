@@ -20,6 +20,7 @@ About the names:
       * /etc/cpanel/ea4/option-flags/foo/wop/zig
       * /etc/cpanel/ea4/option-flags/foo/wop/zag
 3. All available flags will be documented in this document under “Available Flags”
+   * We should always list what versions of what things the flag was introduced in.
 
 ## Available Flags
 
@@ -27,3 +28,9 @@ About the names:
 
 This will cause Apache vhosts to set the `USER_ID` env var and NGINX server blocks to set
 the `$USER_ID` variable with the numeric uid of the user that owns the domain in question.
+
+As of:
+
+* cPanel v102
+* `ea-nginx` v1.21.4-4
+* `ea-apache24-config-runtime` v1.0-180
