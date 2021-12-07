@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 49
+%define release_prefix 50
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -139,6 +139,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Tue Dec 07 2021 Dan Muey <dan@cpanel.net> - 1.0-50
+- ZC-9570: Replace EOL `ea-nodejs10` w/ LTS `ea-nodejs16` in ea4-metainfo.json’s additional pkgs
+
 * Wed Nov 24 2021 Dan Muey <dan@cpanel.net> - 1.0-49
 - ZC-9528: Add /etc/cpanel/ea4/option-flags/README.md
 
