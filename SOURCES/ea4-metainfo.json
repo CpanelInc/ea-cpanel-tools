@@ -5,7 +5,7 @@
       "ea-modsec30-connector-nginx",
       "ea-modsec30-connector-apache24",
       "ea-tomcat85",
-      "ea-nodejs10",
+      "ea-nodejs16",
       "ea-nginx",
       "ea-nginx-standalone"
    ],
