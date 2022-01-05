@@ -7,6 +7,7 @@
       "ea-tomcat85",
       "ea-nodejs16",
       "ea-nginx",
+      "ea-nginx-http2",
       "ea-nginx-standalone"
    ],
    "default_directoryindex" : "index.php index.php8 index.php7 index.php5 index.perl index.pl index.plx index.ppl index.cgi index.jsp index.jp index.phtml index.shtml index.xhtml index.html index.htm index.js",
