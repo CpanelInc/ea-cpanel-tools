@@ -1,0 +1,21 @@
+{
+   "on" : "remove",
+   "name" : "Potential surprise when unchecking ea-nginx-http2 in the UI",
+   "desc" : "",
+   "url" : false,
+   "level" : "info",
+   "filter" : [
+      "http2"
+   ],
+   "options" : [
+      {
+         "recommended" : true,
+         "text" : "Make sure ea-nginx is still toggled correctly after proceeding!",
+         "level" : "info"
+      },
+      {
+         "text" : "A small bug in older versions errouneously unchecked ea-nginx when you unchecked ea-nginx-http2.",
+         "level" : "info"
+      }
+   ]
+}

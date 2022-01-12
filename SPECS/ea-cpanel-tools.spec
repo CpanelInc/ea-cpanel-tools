@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 51
+%define release_prefix 52
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -22,6 +22,8 @@ Source10:       recommendations__ea-phpNN__important-pkgs.json
 Source11:       recommendations__ea-rubyNN__eol.json
 Source12:       001-ensure-nobody
 Source13:       option-flags-README.md
+Source14:       recommendations__ea-nginx-http2__on.json
+Source15:       recommendations__ea-nginx-http2__off.json
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -61,6 +63,10 @@ rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/etc/cpanel/ea4
 %{__install} %{SOURCE7} %{buildroot}/etc/cpanel/ea4/ea4-metainfo.json
+
+mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2
+%{__install} %{SOURCE14} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/on.json
+%{__install} %{SOURCE15} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/off.json
 
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php-cli
@@ -139,6 +145,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Jan 10 2022 Dan Muey <dan@cpanel.net> - 1.0-52
+- ZC-9636: Add recommends for ea-nginx-http2
+
 * Wed Jan 05 2022 Dan Muey <dan@cpanel.net> - 1.0-51
 - ZC-9632: Add ea-nginx-http2 to EA4 `Additional Packages`
 
