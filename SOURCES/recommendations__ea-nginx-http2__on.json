@@ -1,0 +1,25 @@
+{
+   "on" : "add",
+   "name" : "nginx HTTP2 support and Proxying",
+   "desc" : "",
+   "url" : "https://go.cpanel.net/nginx-http2",
+   "level" : "info",
+   "filter" : [
+      "http2"
+   ],
+   "options" : [
+      {
+         "recommended" : true,
+         "text" : "Per NGINX®’s recommendation: ea-nginx terminates the protocol when using http2 (it uses HTTP 1.1 in between). That means:",
+         "level" : "info"
+      },
+      {  
+         "text" : "Apache’s http2 module is not needed when you install ea-nginx-http2.",
+         "level" : "info"
+      },
+      {  
+         "text" : "If Apache’s http2 module is installed it is a no-op when nginx is proxying to it.",
+         "level" : "info"
+      }
+   ]
+}

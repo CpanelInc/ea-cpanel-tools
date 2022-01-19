@@ -14,6 +14,11 @@ install -m 755 $SOURCE3 $DEB_INSTALL_ROOT/usr/local/bin
 install -m 755 $SOURCE5 $DEB_INSTALL_ROOT/usr/local/bin
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4
 install -m 644 $SOURCE7 $DEB_INSTALL_ROOT/etc/cpanel/ea4/ea4-metainfo.json
+
+mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-nginx-http2
+install -m 644 $SOURCE14 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-nginx-http2/on.json
+install -m 644 $SOURCE15 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-nginx-http2/off.json
+
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php54-php
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php54-php-cli
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php54-php-common
