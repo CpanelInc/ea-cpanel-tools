@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 52
+%define release_prefix 53
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -145,6 +145,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Tue Feb 01 2022 Dan Muey <dan@cpanel.net> - 1.0-53
+- ZC-9690: Add ea-nginx-gzip to Additional Packages list
+
 * Mon Jan 10 2022 Dan Muey <dan@cpanel.net> - 1.0-52
 - ZC-9636: Add recommends for ea-nginx-http2
 
