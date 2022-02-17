@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 53
+%define release_prefix 54
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -67,6 +67,10 @@ mkdir -p %{buildroot}/etc/cpanel/ea4
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2
 %{__install} %{SOURCE14} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/on.json
 %{__install} %{SOURCE15} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/off.json
+for pkg in ea-nginx-gzip ea-nginx-brotli ea-nginx-standalone; do
+    mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/${pkg}
+    ln -s ../ea-nginx-http2/off.json %{buildroot}/etc/cpanel/ea4/recommendations/${pkg}/off.json
+done
 
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54-php-cli
@@ -145,6 +149,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Feb 17 2022 Dan Muey <dan@cpanel.net> - 1.0-54
+- ZC-9758: Add ea-nginx-brotli to additional packages list && do http2-like toggle off recommendations
+
 * Tue Feb 01 2022 Dan Muey <dan@cpanel.net> - 1.0-53
 - ZC-9690: Add ea-nginx-gzip to Additional Packages list
 

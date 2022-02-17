@@ -1,6 +1,6 @@
 {
    "on" : "remove",
-   "name" : "Potential surprise when unchecking ea-nginx-http2 in the UI",
+   "name" : "Potential surprise when unchecking ea-nginx-* in the UI",
    "desc" : "",
    "url" : false,
    "level" : "info",
@@ -14,7 +14,7 @@
          "level" : "info"
       },
       {
-         "text" : "A small bug in older versions errouneously unchecked ea-nginx when you unchecked ea-nginx-http2.",
+         "text" : "A small bug in older versions errouneously unchecked ea-nginx when you unchecked ea-nginx-*.",
          "level" : "info"
       }
    ]
