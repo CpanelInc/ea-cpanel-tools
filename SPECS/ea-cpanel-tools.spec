@@ -151,6 +151,7 @@ rm -rf %{buildroot}
 %changelog
 * Thu Feb 17 2022 Dan Muey <dan@cpanel.net> - 1.0-54
 - ZC-9758: Add ea-nginx-brotli to additional packages list && do http2-like toggle off recommendations
+- ZC-9759: add `container_based_packages` list to ea4-metainfo.json
 
 * Tue Feb 01 2022 Dan Muey <dan@cpanel.net> - 1.0-53
 - ZC-9690: Add ea-nginx-gzip to Additional Packages list
