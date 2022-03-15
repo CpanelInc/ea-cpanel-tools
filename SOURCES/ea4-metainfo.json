@@ -1,4 +1,8 @@
 {
+   "container_based_packages" : [
+      "ea-tomcat100",
+      "ea-memcached16" 
+   ],
    "additional_packages" : [
       "ea-modsec2-rules-owasp-crs",
       "ea-modsec30-rules-owasp-crs",
@@ -7,6 +11,7 @@
       "ea-tomcat85",
       "ea-nodejs16",
       "ea-nginx",
+      "ea-nginx-brotli",
       "ea-nginx-gzip",
       "ea-nginx-http2",
       "ea-nginx-standalone"
