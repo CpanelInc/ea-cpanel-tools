@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 54
+%define release_prefix 55
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -149,6 +149,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Wed Mar 16 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-55
+- ZC-9823: Set php default version to 8.1
+
 * Thu Feb 17 2022 Dan Muey <dan@cpanel.net> - 1.0-54
 - ZC-9758: Add ea-nginx-brotli to additional packages list && do http2-like toggle off recommendations
 - ZC-9759: add `container_based_packages` list to ea4-metainfo.json
