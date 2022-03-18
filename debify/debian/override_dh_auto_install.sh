@@ -59,3 +59,7 @@ install -m 755 $SOURCE12 $hooks_base_pre/ea-__WILDCARD__
 
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/option-flags/
 install -m 644 $SOURCE13 $DEB_INSTALL_ROOT/etc/cpanel/ea4/option-flags/README.md
+
+mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/profiles/
+install -m 0644 $SOURCE16 $DEB_INSTALL_ROOT/etc/cpanel/ea4/profiles/pkg-manifest.json
+
