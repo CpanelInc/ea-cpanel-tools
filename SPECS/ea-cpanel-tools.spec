@@ -150,7 +150,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Wed Mar 16 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-55
-- ZC-9823: Set php default version to 8.1
+- ZC-9823: Set php default version to 8.0
 
 * Thu Feb 17 2022 Dan Muey <dan@cpanel.net> - 1.0-54
 - ZC-9758: Add ea-nginx-brotli to additional packages list && do http2-like toggle off recommendations
