@@ -68,7 +68,7 @@ mkdir -p %{buildroot}/etc/cpanel/ea4
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2
 %{__install} %{SOURCE14} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/on.json
 %{__install} %{SOURCE15} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/off.json
-for pkg in ea-nginx-gzip ea-nginx-brotli ea-nginx-standalone; do
+for pkg in ea-nginx-gzip ea-nginx-brotli ea-nginx-standalone ea-nginx-njs; do
     mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/${pkg}
     ln -s ../ea-nginx-http2/off.json %{buildroot}/etc/cpanel/ea4/recommendations/${pkg}/off.json
 done
@@ -156,6 +156,7 @@ rm -rf %{buildroot}
 %changelog
 * Thu Mar 17 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-56
 - ZC-9849: Add pkg_manifest.json and add target to ea_current_to_profile
+- ZC-9854: Add ea-nginx-njs to additional packages and recommendations.
 
 * Wed Mar 16 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-55
 - ZC-9823: Set php default version to 8.0
