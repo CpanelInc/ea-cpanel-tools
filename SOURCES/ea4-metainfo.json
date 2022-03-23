@@ -14,6 +14,7 @@
       "ea-nginx-brotli",
       "ea-nginx-gzip",
       "ea-nginx-http2",
+      "ea-nginx-njs",
       "ea-nginx-standalone"
    ],
    "obs_project_aliases": {
