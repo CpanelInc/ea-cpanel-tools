@@ -43,6 +43,12 @@ our %safe_to_ignore = (
     'ea-php81-libc-client' => 1
 );
 
+our %os_type = (
+    "CentOS_7"      => "rpm",
+    "CentOS_8"      => "rpm",
+    "xUbuntu_20.04" => "deb",
+);
+
 sub script {
     my (@args) = @_;
 
@@ -87,6 +93,11 @@ USAGE
             $target_os = $1;
             die "Not a valid OS ($target_os)" if !exists $obs_project_aliases{$target_os};
             $manifest_os = $obs_project_aliases{$target_os};
+
+            my $current_os_pkgmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
+            my $target_os_pkgmgr  = $os_type{$manifest_os};
+
+            die "Moving from your current OS to $target_os is not supported\n" if ( $current_os_pkgmgr ne $target_os_pkgmgr );
         }
     }
 
