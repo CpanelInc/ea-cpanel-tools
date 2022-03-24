@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 55
+%define release_prefix 56
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -24,6 +24,7 @@ Source12:       001-ensure-nobody
 Source13:       option-flags-README.md
 Source14:       recommendations__ea-nginx-http2__on.json
 Source15:       recommendations__ea-nginx-http2__off.json
+Source16:       pkg-manifest.json
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -110,6 +111,9 @@ install %{SOURCE12} %{hooks_base_pre}/ea-__WILDCARD__/001-ensure-nobody
 mkdir -p %{buildroot}/etc/cpanel/ea4/option-flags/
 install %{SOURCE13} %{buildroot}/etc/cpanel/ea4/option-flags/README.md
 
+mkdir -p %{buildroot}/etc/cpanel/ea4/profiles/
+install %{SOURCE16} %{buildroot}/etc/cpanel/ea4/profiles/pkg-manifest.json
+
 mkdir -p %{buildroot}/etc/yum/vars
 %if 0%{?rhel} > 6
     %if 0%{?rhel} == 8
@@ -144,11 +148,15 @@ mkdir -p %{buildroot}/etc/yum/vars
 
 %attr(0755,root,root) %{hooks_base_sys}/ea-__WILDCARD__/001-ensure-nobody
 %attr(0755,root,root) %{hooks_base_pre_sys}/ea-__WILDCARD__/001-ensure-nobody
+%attr(0644,root,root) /etc/cpanel/ea4/profiles/pkg-manifest.json
 
 %clean
 rm -rf %{buildroot}
 
 %changelog
+* Thu Mar 17 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-56
+- ZC-9849: Add pkg_manifest.json and add target to ea_current_to_profile
+
 * Wed Mar 16 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-55
 - ZC-9823: Set php default version to 8.0
 
