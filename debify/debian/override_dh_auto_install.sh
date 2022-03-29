@@ -18,7 +18,7 @@ install -m 644 $SOURCE7 $DEB_INSTALL_ROOT/etc/cpanel/ea4/ea4-metainfo.json
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-nginx-http2
 install -m 644 $SOURCE14 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-nginx-http2/on.json
 install -m 644 $SOURCE15 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-nginx-http2/off.json
-for pkg in ea-nginx-gzip ea-nginx-brotli ea-nginx-standalone; do
+for pkg in ea-nginx-gzip ea-nginx-brotli ea-nginx-standalone ea-nginx-njs; do
     mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/${pkg}
     ln -s ../ea-nginx-http2/off.json $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/${pkg}/off.json
 done
@@ -59,3 +59,7 @@ install -m 755 $SOURCE12 $hooks_base_pre/ea-__WILDCARD__
 
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/option-flags/
 install -m 644 $SOURCE13 $DEB_INSTALL_ROOT/etc/cpanel/ea4/option-flags/README.md
+
+mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/profiles/
+install -m 0644 $SOURCE16 $DEB_INSTALL_ROOT/etc/cpanel/ea4/profiles/pkg-manifest.json
+
