@@ -122,7 +122,15 @@ USAGE
         if ( $pkg =~ m/^ea-apache(\d)(\d)_mod_(ruid.*)$/ ) { push( @tags, "$3 $1.$2" ); }
     }
 
+    my %extra_meta;
     if ($target_os) {
+        $extra_meta{os_upgrade} = {
+            source_os          => scalar( _get_src_os() ),
+            target_os          => $target_os,
+            target_obs_project => $manifest_os,
+            dropped_pkgs       => {},                        # do it here so it is included even when there are no packages dropped
+        };
+
         my %manifest     = %{ Cpanel::JSON::LoadFile($manifest_file) };
         my %experimental = map { _normalize_pkg($_) => 1 } @{ $manifest{'EA4-experimental'}->{$manifest_os} };
 
@@ -159,6 +167,7 @@ USAGE
                     print " (EA4-experimental packages are not preserved during OS upgrades)" if ( exists $experimental{$pkg} );
                     print "\n";
                     $flag = 1;
+                    $extra_meta{os_upgrade}{dropped_pkgs}{$pkg} = exists $experimental{$pkg} ? "exp" : "reg";
                 }
             }
 
@@ -187,7 +196,8 @@ USAGE
         desc    => "Auto Generated profile",
         version => "1.0",
         pkgs    => \@pkgs_have,
-        tags    => \@tags
+        tags    => \@tags,
+        %extra_meta,
     };
 
     open my $OUT, ">", $custom_json or die "Cannot create $custom_json";
@@ -199,6 +209,21 @@ USAGE
     print $custom_json;
 
     return 0;    # return is exit status
+}
+
+###############
+#### helpers ##
+###############
+
+sub _get_src_os {
+    my $src_os = eval { require Cpanel::OS; Cpanel::OS::display_name(); };
+
+    $src_os //= `grep PRETTY_NAME /etc/os-release | sed 's/^PRETTY_NAME=//' | tr -d '"' | tr -d "'"`;
+    chomp $src_os;
+
+    $src_os ||= 'Unknown. Server does not have Cpanel::OS or /etc/os-release (or /etc/os-release does not have PRETTY_NAME=…)';
+
+    return $src_os;
 }
 
 sub _normalize_pkg {
