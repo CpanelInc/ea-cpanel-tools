@@ -6,5 +6,44 @@ use warnings;
 use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to this repo
 use ea4_tool::util ();
 
-ea4_tool::util::write_ea4_manifest("SOURCES/pkg-manifest.json");
+my $manifest_path = "SOURCES/pkg-manifest.json";
+my $pre_update    = Cpanel::JSON::LoadFile($manifest_path);
 
+ea4_tool::util::write_ea4_manifest($manifest_path);
+my $pst_update = Cpanel::JSON::LoadFile($manifest_path);
+
+# To manually test you can do this sort of thing:
+#   push @{ $pre_update->{EA4}{CentOS_7} }, "ea-oldandbusted";    # simulate a package being removed
+#   push @{ $pst_update->{EA4}{CentOS_7} }, "ea-newhotness";      # simulate a package being added
+
+my $changes = 0;
+for my $proj ( keys %{ $pre_update->{EA4} } ) {
+    my %old_lookup = map { $_ => 1 } @{ $pre_update->{EA4}{$proj} };
+    my %new_lookup = map { $_ => 1 } @{ $pst_update->{EA4}{$proj} };
+
+    for my $opkg ( keys %old_lookup ) {
+        if ( !exists $new_lookup{$opkg} ) {
+            my @new_list = grep { $_ ne $opkg } @{ $pst_update->{"EA4-production"}{$proj} };
+            @{ $pst_update->{"EA4-production"}{$proj} } = @new_list;
+            print "Removing $opkg from EA4-production $proj\n";
+            $changes++;
+        }
+    }
+
+    for my $npkg ( keys %new_lookup ) {
+        if ( !exists $old_lookup{$npkg} ) {
+            push @{ $pst_update->{"EA4-production"}{$proj} }, $npkg;
+            print "Adding $npkg to EA4-production $proj\n";
+            $changes++;
+        }
+    }
+}
+
+if ($changes) {
+    ea4_tool::util::read_modify_save_json(
+        $manifest_path,
+        sub {
+            %{ shift() } = %{$pst_update};
+        }
+    );
+}
