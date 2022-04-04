@@ -97,6 +97,7 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php56
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php72
+ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php73
 
 %if 0%{?rhel} > 6
     mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger
@@ -156,6 +157,7 @@ rm -rf %{buildroot}
 %changelog
 * Wed Mar 30 2022 Dan Muey <dan@cpanel.net> - 1.0-57
 - ZC-9886: Add meta info to target-os profile && update EA4-production manifest when updating EA4 manifest
+- EA-10600: Add PHP 7.3 to EOL recommendations
 
 * Thu Mar 17 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-56
 - ZC-9849: Add pkg_manifest.json and add target to ea_current_to_profile
