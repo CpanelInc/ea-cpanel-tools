@@ -1365,6 +1365,7 @@
          "ea-php81-php-soap",
          "ea-php81-php-sockets",
          "ea-php81-php-sodium",
+         "ea-php81-php-sourceguardian",
          "ea-php81-php-tidy",
          "ea-php81-php-xml",
          "ea-php81-php-zip",
@@ -1373,6 +1374,7 @@
          "ea-podman",
          "ea-podman-repo",
          "ea-profiles-cpanel",
+         "ea-redis62",
          "ea-ruby24",
          "ea-ruby24-build",
          "ea-ruby24-libuv",
@@ -1449,6 +1451,7 @@
          "ea-ruby27-scldevel",
          "ea-tomcat100",
          "ea-tomcat85",
+         "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
          "php54-php",
@@ -1905,6 +1908,7 @@
          "ea-php81-php-soap",
          "ea-php81-php-sockets",
          "ea-php81-php-sodium",
+         "ea-php81-php-sourceguardian",
          "ea-php81-php-tidy",
          "ea-php81-php-xml",
          "ea-php81-php-zip",
@@ -1913,6 +1917,7 @@
          "ea-podman",
          "ea-podman-repo",
          "ea-profiles-cpanel",
+         "ea-redis62",
          "ea-ruby27",
          "ea-ruby27-build",
          "ea-ruby27-libuv",
@@ -1952,6 +1957,7 @@
          "ea-ruby27-scldevel",
          "ea-tomcat100",
          "ea-tomcat85",
+         "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
          "yum-plugin-universal-hooks"
@@ -2262,6 +2268,7 @@
          "ea-php81-php-soap",
          "ea-php81-php-sockets",
          "ea-php81-php-sodium",
+         "ea-php81-php-sourceguardian",
          "ea-php81-php-tidy",
          "ea-php81-php-xml",
          "ea-php81-php-zip",
@@ -2269,7 +2276,9 @@
          "ea-podman",
          "ea-podman-repo",
          "ea-profiles-cpanel",
-         "ea-tomcat100"
+         "ea-redis62",
+         "ea-tomcat100",
+         "ea4-delayed"
       ]
    },
    "EA4-experimental" : {
@@ -3152,6 +3161,7 @@
          "ea-libxml2-static",
          "ea-libzip",
          "ea-libzip-devel",
+         "ea-memcached16",
          "ea-modsec-sdbm-util",
          "ea-modsec2-rules-owasp-crs",
          "ea-nghttp2",
@@ -3715,6 +3725,7 @@
          "ea-php81-runtime",
          "ea-php81-scldevel",
          "ea-podman",
+         "ea-podman-repo",
          "ea-profiles-cpanel",
          "ea-ruby24",
          "ea-ruby24-build",
@@ -3790,10 +3801,15 @@
          "ea-ruby27-rubygems-devel",
          "ea-ruby27-runtime",
          "ea-ruby27-scldevel",
+         "ea-tomcat100",
          "ea-tomcat85",
+         "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-redis62",
+         "ea-php81-php-sourceguardian",
+         "ea4-delayed"
       ],
       "CentOS_8" : [
          "autotools-latest",
@@ -3942,6 +3958,7 @@
          "ea-libxml2-static",
          "ea-libzip",
          "ea-libzip-devel",
+         "ea-memcached16",
          "ea-modsec-sdbm-util",
          "ea-modsec2-rules-owasp-crs",
          "ea-nghttp2",
@@ -4219,6 +4236,7 @@
          "ea-php81-runtime",
          "ea-php81-scldevel",
          "ea-podman",
+         "ea-podman-repo",
          "ea-profiles-cpanel",
          "ea-ruby27",
          "ea-ruby27-build",
@@ -4257,9 +4275,14 @@
          "ea-ruby27-rubygems-devel",
          "ea-ruby27-runtime",
          "ea-ruby27-scldevel",
+         "ea-tomcat100",
+         "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-redis62",
+         "ea4-delayed",
+         "ea-php81-php-sourceguardian"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -4377,6 +4400,7 @@
          "ea-apr-util-sqlite",
          "ea-cpanel-tools",
          "ea-documentroot",
+         "ea-memcached16",
          "ea-modsec-sdbm-util",
          "ea-modsec2-rules-owasp-crs",
          "ea-nginx",
@@ -4461,6 +4485,7 @@
          "ea-php74-php-imap",
          "ea-php74-php-intl",
          "ea-php74-php-ioncube10",
+         "ea-php74-php-ioncube11",
          "ea-php74-php-ldap",
          "ea-php74-php-litespeed",
          "ea-php74-php-mbstring",
@@ -4569,7 +4594,14 @@
          "ea-php81-php-xml",
          "ea-php81-php-zip",
          "ea-php81-runtime",
-         "ea-profiles-cpanel"
+         "ea-podman",
+         "ea-podman-repo",
+         "ea-profiles-cpanel",
+         "ea-tomcat100",
+         "ea4-delayed",
+         "ea-php81-php-sourceguardian",
+         "ea-redis62",
+         "ea4-delayed"
       ]
    }
 }
