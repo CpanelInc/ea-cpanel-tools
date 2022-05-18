@@ -4,8 +4,13 @@ source debian/vars.sh
 
 set -x
 
-echo "SOURCE7 :$SOURCE7:"
-ls -ld $SOURCE7
+# Modify the underscores in the recommendation file
+
+# Purposely chose to modify exactly what I need, if I put a more general
+# regexp in, it might catch other things where the underscore is needed.
+
+sed -i 's/ea-apache24-mod_ruid2/ea-apache24-mod-ruid2/' $SOURCE4
+sed -i 's/ea-apache24-mod_mpm_itk/ea-apache24-mod-mpm-itk/' $SOURCE4
 
 mkdir -p $DEB_INSTALL_ROOT/usr/local/bin
 install -m 755 $SOURCE1 $DEB_INSTALL_ROOT/usr/local/bin
