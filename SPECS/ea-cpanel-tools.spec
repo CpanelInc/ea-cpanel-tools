@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 59
+%define release_prefix 60
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -117,6 +117,9 @@ install %{SOURCE16} %{buildroot}/etc/cpanel/ea4/profiles/pkg-manifest.json
 
 mkdir -p %{buildroot}/etc/yum/vars
 %if 0%{?rhel} > 6
+    %if 0%{?rhel} == 9
+        echo "CentOS_9" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+    %endif
     %if 0%{?rhel} == 8
         echo "CentOS_8" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
     %endif
@@ -155,6 +158,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Sep 29 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-60
+- ZC-10009: Add changes so that it builds on AlmaLinux 9
+
 * Tue May 10 2022 Julian Brown <julian.brown@cpanel.net> - 1.0-59
 - ZC-9918: Correct names of packages on Ubuntu
 
