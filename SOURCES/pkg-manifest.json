@@ -2209,6 +2209,7 @@
          "ea-php81-php-iconv",
          "ea-php81-php-imap",
          "ea-php81-php-intl",
+         "ea-php81-php-ioncube12",
          "ea-php81-php-ldap",
          "ea-php81-php-litespeed",
          "ea-php81-php-mbstring",
@@ -2558,6 +2559,7 @@
          "ea-podman-repo",
          "ea-profiles-cpanel",
          "ea-redis62",
+         "ea-tomcat100",
          "ea4-delayed"
       ]
    },
@@ -4094,9 +4096,7 @@
          "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks",
-         "ea-php81-php-ioncube12",
-         "ea-php74-php-ioncube12"
+         "yum-plugin-universal-hooks"
       ],
       "CentOS_8" : [
          "autotools-latest",
@@ -4570,9 +4570,7 @@
          "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks",
-         "ea-php74-php-ioncube12",
-         "ea-php81-php-ioncube12"
+         "yum-plugin-universal-hooks"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -4891,9 +4889,8 @@
          "ea-podman-repo",
          "ea-profiles-cpanel",
          "ea-redis62",
-         "ea4-delayed",
-         "ea-php74-php-ioncube12",
-         "ea-php81-php-ioncube12"
+         "ea-tomcat100",
+         "ea4-delayed"
       ]
    }
 }
