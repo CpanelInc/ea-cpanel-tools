@@ -620,6 +620,13 @@ error_log:
   note: ''
   section: 'Error Handling and Logging'
   type: string
+error_log_mode:
+  changeable: PHP_INI_ALL
+  default: 0644
+  multiple: 0
+  note: ''
+  section: 'Error Handling and Logging'
+  type: integer
 error_prepend_string:
   changeable: PHP_INI_ALL
   default: NULL
@@ -2085,6 +2092,7 @@ mysqli.reconnect:
   note: ''
   section: 'MySQL Improved'
   type: integer
+  deprecated: 8.2
 mysqlnd.collect_memory_statistics:
   changeable: PHP_INI_SYSTEM
   default: 0
@@ -2218,6 +2226,14 @@ oci8.connection_class:
 oci8.default_prefetch:
   changeable: PHP_INI_SYSTEM
   default: 10
+  multiple: 0
+  note: ''
+  section: 'Oracle'
+  type: integer
+oci8.prefetch_lob_size:
+  changeable: PHP_INI_SYSTEM
+  added: 8.2
+  default: 0
   multiple: 0
   note: ''
   section: 'Oracle'
