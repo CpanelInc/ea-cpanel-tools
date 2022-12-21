@@ -161,7 +161,7 @@ USAGE
             my $flag = 0;
 
             foreach my $pkg (@removed_pkgs) {
-                if ( !exists $safe_to_ignore{$pkg} ) {
+                if ( !exists $safe_to_ignore{$pkg} && substr( $pkg, -10, 10 ) ne '-debuginfo' ) {
                     print "The following packages are not available on $target_os and have been removed from the profile\n" if !$flag;
                     print "    $pkg";
                     print " (EA4-experimental packages are not preserved during OS upgrades)" if ( exists $experimental{$pkg} );
