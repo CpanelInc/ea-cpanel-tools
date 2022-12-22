@@ -159,7 +159,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Thu Dec 22 2022 Dan Muey <dan@cpanel.net> - 1.0-65
-- ZC-10447: Remove EOL PHP 7.4 from and add PHP 8.2 to profiles, update manifest for A9 and PHP 8.2
+- ZC-10447: update manifest for A9 and PHP 8.2, make PHP 8.1 the default for EA4
 
 * Tue Dec 13 2022 Dan Muey <dan@cpanel.net> - 1.0-64
 - ZC-10548: have `ea_current_to_profile` ignore `-debuginfo` packages under `--target-os`
