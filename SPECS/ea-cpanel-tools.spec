@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 64
+%define release_prefix 65
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -88,6 +88,8 @@ for pkg in php php-cli php-common; do
     ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php73-${pkg}
     ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php74-${pkg}
     ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php80-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php81-${pkg}
+    ln -s ea-php54-${pkg} %{buildroot}/etc/cpanel/ea4/recommendations/ea-php82-${pkg}
 done
 
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-php54
@@ -98,6 +100,7 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php70
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php71
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php72
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php73
+ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php74
 
 %if 0%{?rhel} > 6
     mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger
@@ -158,6 +161,10 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Dec 22 2022 Dan Muey <dan@cpanel.net> - 1.0-65
+- ZC-10447: update manifest for A9 and PHP 8.2, make PHP 8.1 the default for EA4
+- ZC-10581: update ea4 recommendations to match the PHP reality
+
 * Tue Dec 13 2022 Dan Muey <dan@cpanel.net> - 1.0-64
 - ZC-10548: have `ea_current_to_profile` ignore `-debuginfo` packages under `--target-os`
 

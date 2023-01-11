@@ -43,6 +43,8 @@ for pkg in php php-cli php-common; do
     ln -s ea-php54-${pkg} $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php73-${pkg}
     ln -s ea-php54-${pkg} $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php74-${pkg}
     ln -s ea-php54-${pkg} $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php80-${pkg}
+    ln -s ea-php54-${pkg} $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php81-${pkg}
+    ln -s ea-php54-${pkg} $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php82-${pkg}
 done
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php54
 install -m 644 $SOURCE6 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php54/eol.json
@@ -52,6 +54,7 @@ ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php70
 ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php71
 ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php72
 ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php73
+ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php74
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger
 install -m 644 $SOURCE11 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger/eol.json
 mkdir -p $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/
