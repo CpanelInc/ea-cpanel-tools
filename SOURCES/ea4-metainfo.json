@@ -22,6 +22,7 @@
         "CentOS_7" : "CentOS_7",
         "CentOS_8" : "CentOS_8",
         "AlmaLinux_8" : "CentOS_8",
+        "CloudLinux_8" : "CloudLinux_8",
         "xUbuntu_20.04" : "xUbuntu_20.04",
         "Ubuntu_20.04" : "xUbuntu_20.04"
    },
