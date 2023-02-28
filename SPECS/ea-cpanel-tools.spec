@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 66
+%define release_prefix 67
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -161,6 +161,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Tue Feb 28 2023 Sloane Bernstein <sloane@cpanel.net> - 1.0-67
+- EA-11271: Let `ea_current_to_profile` ignore OpenSSL devel packages under `--target-os`
+
 * Tue Jan 10 2023 Dan Muey <dan@cpanel.net> - 1.0-66
 - ZC-10586: Update manifest for new C7 PHP 8.2 pkgs
 
