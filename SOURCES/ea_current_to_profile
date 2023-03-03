@@ -44,6 +44,7 @@ our %safe_to_ignore = (
 our %os_type = (
     "CentOS_7"      => "rpm",
     "CentOS_8"      => "rpm",
+    "CloudLinux_8"  => "rpm",
     "xUbuntu_20.04" => "deb",
 );
 
