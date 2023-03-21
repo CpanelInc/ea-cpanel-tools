@@ -26,7 +26,7 @@ sub usage {
     print "                   to doing --install if it fails.  This is only intended to be used\n";
     print "                   on a fresh cPanel install.\n";
     print "\n";
-    exit 0;
+    exit( $msg ? 1 : 0 );
 }
 
 sub script {

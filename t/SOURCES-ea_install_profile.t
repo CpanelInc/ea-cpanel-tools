@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 15 + 1;
+use Test::More tests => 16 + 1;
 use Test::NoWarnings;
 use File::Temp ();
 use File::Slurp 'write_file';
@@ -64,6 +64,11 @@ is( $resolve_multi_op,    1, 'resolve_multi_op() not called if resolve_multi_op_
 
 $resolve_multi_op_ns = 0;
 $resolve_multi_op    = 0;
+
+# Test non-zero return code upon failure
+my $rc;
+trap { $rc = ea_install_profile::script( "--install", "$dir/this_file_does_not_exist" ) };
+isnt( $rc, 0, "Non-zero return code upon error");
 
 my @pkgs;
 my $fail_syscmd = 0;
