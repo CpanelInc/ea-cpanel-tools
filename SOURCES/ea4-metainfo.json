@@ -13,6 +13,7 @@
       "ea-nodejs16",
       "ea-nginx",
       "ea-nginx-brotli",
+      "ea-nginx-echo",
       "ea-nginx-gzip",
       "ea-nginx-http2",
       "ea-nginx-njs",
