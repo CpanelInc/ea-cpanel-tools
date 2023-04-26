@@ -1400,6 +1400,7 @@
          "ea-php82-php-ldap",
          "ea-php82-php-litespeed",
          "ea-php82-php-mbstring",
+         "ea-php82-php-memcached",
          "ea-php82-php-mysqlnd",
          "ea-php82-php-odbc",
          "ea-php82-php-opcache",
@@ -1994,6 +1995,7 @@
          "ea-php82-php-ldap",
          "ea-php82-php-litespeed",
          "ea-php82-php-mbstring",
+         "ea-php82-php-memcached",
          "ea-php82-php-mysqlnd",
          "ea-php82-php-odbc",
          "ea-php82-php-opcache",
@@ -2357,6 +2359,7 @@
          "ea-php82-php-ldap",
          "ea-php82-php-litespeed",
          "ea-php82-php-mbstring",
+         "ea-php82-php-memcached",
          "ea-php82-php-mysqlnd",
          "ea-php82-php-odbc",
          "ea-php82-php-opcache",
@@ -2723,6 +2726,7 @@
          "ea-php82-php-ldap",
          "ea-php82-php-litespeed",
          "ea-php82-php-mbstring",
+         "ea-php82-php-memcached",
          "ea-php82-php-mysqlnd",
          "ea-php82-php-odbc",
          "ea-php82-php-opcache",
@@ -3575,6 +3579,7 @@
          "ea-nghttp2",
          "ea-nginx",
          "ea-nginx-brotli",
+         "ea-nginx-echo",
          "ea-nginx-gzip",
          "ea-nginx-http2",
          "ea-nginx-ngxdev",
@@ -4210,8 +4215,7 @@
          "ea4-experimental",
          "ea4-legacy",
          "yum-plugin-universal-hooks",
-         "ea-nginx-echo",
-         "ea-php82-php-sourceguardian"
+         "ea-php82-php-memcached"
       ],
       "CentOS_8" : [
          "autotools-latest",
@@ -4366,6 +4370,7 @@
          "ea-nghttp2",
          "ea-nginx",
          "ea-nginx-brotli",
+         "ea-nginx-echo",
          "ea-nginx-gzip",
          "ea-nginx-http2",
          "ea-nginx-ngxdev",
@@ -4734,8 +4739,7 @@
          "ea4-experimental",
          "ea4-legacy",
          "yum-plugin-universal-hooks",
-         "ea-php82-php-sourceguardian",
-         "ea-nginx-echo"
+         "ea-php82-php-memcached"
       ],
       "CentOS_9" : [
          "autotools-latest",
@@ -4891,6 +4895,7 @@
          "ea-nghttp2",
          "ea-nginx",
          "ea-nginx-brotli",
+         "ea-nginx-echo",
          "ea-nginx-gzip",
          "ea-nginx-http2",
          "ea-nginx-ngxdev",
@@ -5059,8 +5064,7 @@
          "ea4-delayed",
          "ea4-legacy",
          "yum-plugin-universal-hooks",
-         "ea-php82-php-sourceguardian",
-         "ea-nginx-echo"
+         "ea-php82-php-memcached"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -5183,6 +5187,7 @@
          "ea-modsec2-rules-owasp-crs",
          "ea-nginx",
          "ea-nginx-brotli",
+         "ea-nginx-echo",
          "ea-nginx-gzip",
          "ea-nginx-http2",
          "ea-nginx-ngxdev",
@@ -5423,8 +5428,7 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea4-delayed",
-         "ea-nginx-echo",
-         "ea-php82-php-sourceguardian"
+         "ea-php82-php-memcached"
       ]
    }
 }
