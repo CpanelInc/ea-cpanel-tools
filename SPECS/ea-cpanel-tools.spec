@@ -162,7 +162,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Thu May 04 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-71
-- ZC-10474: Add ea-nginx-echo to `additional_packages`
+- ZC-10474: Add ea-nginx-headers-more to `additional_packages`
 
 * Wed Apr 26 2023 Julian Brown <julian.brown@cpanel.net> - 1.0-70
 - ZC-10561: Add ea-php82-php-memcached

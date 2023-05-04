@@ -4452,8 +4452,7 @@
          "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks",
-         "ea-nginx-headers-more"
+         "yum-plugin-universal-hooks"
       ],
       "CentOS_8" : [
          "autotools-latest",
@@ -4977,8 +4976,7 @@
          "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks",
-         "ea-nginx-headers-more"
+         "yum-plugin-universal-hooks"
       ],
       "CentOS_9" : [
          "autotools-latest",
@@ -5303,8 +5301,7 @@
          "ea-tomcat100",
          "ea4-delayed",
          "ea4-legacy",
-         "yum-plugin-universal-hooks",
-         "ea-nginx-headers-more"
+         "yum-plugin-universal-hooks"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -5668,8 +5665,7 @@
          "ea-profiles-cpanel",
          "ea-redis62",
          "ea-tomcat100",
-         "ea4-delayed",
-         "ea-nginx-headers-more"
+         "ea4-delayed"
       ]
    }
 }
