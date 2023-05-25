@@ -129,6 +129,7 @@
          "ea-freetds-libs",
          "ea-libargon2",
          "ea-libargon2-devel",
+         "ea-libc-client",
          "ea-libcurl",
          "ea-libcurl-devel",
          "ea-libicu",
@@ -784,6 +785,7 @@
          "ea-freetds-libs",
          "ea-libargon2",
          "ea-libargon2-devel",
+         "ea-libc-client",
          "ea-libcurl",
          "ea-libcurl-devel",
          "ea-libicu",
@@ -1670,6 +1672,7 @@
          "ea-freetds-libs",
          "ea-libargon2",
          "ea-libargon2-devel",
+         "ea-libc-client",
          "ea-libicu",
          "ea-libicu-devel",
          "ea-liblsapi",
@@ -2195,6 +2198,7 @@
          "ea-freetds-libs",
          "ea-libargon2",
          "ea-libargon2-devel",
+         "ea-libc-client",
          "ea-libicu",
          "ea-libicu-devel",
          "ea-liblsapi",
@@ -2506,6 +2510,7 @@
          "ea-apr-util-sqlite",
          "ea-cpanel-tools",
          "ea-documentroot",
+         "ea-libc-client",
          "ea-memcached16",
          "ea-modsec-sdbm-util",
          "ea-modsec2-rules-owasp-crs",
@@ -2871,6 +2876,7 @@
          "ea-apr-util-sqlite",
          "ea-cpanel-tools",
          "ea-documentroot",
+         "ea-libc-client",
          "ea-memcached16",
          "ea-modsec-sdbm-util",
          "ea-modsec2-rules-owasp-crs",
@@ -3729,7 +3735,8 @@
          "ea-tomcat85",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-libc-client"
       ],
       "CentOS_7" : [
          "autotools-latest",
@@ -4575,7 +4582,8 @@
          "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-libc-client"
       ],
       "CentOS_8" : [
          "autotools-latest",
@@ -5100,7 +5108,8 @@
          "ea4-delayed",
          "ea4-experimental",
          "ea4-legacy",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-libc-client"
       ],
       "CentOS_9" : [
          "autotools-latest",
@@ -5426,7 +5435,8 @@
          "ea-tomcat85",
          "ea4-delayed",
          "ea4-legacy",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-libc-client"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -5790,7 +5800,11 @@
          "ea-profiles-cpanel",
          "ea-redis62",
          "ea-tomcat100",
-         "ea4-delayed"
+         "ea4-delayed",
+         "ea-libc-client"
+      ],
+      "xUbuntu_22.04" : [
+         "ea-libc-client"
       ]
    }
 }
