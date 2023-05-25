@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 71
+%define release_prefix 72
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -161,6 +161,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu May 18 2023 Dan Muey <dan@cpanel.net> - 1.0-72
+- ZC-10955: Update manifest for post reset of OBS flags (Makefile disables only; no manual disables)
+
 * Thu May 04 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-71
 - ZC-10474: Add ea-nginx-headers-more to `additional_packages`
 - ZC-10320: Add Ubuntu 22 to manifest
