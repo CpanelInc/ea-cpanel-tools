@@ -15,6 +15,7 @@
       "ea-nginx-brotli",
       "ea-nginx-echo",
       "ea-nginx-gzip",
+      "ea-nginx-headers-more",
       "ea-nginx-http2",
       "ea-nginx-njs",
       "ea-nginx-standalone"
