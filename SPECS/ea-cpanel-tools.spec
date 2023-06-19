@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 73
+%define release_prefix 74
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -161,6 +161,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Jun 19 2023 Dan Muey <dan@cpanel.net> - 1.0-74
+- ZC-10971: Add support for profile’s `pre` list
+
 * Thu May 25 2023 Julian Brown <julian.brown@cpanel.net> - 1.0-73
 - ZC-10931: Updated for ea-libc-client
 
