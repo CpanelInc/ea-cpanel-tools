@@ -77,6 +77,15 @@ sub script {
     }
     print "\n" if $derps;
 
+    if ( $data->{pre} ) {
+        print "Installing prereqs …\n";
+        my $sys = Cpanel::PackMan->instance->sys;
+
+        $sys->install( @{ $data->{pre} } );    # apt, yum, and dnf’s `install` will install if its not installed, upgrade if its old, noop if its already the latest
+        $sys->cache;                           # this is needed in case a new package repo was put in place
+        print " … prereqs done!\n\n";
+    }
+
     if ($firstinstall) {
         print "The system is running in first install mode and will install the requested packages without resolving conflicts …\n";
         local $@;
@@ -101,7 +110,7 @@ sub script {
     if ($install) {
         print "Installing …\n";
         my $actions = Cpanel::PackMan->instance->multi_op($res);
-        if (!$actions) {
+        if ( !$actions ) {
             print " … nothing to do.\n";
         }
         else {
