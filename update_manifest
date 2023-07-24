@@ -7,10 +7,10 @@ use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to
 use ea4_tool::util ();
 
 my $manifest_path = "SOURCES/pkg-manifest.json";
-my $pre_update    = Cpanel::JSON::LoadFile($manifest_path);
+my $pre_update    = ea4_tool::util::read_json_from_file($manifest_path);
 
 ea4_tool::util::write_ea4_manifest($manifest_path);
-my $pst_update = Cpanel::JSON::LoadFile($manifest_path);
+my $pst_update = ea4_tool::util::read_json_from_file($manifest_path);
 
 # To manually test you can do this sort of thing:
 #   push @{ $pre_update->{EA4}{CentOS_7} }, "ea-oldandbusted";    # simulate a package being removed
