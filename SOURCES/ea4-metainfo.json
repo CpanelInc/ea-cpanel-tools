@@ -1,6 +1,7 @@
 {
    "container_based_packages" : [
       "ea-tomcat100",
+      "ea-tomcat101",
       "ea-memcached16",
       "ea-redis62"
    ],
