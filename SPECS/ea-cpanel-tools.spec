@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 75
+%define release_prefix 76
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -68,7 +68,7 @@ mkdir -p %{buildroot}/etc/cpanel/ea4
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2
 %{__install} %{SOURCE14} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/on.json
 %{__install} %{SOURCE15} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/off.json
-for pkg in ea-nginx-gzip ea-nginx-brotli ea-nginx-standalone ea-nginx-njs; do
+for pkg in ea-nginx-gzip ea-nginx-brotli ea-nginx-standalone ea-nginx-njs ea-nginx-passenger; do
     mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/${pkg}
     ln -s ../ea-nginx-http2/off.json %{buildroot}/etc/cpanel/ea4/recommendations/${pkg}/off.json
 done
@@ -161,6 +161,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Aug 07 2023 Brian Mendoza <brian.mendozacpanel.net> - 1.0-76
+- ZC-10396: Add ea-nginx-echo to `additional_packages`
+
 * Thu Aug 03 2023 Dan Muey <dan@cpanel.net> - 1.0-75
 - ZC-11053: Add ea-tomcat101 to container-based package list
 
