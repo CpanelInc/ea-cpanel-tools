@@ -19,6 +19,7 @@
       "ea-nginx-headers-more",
       "ea-nginx-http2",
       "ea-nginx-njs",
+      "ea-nginx-passenger",
       "ea-nginx-standalone"
    ],
    "obs_project_aliases": {
