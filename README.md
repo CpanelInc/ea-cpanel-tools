@@ -1,3 +1,15 @@
+# EA4 packages that do not have the `ea-` prefix in their name.
+
+Profiles, out of the box, only operate on packages that begin with `ea-`.
+
+In order to include packages with other prefixes, for example CloudLinux’s `alt-` prefixed packages, we need the prefixes defined.
+
+In order to define one create a file in `/etc/cpanel/ea4/additional-pkg-prefixes/` named after the prefix.
+
+For example, CloudLinux would need to ensure `/etc/cpanel/ea4/additional-pkg-prefixes/alt` existed.
+
+It is suggested to include helpful information about the prefix in the prefix’s file.
+
 # About Recommendations
 
 [Documentation](https://documentation.cpanel.net/display/EA4/EasyApache+4+Recommendations)
