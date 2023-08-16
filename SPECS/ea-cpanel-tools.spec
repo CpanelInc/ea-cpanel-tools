@@ -163,6 +163,7 @@ rm -rf %{buildroot}
 %changelog
 * Mon Aug 14 2023 Dan Muey <dan@cpanel.net> - 1.0-78
 - ZC-11033: Add support for packages w/out an `ea-` prefix in EA4 profiles
+- ZC-11135: Add ea-nodejs18 and ea-nodejs20 to additional packages list
 
 * Thu Aug 10 2023 Julian Brown <julian.brown@cpanel.net> - 1.0-77
 - ZC-11122: Add ea-tomcat101 to the manifest.
