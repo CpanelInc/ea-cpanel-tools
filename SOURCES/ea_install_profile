@@ -12,6 +12,7 @@ use Cpanel::JSON;
 use Cpanel::PackMan;
 use Cpanel::Config::Httpd;
 use Data::Dumper;
+use Path::Tiny 'path';
 
 sub usage {
     my ($msg) = @_;
@@ -57,9 +58,16 @@ sub script {
         usage("Cannot find profile") if !-f $profile;
     }
 
+    my @addl_prefixes = eval {
+        map { $_->basename } path("/etc/cpanel/ea4/additional-pkg-prefixes/")->children;
+    };
+
     print "Loading profile …\n";
     my %server_pkgs;
     @server_pkgs{ Cpanel::PackMan->instance->list( 'prefix' => 'ea-' ) } = ();
+    for my $prefix (@addl_prefixes) {
+        @server_pkgs{ Cpanel::PackMan->instance->list( 'prefix' => "$prefix-" ) } = ();
+    }
 
     my $data = Cpanel::JSON::LoadFile($profile);
 
@@ -105,6 +113,18 @@ sub script {
     my $resolve_method = defined &Cpanel::PackMan::resolve_multi_op_ns ? 'resolve_multi_op_ns' : 'resolve_multi_op';
 
     my $res = Cpanel::PackMan->instance->$resolve_method( $data->{'pkgs'}, 'ea' );
+    for my $prefix (@addl_prefixes) {
+        my $prefix_res = eval { Cpanel::PackMan->instance->$resolve_method( $data->{'pkgs'}, $prefix ) };
+        if ($@) {
+            warn "!!!! Your system is not new enough to support EA4 pkg prefixes besides `ea-`, other prefixes will be left out !!\n";
+            last;
+        }
+
+        for my $field (qw(uninstall unaffected upgrade install)) {
+            push @{ $res->{$field} }, @{ $prefix_res->{$field} };
+        }
+    }
+
     print " … done!\n";
 
     if ($install) {

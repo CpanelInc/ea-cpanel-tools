@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 77
+%define release_prefix 78
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -161,6 +161,10 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Aug 14 2023 Dan Muey <dan@cpanel.net> - 1.0-78
+- ZC-11033: Add support for packages w/out an `ea-` prefix in EA4 profiles
+- ZC-11135: Add ea-nodejs18 and ea-nodejs20 to additional packages list
+
 * Thu Aug 10 2023 Julian Brown <julian.brown@cpanel.net> - 1.0-77
 - ZC-11122: Add ea-tomcat101 to the manifest.
 
