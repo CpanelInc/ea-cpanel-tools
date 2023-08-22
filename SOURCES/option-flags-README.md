@@ -34,3 +34,15 @@ As of:
 * cPanel v102
 * `ea-nginx` v1.21.4-4
 * `ea-apache24-config-runtime` v1.0-180
+
+### `give-cpsrvd-nginx-operations-unlimited-memory`
+
+This will cause `cpsrvd`’s `cpwrap` nginx operations to ignore the memory limit set in WHM and allow these to happen with unlimited memory.
+
+This is useful when you want a lower memory limit in general but the number of domains on the server causes nginx to use more memory than that limit allows.
+
+This should be used with caution as it could OOM the entire server and not just the nginx operation. A safer alternative would be to increase your memory limit to something suitable for the number of domains on the system.
+
+As of:
+
+* `ea-nginx` v1.25.1-4

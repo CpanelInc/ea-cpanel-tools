@@ -12,6 +12,8 @@
       "ea-modsec30-connector-apache24",
       "ea-tomcat85",
       "ea-nodejs16",
+      "ea-nodejs18",
+      "ea-nodejs20",
       "ea-nginx",
       "ea-nginx-brotli",
       "ea-nginx-echo",
