@@ -116,8 +116,15 @@ sub script {
     for my $prefix (@addl_prefixes) {
         my $prefix_res = eval { Cpanel::PackMan->instance->$resolve_method( $data->{'pkgs'}, $prefix ) };
         if ($@) {
-            warn "!!!! Your system is not new enough to support EA4 pkg prefixes besides `ea-`, other prefixes will be left out !!\n";
-            last;
+            if ( $@ =~ m/Unknown namespace/ ) {
+                warn "!!!! Your system is not new enough to support EA4 pkg prefixes besides `ea-`, other prefixes will be left out !!\n";
+                last;
+            }
+            else {
+                chomp $@;
+                warn "!!!! There was a problem with the additional-pkg-prefix “$prefix”, it will be left out !!\n\tError: $@\n";
+                next;
+            }
         }
 
         for my $field (qw(uninstall unaffected upgrade install)) {
