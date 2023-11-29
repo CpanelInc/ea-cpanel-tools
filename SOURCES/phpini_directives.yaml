@@ -192,6 +192,7 @@ assert.active:
   note: ''
   section: 'Options & Information'
   type: boolean
+  deprecated: 8.3.0
 assert.bail:
   changeable: PHP_INI_ALL
   default: 0
@@ -199,6 +200,7 @@ assert.bail:
   note: ''
   section: 'Options & Information'
   type: boolean
+  deprecated: 8.3.0
 assert.callback:
   changeable: PHP_INI_ALL
   default: NULL
@@ -206,6 +208,7 @@ assert.callback:
   note: ''
   section: 'Options & Information'
   type: string
+  deprecated: 8.3.0
 assert.quiet_eval:
   changeable: PHP_INI_ALL
   default: 0
@@ -213,6 +216,7 @@ assert.quiet_eval:
   note: ''
   section: 'Options & Information'
   type: boolean
+  deprecated: 8.3.0
 assert.warning:
   changeable: PHP_INI_ALL
   default: 1
@@ -220,6 +224,7 @@ assert.warning:
   note: ''
   section: 'Options & Information'
   type: boolean
+  deprecated: 8.3.0
 auto_append_file:
   changeable: PHP_INI_PERDIR
   default: NULL
