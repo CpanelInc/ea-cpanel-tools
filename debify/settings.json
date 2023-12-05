@@ -9,21 +9,21 @@
     },
     "adjust_install_file_src": [
         [
-            "etc/yum/universal-hooks/multi_pkgs/posttrans/ea-__WILDCARD__/001-ensure-nobody",
+            "etc/dnf/universal-hooks/multi_pkgs/transaction/ea-__WILDCARD__/001-ensure-nobody",
             "etc/apt/universal-hooks/multi_pkgs/Post-Invoke/ea-__WILDCARD__/001-ensure-nobody"
         ],
         [
-            "etc/yum/universal-hooks/multi_pkgs/pretrans/ea-__WILDCARD__/001-ensure-nobody",
+            "etc/dnf/universal-hooks/multi_pkgs/pre_transaction/ea-__WILDCARD__/001-ensure-nobody",
             "etc/apt/universal-hooks/multi_pkgs/Pre-Install-Pkgs/ea-__WILDCARD__/001-ensure-nobody"
         ]
     ],
     "adjust_install_file_dst": [
         [
-            "etc/yum/universal-hooks/multi_pkgs/posttrans/ea-__WILDCARD__",
+            "etc/dnf/universal-hooks/multi_pkgs/transaction/ea-__WILDCARD__",
             "etc/apt/universal-hooks/multi_pkgs/Post-Invoke/ea-__WILDCARD__"
         ],
         [
-            "etc/yum/universal-hooks/multi_pkgs/pretrans/ea-__WILDCARD__",
+            "etc/dnf/universal-hooks/multi_pkgs/pre_transaction/ea-__WILDCARD__",
             "etc/apt/universal-hooks/multi_pkgs/Pre-Install-Pkgs/ea-__WILDCARD__"
         ]
     ],
