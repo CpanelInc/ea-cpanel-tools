@@ -162,7 +162,7 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
-* Mon Jan 08 2023 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-83
+* Mon Jan 08 2024 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-83
 - ZC-11503: Add PHP 8.0 EOL recommendation
 
 * Wed Dec 20 2023 Julian Brown <julian.brown@cpanel.net> - 1.0-82
