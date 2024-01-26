@@ -71,13 +71,22 @@ sub script {
 
     my $data = Cpanel::JSON::LoadFile($profile);
 
-    # 1. detect any packages in the profile that do not exist on the server
+    # 1. Normalize packages with _ for Ubuntu if needed (See ZC-11501 for why this is necessary or why only needed for Ubuntu)
+    my $pkmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
+
+    if ($pkmgr eq 'deb' and $data->{source_pkmgr} eq 'rpm') {
+        foreach my $pkg (@{ $data->{pkgs} }) {
+            $pkg = _normalize_pkg($pkg);
+        }
+    }
+
+    # 2. detect any packages in the profile that do not exist on the server
     my %not_on_server = ( map { !exists $server_pkgs{$_} ? ( $_ => undef ) : () } @{ $data->{pkgs} } );
 
-    # 2. remove %not_on_server from $profile->{pkgs}
+    # 3. remove %not_on_server from $profile->{pkgs}
     $data->{pkgs} = [ grep { !exists $not_on_server{$_} } @{ $data->{pkgs} } ];
 
-    # 3. Tell them about the ones we are ignoring
+    # 4. Tell them about the ones we are ignoring
     my $derps = 0;
     for my $derppkg ( sort keys %not_on_server ) {
         warn "    * Warning! ignored package: $derppkg. It is in the profile’s package list but does not exist on this server.\n";
@@ -149,6 +158,14 @@ sub script {
     }
 
     return 0;
+}
+
+sub _normalize_pkg {
+    my ($pkg) = @_;
+
+    $pkg =~ s/_/-/g;
+
+    return $pkg;
 }
 
 exit( script(@ARGV) ) unless caller();

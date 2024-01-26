@@ -64,6 +64,7 @@ sub script {
     my $target_os;
     my $manifest_os;
     my $modified = 0;
+    my $source_pkmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
 
     # We need to get OS aliases
     my %ea4_metainfo        = %{ Cpanel::JSON::LoadFile($ea4_metainfo_file) };
@@ -98,11 +99,6 @@ USAGE
             $target_os = $1;
             die "Not a valid OS ($target_os)" if !exists $obs_project_aliases{$target_os};
             $manifest_os = $obs_project_aliases{$target_os};
-
-            my $current_os_pkgmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
-            my $target_os_pkgmgr  = $os_type{$manifest_os};
-
-            die "Moving from your current OS to $target_os is not supported\n" if ( $current_os_pkgmgr ne $target_os_pkgmgr );
         }
         else {
             die "Unknown argument “$arg”\n";
@@ -216,11 +212,12 @@ USAGE
     }
 
     my $custom_profile = {
-        name    => $new_name,
-        desc    => "Auto Generated profile",
-        version => "1.0",
-        pkgs    => \@pkgs_have,
-        tags    => \@tags,
+        name         => $new_name,
+        desc         => "Auto Generated profile",
+        version      => "1.0",
+        pkgs         => \@pkgs_have,
+        tags         => \@tags,
+        source_pkmgr => $source_pkmgr,
         %extra_meta,
     };
 
