@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 83
+%define release_prefix 84
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -162,6 +162,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Jan 29 2024 Travis Holloway <t.holloway@cpanel.net> - 1.0-84
+- EA-11937: Remove ea-tomcat85 for CentOS_8 in pkg-manifest.json
+
 * Mon Jan 08 2024 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-83
 - ZC-11503: Add PHP 8.0 EOL recommendation
 
