@@ -72,24 +72,32 @@ sub script {
     my $data = Cpanel::JSON::LoadFile($profile);
 
     # 1. Fix ea-apachae24 package names with underscores for Ubuntu and with dashes for RHEL if needed (See ZC-11501 for why this is necessary)
-    my $pkmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
+    my $pkgmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
+    my $changed = 0;
 
-    if ($pkmgr eq 'deb' and $data->{source_pkmgr} eq 'rpm') {
+    if ($pkgmgr eq 'deb') {
         foreach my $pkg (@{ $data->{pkgs} }) {
-            $pkg = _normalize_pkg_for_ubuntu($pkg);
+            my $new_pkg = _normalize_pkg_for_ubuntu($pkg);
+            if ($new_pkg ne $pkg) {
+                  $pkg = $new_pkg;
+                  $changed = 1;
+            }
         }
     }
-    elsif ($pkmgr eq 'rpm' and $data->{source_pkmgr} eq 'deb') {
+    elsif ($pkgmgr eq 'rpm') {
         foreach my $pkg (@{ $data->{pkgs} }) {
-            $pkg = _normalize_pkg_for_rhel($pkg);
+            my $new_pkg = _normalize_pkg_for_rhel($pkg);
+            if ($new_pkg ne $pkg) {
+                  $pkg = $new_pkg;
+                  $changed = 1;
+            }
         }
     }
+    else {
+        die "How did we get here? `pkgmgr` is neither `rpm` nor `deb` ($pkgmgr)\n";
+    }
 
-    open my $OUT, ">", $profile or die "Cannot create $profile";
-    print $OUT Cpanel::JSON::pretty_dump($data);
-    close $OUT;
-
-    die "Could not write to file $profile" if ( !-f $profile );
+    path($profile)->spew( Cpanel::JSON::pretty_dump($data) ) if $changed;
 
     # 2. detect any packages in the profile that do not exist on the server
     my %not_on_server = ( map { !exists $server_pkgs{$_} ? ( $_ => undef ) : () } @{ $data->{pkgs} } );
@@ -196,9 +204,7 @@ sub _normalize_pkg_for_rhel {
     if ($pkg =~ m/^($prefix)(.*)/) {
         if (exists $unconventional{$pkg}) {
             return $pkg if $unconventional{$pkg} eq 'skip';
-
-            $pkg = $unconventional{$pkg};
-            return $pkg;
+            return $unconventional{$pkg};
         } else {
             my $name = $2;
             $name =~ s/-/_/g;

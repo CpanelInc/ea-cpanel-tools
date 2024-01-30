@@ -212,18 +212,15 @@ USAGE
     }
 
     my $custom_profile = {
-        name         => $new_name,
-        desc         => "Auto Generated profile",
-        version      => "1.0",
-        pkgs         => \@pkgs_have,
-        tags         => \@tags,
-        source_pkmgr => $source_pkmgr,
+        name    => $new_name,
+        desc    => "Auto Generated profile",
+        version => "1.0",
+        pkgs    => \@pkgs_have,
+        tags    => \@tags,
         %extra_meta,
     };
 
-    open my $OUT, ">", $custom_json or die "Cannot create $custom_json";
-    print $OUT Cpanel::JSON::pretty_dump($custom_profile);
-    close $OUT;
+    path($custom_json)->spew( Cpanel::JSON::pretty_dump($custom_profile) );
 
     die "Could not create a new custom json file" if ( !-f $custom_json );
 
