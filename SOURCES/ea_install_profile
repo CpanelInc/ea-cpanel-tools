@@ -71,13 +71,41 @@ sub script {
 
     my $data = Cpanel::JSON::LoadFile($profile);
 
-    # 1. detect any packages in the profile that do not exist on the server
+    # 1. Fix ea-apachae24 package names with underscores for Ubuntu and with dashes for RHEL if needed (See ZC-11501 for why this is necessary)
+    my $pkgmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
+    my $changed = 0;
+
+    if ($pkgmgr eq 'deb') {
+        foreach my $pkg (@{ $data->{pkgs} }) {
+            my $new_pkg = _normalize_pkg_for_ubuntu($pkg);
+            if ($new_pkg ne $pkg) {
+                  $pkg = $new_pkg;
+                  $changed = 1;
+            }
+        }
+    }
+    elsif ($pkgmgr eq 'rpm') {
+        foreach my $pkg (@{ $data->{pkgs} }) {
+            my $new_pkg = _normalize_pkg_for_rhel($pkg);
+            if ($new_pkg ne $pkg) {
+                  $pkg = $new_pkg;
+                  $changed = 1;
+            }
+        }
+    }
+    else {
+        die "How did we get here? `pkgmgr` is neither `rpm` nor `deb` ($pkgmgr)\n";
+    }
+
+    path($profile)->spew( Cpanel::JSON::pretty_dump($data) ) if $changed;
+
+    # 2. detect any packages in the profile that do not exist on the server
     my %not_on_server = ( map { !exists $server_pkgs{$_} ? ( $_ => undef ) : () } @{ $data->{pkgs} } );
 
-    # 2. remove %not_on_server from $profile->{pkgs}
+    # 3. remove %not_on_server from $profile->{pkgs}
     $data->{pkgs} = [ grep { !exists $not_on_server{$_} } @{ $data->{pkgs} } ];
 
-    # 3. Tell them about the ones we are ignoring
+    # 4. Tell them about the ones we are ignoring
     my $derps = 0;
     for my $derppkg ( sort keys %not_on_server ) {
         warn "    * Warning! ignored package: $derppkg. It is in the profile’s package list but does not exist on this server.\n";
@@ -149,6 +177,42 @@ sub script {
     }
 
     return 0;
+}
+
+sub _normalize_pkg_for_ubuntu {
+    my ($pkg) = @_;
+
+    $pkg =~ s/_/-/g;
+
+    return $pkg;
+}
+
+sub _normalize_pkg_for_rhel {
+    my ($pkg) = @_;
+
+    # These packages do not follow the conventional naming structure (purely underscores after 'mod')
+    my %unconventional = (
+        'ea-apache24-mod-passenger'       => 'skip',
+        'ea-apache24-mod-passenger-doc'   => 'skip',
+        'ea-apache24-mod-qos'             => 'skip',
+        'ea-apache24-mod-cpanel-debug'    => 'ea-apache24-mod_cpanel-debug',
+        'ea-apache24-mod-security2-mlogc' => 'ea-apache24-mod_security2-mlogc'
+    );
+
+    my $prefix = 'ea-apache24-mod';
+
+    if ($pkg =~ m/^($prefix)(.*)/) {
+        if (exists $unconventional{$pkg}) {
+            return $pkg if $unconventional{$pkg} eq 'skip';
+            return $unconventional{$pkg};
+        } else {
+            my $name = $2;
+            $name =~ s/-/_/g;
+            $pkg = $prefix . $name;
+        }
+    }
+
+    return $pkg;
 }
 
 exit( script(@ARGV) ) unless caller();
