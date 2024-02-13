@@ -163,7 +163,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Tue Jan 30 2024 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-85
-- ZC-11501: Allow compatibility between profiles from RHEL to DEB and vise versa
+- ZC-11501: Allow compatibility between profiles from RHEL to DEB and vice versa
 
 * Mon Jan 29 2024 Travis Holloway <t.holloway@cpanel.net> - 1.0-84
 - EA-11937: Remove ea-tomcat85 for CentOS_8 in pkg-manifest.json
