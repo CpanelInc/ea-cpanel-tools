@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 85
+%define release_prefix 86
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -162,6 +162,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Thu Feb 15 2024 Dan Muey <dan@cpanel.net> - 1.0-86
+- ZC-11627: Update manifest under canonical write so its ordered correctly
+
 * Tue Jan 30 2024 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-85
 - ZC-11501: Allow compatibility between profiles from RHEL to DEB and vice versa
 
