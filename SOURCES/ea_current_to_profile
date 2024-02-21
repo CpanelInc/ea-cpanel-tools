@@ -64,6 +64,7 @@ sub script {
     my $target_os;
     my $manifest_os;
     my $modified = 0;
+    my $source_pkmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
 
     # We need to get OS aliases
     my %ea4_metainfo        = %{ Cpanel::JSON::LoadFile($ea4_metainfo_file) };
@@ -98,11 +99,6 @@ USAGE
             $target_os = $1;
             die "Not a valid OS ($target_os)" if !exists $obs_project_aliases{$target_os};
             $manifest_os = $obs_project_aliases{$target_os};
-
-            my $current_os_pkgmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
-            my $target_os_pkgmgr  = $os_type{$manifest_os};
-
-            die "Moving from your current OS to $target_os is not supported\n" if ( $current_os_pkgmgr ne $target_os_pkgmgr );
         }
         else {
             die "Unknown argument “$arg”\n";
@@ -224,9 +220,7 @@ USAGE
         %extra_meta,
     };
 
-    open my $OUT, ">", $custom_json or die "Cannot create $custom_json";
-    print $OUT Cpanel::JSON::pretty_dump($custom_profile);
-    close $OUT;
+    path($custom_json)->spew( Cpanel::JSON::pretty_dump($custom_profile) );
 
     die "Could not create a new custom json file" if ( !-f $custom_json );
 
