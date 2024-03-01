@@ -7,7 +7,8 @@
 
 use strict;
 use warnings;
-use Test::More tests => 16 + 1;
+use Test::More tests => 28 + 1;
+use Test::Deep;
 use Test::NoWarnings;
 use File::Temp ();
 use File::Slurp 'write_file';
@@ -86,5 +87,47 @@ $fail_syscmd = 1;
 trap { ea_install_profile::script( "--firstinstall", "$dir/profile.$$.json" ); };
 like( join( " ", @{ $trap->warn() } ), qr/The system will fall back to doing a full install/, "If --firstinstall fails we fallback to the full version" );
 Test::NoWarnings::clear_warnings();
+
+my $server_pkgs = {
+    'ea-normal-pkg'                     => undef,
+    'ea-apache24-mod_underscores_v1729' => undef,
+    'ea-apache24-mod-oops-all-dashes'   => undef,
+    'ea-apache24-mod_okdoit-v9001'      => undef,
+    'ea-apache24-mod-weirded-out'       => undef,
+    'ea-apache24-mod_weirded-out'       => undef,
+};
+my $result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-normal-pkg', $server_pkgs );
+is( $result, 'ea-normal-pkg', "_normalize_pkg_for_rhel, non-prefixed, exact match => no changes" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-normal_pkg', $server_pkgs );
+is( $result, 'ea-normal_pkg', "_normalize_pkg_for_rhel, non-prefixed, inexact match => no changes" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod-doesnotexist', $server_pkgs );
+is( $result, 'ea-apache24-mod_doesnotexist', "_normalize_pkg_for_rhel, prefixed, no match => munges dashes to underscores" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod_underscore_v1729', $server_pkgs );
+is( $result, 'ea-apache24-mod_underscore_v1729', "_normalize_pkg_for_rhel, prefixed, package has all underscores, looking for all underscores => no changes" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod-underscore-v1729', $server_pkgs );
+is( $result, 'ea-apache24-mod_underscore_v1729', "_normalize_pkg_for_rhel, prefixed, package has all underscores, looking for all dashes => munges dashes to underscores" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod-oops-all-dashes', $server_pkgs );
+is( $result, 'ea-apache24-mod-oops-all-dashes', "_normalize_pkg_for_rhel, prefixed, package has all dashes, looking for all dashes => no changes" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod_oops_all_dashes', $server_pkgs );
+is( $result, 'ea-apache24-mod-oops-all-dashes', "_normalize_pkg_for_rhel, prefixed, package has all dashes, looking for all underscores => munges underscores to dashes" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod-okdoit-v9001', $server_pkgs );
+is( $result, 'ea-apache24-mod_okdoit-v9001', "_normalize_pkg_for_rhel, prefixed, package has mixed dashes and underscores, looking for all dashes => returns correct mixed name" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod-weirded-out', $server_pkgs );
+is( $result, 'ea-apache24-mod-weirded-out', "_normalize_pkg_for_rhel, prefixed, multiple packages differing only by dashes/underscores, looking for all dashes => returns correct all-dash name" );
+
+$result = ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod_weirded-out', $server_pkgs );
+is( $result, 'ea-apache24-mod_weirded-out', "_normalize_pkg_for_rhel, prefixed, multiple packages differing only by dashes/underscores, looking for mixed dashes and underscores => returns correct mixed name" );
+
+$result = trap { ea_install_profile::_normalize_pkg_for_rhel( 'ea-apache24-mod_weirded_out', $server_pkgs ) };
+cmp_deeply( $result, any(qw[ea-apache24-mod-weirded-out ea-apache24-mod_weirded-out]), "_normalize_pkg_for_rhel, prefixed, multiple packages differing only by dashes/underscores, looking for all-underscore name that does not exist => returns one of the existing packages" );
+like( join( " ", @{ $trap->warn() } ), qr/Multiple inexact matches/, "...and we received a warning" );
 
 # note "TODO: moar tests!";
