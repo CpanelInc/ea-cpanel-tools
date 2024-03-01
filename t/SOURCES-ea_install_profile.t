@@ -68,7 +68,7 @@ $resolve_multi_op    = 0;
 # Test non-zero return code upon failure
 my $rc;
 trap { $rc = ea_install_profile::script( "--install", "$dir/this_file_does_not_exist" ) };
-isnt( $rc, 0, "Non-zero return code upon error");
+isnt( $rc, 0, "Non-zero return code upon error" );
 
 my @pkgs;
 my $fail_syscmd = 0;

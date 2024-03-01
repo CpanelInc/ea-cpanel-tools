@@ -72,24 +72,24 @@ sub script {
     my $data = Cpanel::JSON::LoadFile($profile);
 
     # 1. Fix ea-apachae24 package names with underscores for Ubuntu and with dashes for RHEL if needed (See ZC-11501 for why this is necessary)
-    my $pkgmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
+    my $pkgmgr  = -x '/usr/bin/apt' ? 'deb' : 'rpm';
     my $changed = 0;
 
-    if ($pkgmgr eq 'deb') {
-        foreach my $pkg (@{ $data->{pkgs} }) {
+    if ( $pkgmgr eq 'deb' ) {
+        foreach my $pkg ( @{ $data->{pkgs} } ) {
             my $new_pkg = _normalize_pkg_for_ubuntu($pkg);
-            if ($new_pkg ne $pkg) {
-                  $pkg = $new_pkg;
-                  $changed = 1;
+            if ( $new_pkg ne $pkg ) {
+                $pkg     = $new_pkg;
+                $changed = 1;
             }
         }
     }
-    elsif ($pkgmgr eq 'rpm') {
-        foreach my $pkg (@{ $data->{pkgs} }) {
+    elsif ( $pkgmgr eq 'rpm' ) {
+        foreach my $pkg ( @{ $data->{pkgs} } ) {
             my $new_pkg = _normalize_pkg_for_rhel($pkg);
-            if ($new_pkg ne $pkg) {
-                  $pkg = $new_pkg;
-                  $changed = 1;
+            if ( $new_pkg ne $pkg ) {
+                $pkg     = $new_pkg;
+                $changed = 1;
             }
         }
     }
@@ -201,11 +201,12 @@ sub _normalize_pkg_for_rhel {
 
     my $prefix = 'ea-apache24-mod';
 
-    if ($pkg =~ m/^($prefix)(.*)/) {
-        if (exists $unconventional{$pkg}) {
+    if ( $pkg =~ m/^($prefix)(.*)/ ) {
+        if ( exists $unconventional{$pkg} ) {
             return $pkg if $unconventional{$pkg} eq 'skip';
             return $unconventional{$pkg};
-        } else {
+        }
+        else {
             my $name = $2;
             $name =~ s/-/_/g;
             $pkg = $prefix . $name;
@@ -218,4 +219,3 @@ sub _normalize_pkg_for_rhel {
 exit( script(@ARGV) ) unless caller();
 
 1;
-
