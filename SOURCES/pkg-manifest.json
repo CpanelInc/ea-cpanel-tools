@@ -669,7 +669,6 @@
          "ea-tomcat101",
          "ea-tomcat85",
          "ea4-experimental",
-         "ea4-legacy",
          "yum-plugin-universal-hooks"
       ],
       "CentOS_7" : [
@@ -1569,7 +1568,6 @@
          "ea-tomcat85",
          "ea4-delayed",
          "ea4-experimental",
-         "ea4-legacy",
          "php54-php",
          "php54-php-bcmath",
          "php54-php-bz2",
@@ -2180,7 +2178,6 @@
          "ea-tomcat101",
          "ea4-delayed",
          "ea4-experimental",
-         "ea4-legacy",
          "yum-plugin-universal-hooks"
       ],
       "CentOS_9" : [
@@ -2559,7 +2556,6 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
-         "ea4-legacy",
          "yum-plugin-universal-hooks"
       ],
       "xUbuntu_20.04" : [
@@ -3313,23 +3309,6 @@
          "ea-php74-php-phalcon4",
          "ea-php74-php-psr",
          "ea-php74-php-snuffleupagus"
-      ],
-      "CentOS_9" : [
-         "ea-apache24-mod_xsendfile",
-         "ea-modsec30",
-         "ea-modsec30-connector-nginx",
-         "ea-modsec30-rules-owasp-crs",
-         "ea-nginx-passenger",
-         "ea-nginx-standalone"
-      ],
-      "xUbuntu_20.04" : [
-         "ea-apache24-mod-wsgi",
-         "ea-modsec30",
-         "ea-modsec30-rules-owasp-crs"
-      ],
-      "xUbuntu_22.04" : [
-         "ea-modsec30",
-         "ea-modsec30-rules-owasp-crs"
       ]
    },
    "EA4-production" : {
@@ -4004,7 +3983,6 @@
          "ea-tomcat101",
          "ea-tomcat85",
          "ea4-experimental",
-         "ea4-legacy",
          "yum-plugin-universal-hooks"
       ],
       "CentOS_7" : [
@@ -4902,7 +4880,6 @@
          "ea-tomcat85",
          "ea4-delayed",
          "ea4-experimental",
-         "ea4-legacy",
          "yum-plugin-universal-hooks"
       ],
       "CentOS_8" : [
@@ -5484,7 +5461,6 @@
          "ea-tomcat101",
          "ea4-delayed",
          "ea4-experimental",
-         "ea4-legacy",
          "yum-plugin-universal-hooks"
       ],
       "CentOS_9" : [
@@ -5871,7 +5847,6 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
-         "ea4-legacy",
          "yum-plugin-universal-hooks"
       ],
       "xUbuntu_20.04" : [
@@ -6422,10 +6397,6 @@
          "ea-passenger-src",
          "ea-php-cli",
          "ea-php-cli-lsphp",
-         "ea-php73",
-         "ea-php73-runtime",
-         "ea-php74",
-         "ea-php74-runtime",
          "ea-php81",
          "ea-php81-pear",
          "ea-php81-php-bcmath",
