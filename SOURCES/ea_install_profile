@@ -72,24 +72,24 @@ sub script {
     my $data = Cpanel::JSON::LoadFile($profile);
 
     # 1. Fix ea-apachae24 package names with underscores for Ubuntu and with dashes for RHEL if needed (See ZC-11501 for why this is necessary)
-    my $pkgmgr = -x '/usr/bin/apt' ? 'deb' : 'rpm';
+    my $pkgmgr  = -x '/usr/bin/apt' ? 'deb' : 'rpm';
     my $changed = 0;
 
-    if ($pkgmgr eq 'deb') {
-        foreach my $pkg (@{ $data->{pkgs} }) {
+    if ( $pkgmgr eq 'deb' ) {
+        foreach my $pkg ( @{ $data->{pkgs} } ) {
             my $new_pkg = _normalize_pkg_for_ubuntu($pkg);
-            if ($new_pkg ne $pkg) {
-                  $pkg = $new_pkg;
-                  $changed = 1;
+            if ( $new_pkg ne $pkg ) {
+                $pkg     = $new_pkg;
+                $changed = 1;
             }
         }
     }
-    elsif ($pkgmgr eq 'rpm') {
-        foreach my $pkg (@{ $data->{pkgs} }) {
-            my $new_pkg = _normalize_pkg_for_rhel($pkg);
-            if ($new_pkg ne $pkg) {
-                  $pkg = $new_pkg;
-                  $changed = 1;
+    elsif ( $pkgmgr eq 'rpm' ) {
+        foreach my $pkg ( @{ $data->{pkgs} } ) {
+            my $new_pkg = _normalize_pkg_for_rhel( $pkg, \%server_pkgs );
+            if ( $new_pkg ne $pkg ) {
+                $pkg     = $new_pkg;
+                $changed = 1;
             }
         }
     }
@@ -188,27 +188,26 @@ sub _normalize_pkg_for_ubuntu {
 }
 
 sub _normalize_pkg_for_rhel {
-    my ($pkg) = @_;
+    my ( $orig_pkg, $server_pkgs_hr ) = @_;
 
-    # These packages do not follow the conventional naming structure (purely underscores after 'mod')
-    my %unconventional = (
-        'ea-apache24-mod-passenger'       => 'skip',
-        'ea-apache24-mod-passenger-doc'   => 'skip',
-        'ea-apache24-mod-qos'             => 'skip',
-        'ea-apache24-mod-cpanel-debug'    => 'ea-apache24-mod_cpanel-debug',
-        'ea-apache24-mod-security2-mlogc' => 'ea-apache24-mod_security2-mlogc'
-    );
+    # Short-circuit if there is an exact match:
+    return $orig_pkg if exists $server_pkgs_hr->{$orig_pkg};
 
+    my $pkg    = $orig_pkg;
     my $prefix = 'ea-apache24-mod';
 
-    if ($pkg =~ m/^($prefix)(.*)/) {
-        if (exists $unconventional{$pkg}) {
-            return $pkg if $unconventional{$pkg} eq 'skip';
-            return $unconventional{$pkg};
-        } else {
-            my $name = $2;
-            $name =~ s/-/_/g;
-            $pkg = $prefix . $name;
+    if ( $pkg =~ m/^($prefix)(.*)/ ) {
+        my $name = $2;
+        $name =~ s/-/_/g;    # Apache module packages tend to use underscores, so start with that.
+        $pkg = $prefix . $name;
+
+        # If that also fails, search through the entire list:
+        if ( !exists $server_pkgs_hr->{$pkg} ) {
+            my $re_pkg  = $prefix . ( $name =~ s/_/[-_]/gr );
+            my @results = grep { m/^$re_pkg$/ } keys %$server_pkgs_hr;
+            $pkg = $results[0] if scalar @results > 0;
+
+            warn "!!!! Multiple inexact matches for '$orig_pkg' when treating underscores and dashes as equivalent; using '$pkg'!" if scalar @results > 1;
         }
     }
 
@@ -218,4 +217,3 @@ sub _normalize_pkg_for_rhel {
 exit( script(@ARGV) ) unless caller();
 
 1;
-
