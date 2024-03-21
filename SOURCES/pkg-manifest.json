@@ -2685,7 +2685,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
-         "ea-noop-u20",
+         "ea-noop",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -3099,6 +3099,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-noop",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -6254,7 +6255,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
-         "ea-noop-u20"
+         "ea-noop"
       ],
       "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
@@ -6528,7 +6529,8 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
-         "ea4-delayed"
+         "ea4-delayed",
+         "ea-noop"
       ]
    }
 }
