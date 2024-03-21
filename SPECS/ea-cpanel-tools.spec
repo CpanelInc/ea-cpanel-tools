@@ -163,7 +163,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Wed Mar 20 2024 Dan Muey <dan@cpanel.net> - 1.0-89
-- ZC-11698: Update manifest for new ea-noop-u22 pkg and recent repo cleanups
+- ZC-11698: Update manifest for new ea-noop-u20 pkg and recent repo cleanups
 
 * Mon Mar 11 2024 Sloane Bernstein <sloane@cpanel.net> - 1.0-88
 - ZC-11660: Allow compatibility for profiles which include third-party packages
