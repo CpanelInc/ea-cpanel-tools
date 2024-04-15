@@ -2685,7 +2685,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
-         "ea-noop",
+         "ea-noop-u20",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -3099,7 +3099,6 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
-         "ea-noop",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -3933,6 +3932,7 @@
          "ea-php82-build",
          "ea-php82-runtime",
          "ea-php82-scldevel",
+         "ea-podman",
          "ea-profiles-cpanel",
          "ea-redis62",
          "ea-ruby24",
@@ -3992,6 +3992,8 @@
          "ea-apache24-config-runtime",
          "ea-apache24-devel",
          "ea-apache24-manual",
+         "ea-apache24-mod-passenger",
+         "ea-apache24-mod-passenger-doc",
          "ea-apache24-mod-qos",
          "ea-apache24-mod_allowmethods",
          "ea-apache24-mod_asis",
@@ -4793,6 +4795,7 @@
          "ea-php83-php-zip",
          "ea-php83-runtime",
          "ea-php83-scldevel",
+         "ea-podman",
          "ea-podman-repo",
          "ea-profiles-cpanel",
          "ea-redis62",
@@ -6255,7 +6258,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
-         "ea-noop"
+         "ea-noop-u20"
       ],
       "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
@@ -6529,8 +6532,7 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
-         "ea4-delayed",
-         "ea-noop"
+         "ea4-delayed"
       ]
    }
 }
