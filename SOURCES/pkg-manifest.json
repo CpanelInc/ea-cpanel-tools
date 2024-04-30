@@ -2239,6 +2239,7 @@
          "ea-apache24-mod_ldap",
          "ea-apache24-mod_log_debug",
          "ea-apache24-mod_log_forensic",
+         "ea-apache24-mod_lsapi",
          "ea-apache24-mod_lua",
          "ea-apache24-mod_macro",
          "ea-apache24-mod_mime_magic",
@@ -5977,6 +5978,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-noop-u20",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -6257,8 +6259,7 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
-         "ea4-delayed",
-         "ea-noop-u20"
+         "ea4-delayed"
       ],
       "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
