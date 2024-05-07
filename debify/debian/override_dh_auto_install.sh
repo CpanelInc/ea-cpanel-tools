@@ -56,6 +56,10 @@ ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php72
 ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php73
 ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php74
 ln -s ea-php54 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-php80
+
+mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-tomcat85
+install -m 644 $SOURCE17 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-tomcat85/eol.json
+
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger
 install -m 644 $SOURCE11 $DEB_INSTALL_ROOT/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger/eol.json
 mkdir -p $DEB_INSTALL_ROOT/usr/local/cpanel/whostmgr/etc/

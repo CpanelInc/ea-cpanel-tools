@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 90
+%define release_prefix 91
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -25,6 +25,7 @@ Source13:       option-flags-README.md
 Source14:       recommendations__ea-nginx-http2__on.json
 Source15:       recommendations__ea-nginx-http2__off.json
 Source16:       pkg-manifest.json
+Source17:       recommendations__ea-tomcat85__eol.json
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -103,6 +104,9 @@ ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php73
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php74
 ln -s ea-php54 %{buildroot}/etc/cpanel/ea4/recommendations/ea-php80
 
+mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-tomcat85
+%{__install} %{SOURCE17} %{buildroot}/etc/cpanel/ea4/recommendations/ea-tomcat85/eol.json
+
 %if 0%{?rhel} > 6
     mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger
     %{__install} %{SOURCE11} %{buildroot}/etc/cpanel/ea4/recommendations/ea-ruby24-mod_passenger/eol.json
@@ -162,6 +166,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Fri May 03 2024 Sloane Bernstein <sloane@cpanel.net> - 1.0-91
+- ZC-11759: Mark ea-tomcat85 as EOL in EA4 recommendations
+
 * Mon Apr 29 2024 Dan Muey <dan@cpanel.net> - 1.0-90
 - ZC-11752: Update Manifest for mod lsapi update
 
