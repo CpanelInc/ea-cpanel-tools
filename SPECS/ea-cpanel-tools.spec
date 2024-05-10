@@ -171,7 +171,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Fri May 10 2024 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-93
-- ZC-11811: Add ea-apache24-mod_cpanel eol.json to recommendations
+- ZC-11822: Add ea-nodejs22 to additional packages list and manifest
 
 * Tue May 07 2024 Dan Muey <dan@cpanel.net> - 1.0-92
 - ZC-11811: Add ea-apache24-mod_cpanel eol.json to recommendations
