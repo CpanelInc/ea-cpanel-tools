@@ -1768,6 +1768,7 @@
          "ea-nodejs16",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-oniguruma",
          "ea-oniguruma-devel",
          "ea-passenger-runtime",
@@ -2133,6 +2134,10 @@
          "ea-podman-repo",
          "ea-profiles-cpanel",
          "ea-redis62",
+         "ea-ruby24",
+         "ea-ruby24-build",
+         "ea-ruby24-runtime",
+         "ea-ruby24-scldevel",
          "ea-ruby27",
          "ea-ruby27-build",
          "ea-ruby27-libuv",
@@ -2345,6 +2350,7 @@
          "ea-nodejs16",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-oniguruma",
          "ea-oniguruma-devel",
          "ea-passenger-runtime",
@@ -2550,6 +2556,10 @@
          "ea-podman-repo",
          "ea-profiles-cpanel",
          "ea-redis62",
+         "ea-ruby24",
+         "ea-ruby24-build",
+         "ea-ruby24-runtime",
+         "ea-ruby24-scldevel",
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
@@ -2686,6 +2696,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-noop-u20",
          "ea-passenger-runtime",
          "ea-passenger-src",
@@ -3100,6 +3111,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -3444,8 +3456,6 @@
          "ea-libcurl-devel",
          "ea-libicu",
          "ea-libicu-devel",
-         "ea-liblsapi",
-         "ea-liblsapi-devel",
          "ea-libmcrypt",
          "ea-libmcrypt-devel",
          "ea-libmemcached",
@@ -5459,7 +5469,12 @@
          "ea-tomcat101",
          "ea4-delayed",
          "ea4-experimental",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-nodejs22",
+         "ea-ruby24-scldevel",
+         "ea-ruby24-build",
+         "ea-ruby24",
+         "ea-ruby24-runtime"
       ],
       "CentOS_9" : [
          "autotools-latest",
@@ -5524,6 +5539,7 @@
          "ea-apache24-mod_ldap",
          "ea-apache24-mod_log_debug",
          "ea-apache24-mod_log_forensic",
+         "ea-apache24-mod_lsapi",
          "ea-apache24-mod_lua",
          "ea-apache24-mod_macro",
          "ea-apache24-mod_mime_magic",
@@ -5845,7 +5861,12 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-ruby24-build",
+         "ea-ruby24-scldevel",
+         "ea-nodejs22",
+         "ea-ruby24",
+         "ea-ruby24-runtime"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -6259,7 +6280,8 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
-         "ea4-delayed"
+         "ea4-delayed",
+         "ea-nodejs22"
       ],
       "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
@@ -6533,7 +6555,8 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
-         "ea4-delayed"
+         "ea4-delayed",
+         "ea-nodejs22"
       ]
    }
 }
