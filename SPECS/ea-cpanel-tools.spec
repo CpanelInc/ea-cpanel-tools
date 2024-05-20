@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 93
+%define release_prefix 94
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -170,6 +170,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Tue May 14 2024 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-94
+- ZC-11823: Add new container package ea-valkey72 to the metainfo and update manifest
+
 * Fri May 10 2024 Brian Mendoza <brian.mendoza@cpanel.net> - 1.0-93
 - ZC-11822: Add ea-nodejs22 to additional packages list and manifest
 
