@@ -2177,6 +2177,7 @@
          "ea-ruby27-scldevel",
          "ea-tomcat100",
          "ea-tomcat101",
+         "ea-valkey72",
          "ea4-delayed",
          "ea4-experimental",
          "yum-plugin-universal-hooks"
@@ -2562,6 +2563,7 @@
          "ea-ruby24-scldevel",
          "ea-tomcat100",
          "ea-tomcat101",
+         "ea-valkey72",
          "ea4-delayed",
          "yum-plugin-universal-hooks"
       ],
@@ -2978,6 +2980,7 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
+         "ea-valkey72",
          "ea4-delayed"
       ],
       "xUbuntu_22.04" : [
@@ -3253,6 +3256,7 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
+         "ea-valkey72",
          "ea4-delayed"
       ]
    },
@@ -5057,6 +5061,7 @@
          "ea-nodejs16",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-oniguruma",
          "ea-oniguruma-devel",
          "ea-openssl11",
@@ -5470,11 +5475,7 @@
          "ea4-delayed",
          "ea4-experimental",
          "yum-plugin-universal-hooks",
-         "ea-nodejs22",
-         "ea-ruby24-scldevel",
-         "ea-ruby24-build",
-         "ea-ruby24",
-         "ea-ruby24-runtime"
+         "ea-valkey72"
       ],
       "CentOS_9" : [
          "autotools-latest",
@@ -5645,6 +5646,7 @@
          "ea-nodejs16",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-oniguruma",
          "ea-oniguruma-devel",
          "ea-passenger-runtime",
@@ -5862,11 +5864,7 @@
          "ea-tomcat101",
          "ea4-delayed",
          "yum-plugin-universal-hooks",
-         "ea-ruby24-build",
-         "ea-ruby24-scldevel",
-         "ea-nodejs22",
-         "ea-ruby24",
-         "ea-ruby24-runtime"
+         "ea-valkey72"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -5999,6 +5997,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-noop-u20",
          "ea-passenger-runtime",
          "ea-passenger-src",
@@ -6281,7 +6280,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
-         "ea-nodejs22"
+         "ea-valkey72"
       ],
       "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
@@ -6414,6 +6413,7 @@
          "ea-ngx-brotli-src",
          "ea-nodejs18",
          "ea-nodejs20",
+         "ea-nodejs22",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -6556,7 +6556,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea4-delayed",
-         "ea-nodejs22"
+         "ea-valkey72"
       ]
    }
 }
