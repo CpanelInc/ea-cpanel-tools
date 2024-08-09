@@ -680,6 +680,8 @@
          "ea-apache24-config-runtime",
          "ea-apache24-devel",
          "ea-apache24-manual",
+         "ea-apache24-mod-passenger",
+         "ea-apache24-mod-passenger-doc",
          "ea-apache24-mod-qos",
          "ea-apache24-mod_allowmethods",
          "ea-apache24-mod_asis",
@@ -3304,6 +3306,7 @@
          "ea-php74-php-snuffleupagus"
       ],
       "CentOS_8" : [
+         "ea-apache24-mod-maxminddb",
          "ea-apache24-mod_wsgi",
          "ea-apache24-mod_xsendfile",
          "ea-memcached",
@@ -3460,6 +3463,8 @@
          "ea-libcurl-devel",
          "ea-libicu",
          "ea-libicu-devel",
+         "ea-liblsapi",
+         "ea-liblsapi-devel",
          "ea-libmcrypt",
          "ea-libmcrypt-devel",
          "ea-libmemcached",
@@ -4892,7 +4897,9 @@
          "ea-tomcat85",
          "ea4-delayed",
          "ea4-experimental",
-         "yum-plugin-universal-hooks"
+         "yum-plugin-universal-hooks",
+         "ea-apache24-mod-passenger-doc",
+         "ea-apache24-mod-passenger"
       ],
       "CentOS_8" : [
          "autotools-latest",
@@ -5472,10 +5479,10 @@
          "ea-ruby27-scldevel",
          "ea-tomcat100",
          "ea-tomcat101",
+         "ea-valkey72",
          "ea4-delayed",
          "ea4-experimental",
-         "yum-plugin-universal-hooks",
-         "ea-valkey72"
+         "yum-plugin-universal-hooks"
       ],
       "CentOS_9" : [
          "autotools-latest",
@@ -5862,9 +5869,9 @@
          "ea-ruby27-scldevel",
          "ea-tomcat100",
          "ea-tomcat101",
+         "ea-valkey72",
          "ea4-delayed",
-         "yum-plugin-universal-hooks",
-         "ea-valkey72"
+         "yum-plugin-universal-hooks"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -6279,8 +6286,8 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
-         "ea4-delayed",
-         "ea-valkey72"
+         "ea-valkey72",
+         "ea4-delayed"
       ],
       "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
@@ -6555,8 +6562,8 @@
          "ea-redis62",
          "ea-tomcat100",
          "ea-tomcat101",
-         "ea4-delayed",
-         "ea-valkey72"
+         "ea-valkey72",
+         "ea4-delayed"
       ]
    }
 }
