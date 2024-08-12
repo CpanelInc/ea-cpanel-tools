@@ -680,8 +680,6 @@
          "ea-apache24-config-runtime",
          "ea-apache24-devel",
          "ea-apache24-manual",
-         "ea-apache24-mod-passenger",
-         "ea-apache24-mod-passenger-doc",
          "ea-apache24-mod-qos",
          "ea-apache24-mod_allowmethods",
          "ea-apache24-mod_asis",
@@ -4012,8 +4010,6 @@
          "ea-apache24-config-runtime",
          "ea-apache24-devel",
          "ea-apache24-manual",
-         "ea-apache24-mod-passenger",
-         "ea-apache24-mod-passenger-doc",
          "ea-apache24-mod-qos",
          "ea-apache24-mod_allowmethods",
          "ea-apache24-mod_asis",
@@ -4897,9 +4893,7 @@
          "ea-tomcat85",
          "ea4-delayed",
          "ea4-experimental",
-         "yum-plugin-universal-hooks",
-         "ea-apache24-mod-passenger-doc",
-         "ea-apache24-mod-passenger"
+         "yum-plugin-universal-hooks"
       ],
       "CentOS_8" : [
          "autotools-latest",
