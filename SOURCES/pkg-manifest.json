@@ -4903,8 +4903,7 @@
          "ea-tomcat85",
          "ea4-delayed",
          "ea4-experimental",
-         "yum-plugin-universal-hooks",
-         "ea-php83-php-sourceguardian"
+         "yum-plugin-universal-hooks"
       ],
       "CentOS_8" : [
          "autotools-latest",
@@ -5488,9 +5487,7 @@
          "ea-valkey72",
          "ea4-delayed",
          "ea4-experimental",
-         "yum-plugin-universal-hooks",
-         "ea-php83-php-ioncube13",
-         "ea-php83-php-sourceguardian"
+         "yum-plugin-universal-hooks"
       ],
       "CentOS_9" : [
          "autotools-latest",
@@ -5880,9 +5877,7 @@
          "ea-tomcat101",
          "ea-valkey72",
          "ea4-delayed",
-         "yum-plugin-universal-hooks",
-         "ea-php83-php-sourceguardian",
-         "ea-php83-php-ioncube13"
+         "yum-plugin-universal-hooks"
       ],
       "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
@@ -6299,9 +6294,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
-         "ea4-delayed",
-         "ea-php83-php-sourceguardian",
-         "ea-php83-php-ioncube13"
+         "ea4-delayed"
       ],
       "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
@@ -6578,9 +6571,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
-         "ea4-delayed",
-         "ea-php83-php-sourceguardian",
-         "ea-php83-php-ioncube13"
+         "ea4-delayed"
       ]
    }
 }
