@@ -31,7 +31,7 @@ for my $proj ( keys %{ $pre_update->{EA4} } ) {
     }
 
     for my $npkg ( keys %new_lookup ) {
-        if ( !exists $old_lookup{$npkg} ) {
+        if ( !grep { $_ eq $npkg } @{ $pst_update->{"EA4-production"}{$proj} } ) {
             push @{ $pst_update->{"EA4-production"}{$proj} }, $npkg;
             print "Adding $npkg to EA4-production $proj\n";
             $changes++;
