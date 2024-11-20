@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 96
+%define release_prefix 99
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -170,6 +170,15 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Fri Nov 15 2024 Dan Muey <daniel.muey@webpros.com> - 1.0-99
+- ZC-12346: Update obs_project_aliases to match reality
+
+* Thu Oct 24 2024 Julian Brown <julian.brown@cpanel.net> - 1.0-98
+- ZC-12253: Add ea-ioncube14
+
+* Thu Oct 03 2024 Julian Brown <julian.brown@cpanel.net> - 1.0-97
+- ZC-12191: Add ea-apache24-mod-wasm
+
 * Mon Sep 16 2024 Julian Brown <julian.brown@cpanel.net> - 1.0-96
 - ZC-12141: Add ioncube and sourceguardian to php83
 
