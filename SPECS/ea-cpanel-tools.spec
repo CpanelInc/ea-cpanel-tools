@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 99
+%define release_prefix 100
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -170,6 +170,9 @@ mkdir -p %{buildroot}/etc/yum/vars
 rm -rf %{buildroot}
 
 %changelog
+* Mon Dec 02 2024 Dan Muey <daniel.muey@webpros.com> - 1.0-100
+- ZC-12237: Add PHP 8.4
+
 * Fri Nov 15 2024 Dan Muey <daniel.muey@webpros.com> - 1.0-99
 - ZC-12346: Update obs_project_aliases to match reality
 
