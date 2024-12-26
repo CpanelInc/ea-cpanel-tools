@@ -10,3 +10,4 @@ on:
 jobs:
   build:
     uses: webpros-cpanel/ea-tools/.github/workflows/reusable-obs-build.yml@ghes
+    secrets: inherit
