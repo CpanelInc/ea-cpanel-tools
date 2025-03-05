@@ -1,12 +1,12 @@
 {
-   "container_based_packages" : [
+   "container_based_packages": [
       "ea-tomcat100",
       "ea-tomcat101",
       "ea-memcached16",
       "ea-redis62",
       "ea-valkey72"
    ],
-   "additional_packages" : [
+   "additional_packages": [
       "ea-modsec2-rules-owasp-crs",
       "ea-modsec30-rules-owasp-crs",
       "ea-modsec30-connector-nginx",
@@ -27,18 +27,22 @@
       "ea-nginx-standalone"
    ],
    "obs_project_aliases": {
-        "CentOS_7" : "CentOS_7",
-        "CentOS_8" : "CentOS_8",
-        "AlmaLinux_8" : "CentOS_8",
-        "CentOS_9" : "CentOS_9",
-        "AlmaLinux_9" : "CentOS_9",
-        "xUbuntu_20.04" : "xUbuntu_20.04",
-        "Ubuntu_20.04" : "xUbuntu_20.04",
-        "xUbuntu_22.04" : "xUbuntu_22.04",
-        "Ubuntu_22.04" : "xUbuntu_22.04"
+      "CentOS_7": "CentOS_7",
+      "CentOS_8": "CentOS_8",
+      "AlmaLinux_8": "CentOS_8",
+      "CentOS_9": "CentOS_9",
+      "AlmaLinux_9": "CentOS_9",
+      "xUbuntu_20.04": "xUbuntu_20.04",
+      "Ubuntu_20.04": "xUbuntu_20.04",
+      "xUbuntu_22.04": "xUbuntu_22.04",
+      "Ubuntu_22.04": "xUbuntu_22.04"
    },
-   "default_directoryindex" : "index.php index.php8 index.php7 index.php5 index.perl index.pl index.plx index.ppl index.cgi index.jsp index.jp index.phtml index.shtml index.xhtml index.html index.htm index.js",
-   "default_php_handler" : "cgi",
-   "default_php_package" : "ea-php81",
-   "default_phpfpm_security_limit_extensions" : ".phtml .php .php3 .php4 .php5 .php6 .php7 .php8"
+   "default_directoryindex": "index.php index.php8 index.php7 index.php5 index.perl index.pl index.plx index.ppl index.cgi index.jsp index.jp index.phtml index.shtml index.xhtml index.html index.htm index.js",
+   "default_php_handler": "cgi",
+   "default_php_package": "ea-php81",
+   "default_phpfpm_security_limit_extensions": ".phtml .php .php3 .php4 .php5 .php6 .php7 .php8",
+   "tech_domains": [
+      "cpanel.site",
+      "wpsquared.site"
+   ]
 }
