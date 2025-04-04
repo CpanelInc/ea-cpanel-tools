@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 104
+%define release_prefix 105
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -148,6 +148,10 @@ mkdir -p %{buildroot}/etc/yum/vars
 %{__install} %{SOURCE8} %{buildroot}/usr/local/cpanel/whostmgr/etc/
 %{__install} %{SOURCE9} %{buildroot}/usr/local/cpanel/whostmgr/etc/
 
+mkdir -p %{buildroot}/var/log/cpanel-server-traffic/web
+chmod 700 %{buildroot}/var/log/cpanel-server-traffic
+chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
+
 %files
 %defattr(0755,root,root,0755)
 /usr/local/bin/*
@@ -166,10 +170,17 @@ mkdir -p %{buildroot}/etc/yum/vars
 %attr(0755,root,root) %{hooks_base_pre_sys}/ea-__WILDCARD__/001-ensure-nobody
 %attr(0644,root,root) /etc/cpanel/ea4/profiles/pkg-manifest.json
 
+%defattr(-,root,root,0700)
+/var/log/cpanel-server-traffic
+/var/log/cpanel-server-traffic/web
+
 %clean
 rm -rf %{buildroot}
 
 %changelog
+* Fri Apr 04 2025 Chris Castillo <chris.castillo@webpros.com> - 1.0-105
+- ZC-12736: Create webserver traffic logging directory.
+
 * Wed Mar 05 2025 Chris Castillo <chris.castillo@webpros.com> - 1.0-104
 - ZC-12668: Add tech domains list
 
