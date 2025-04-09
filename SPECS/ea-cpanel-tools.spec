@@ -129,6 +129,9 @@ install %{SOURCE16} %{buildroot}/etc/cpanel/ea4/profiles/pkg-manifest.json
 
 mkdir -p %{buildroot}/etc/yum/vars
 %if 0%{?rhel} > 6
+    %if 0%{?rhel} == 10
+        echo "Almalinux_10" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
+    %endif
     %if 0%{?rhel} == 9
         echo "CentOS_9" > %{buildroot}/etc/yum/vars/ea4_repo_uri_os
     %endif
