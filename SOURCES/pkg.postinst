@@ -4,5 +4,8 @@ set -x
 
 if [ -e "/usr/bin/apt" ]; then
     chmod 0644 /etc/cpanel/ea4/profiles/pkg-manifest.json
+    chmod 0700 /var/log/cpanel-server-traffic
+    chmod 0700 /var/log/cpanel-server-traffic/web
 fi
+
 
