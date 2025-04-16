@@ -178,6 +178,9 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Wed Apr 16 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-107
+- ZC-12775: temporarily remove `wpsquared.site` from `tech_domains`
+
 * Wed Apr 16 2025 Chris Castillo <chris.castillo@webpros.com> - 1.0-106
 - ZC-12773: Fix directory permissions for Ubuntu
 

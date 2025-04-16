@@ -42,7 +42,6 @@
    "default_php_package": "ea-php81",
    "default_phpfpm_security_limit_extensions": ".phtml .php .php3 .php4 .php5 .php6 .php7 .php8",
    "tech_domains": [
-      "cpanel.site",
-      "wpsquared.site"
+      "cpanel.site"
    ]
 }
