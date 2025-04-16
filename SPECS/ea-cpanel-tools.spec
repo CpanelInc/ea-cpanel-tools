@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 105
+%define release_prefix 106
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -178,6 +178,9 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Wed Apr 16 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-106
+- ZC-12775: temporarily remove `wpsquared.site` from `tech_domains`
+
 * Fri Apr 04 2025 Chris Castillo <chris.castillo@webpros.com> - 1.0-105
 - ZC-12736: Create webserver traffic logging directory.
 
