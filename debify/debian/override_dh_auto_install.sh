@@ -80,3 +80,6 @@ install -m 644 $SOURCE13 $DEB_INSTALL_ROOT/etc/cpanel/ea4/option-flags/README.md
 mkdir -p $DEB_INSTALL_ROOT/etc/cpanel/ea4/profiles/
 install -m 0644 $SOURCE16 $DEB_INSTALL_ROOT/etc/cpanel/ea4/profiles/pkg-manifest.json
 
+mkdir -p  $DEB_INSTALL_ROOT/var/log/cpanel-server-traffic/web
+chmod 700 $DEB_INSTALL_ROOT/var/log/cpanel-server-traffic
+chmod 700 $DEB_INSTALL_ROOT/var/log/cpanel-server-traffic/web
