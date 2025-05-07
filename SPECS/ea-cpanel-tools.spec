@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 108
+%define release_prefix 109
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -181,6 +181,9 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Wed May 07 2025 Julian Brown <julian.brown@webpros.com> - 1.0-109
+- ZC-12826: Add AL10 to OS aliases
+
 * Tue May 06 2025 Julian Brown <julian.brown@webpros.com> - 1.0-108
 - ZC-12810: Preparing for Almalinux 10
 
