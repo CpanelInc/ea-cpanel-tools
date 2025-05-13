@@ -32,10 +32,14 @@
       "AlmaLinux_8": "CentOS_8",
       "CentOS_9": "CentOS_9",
       "AlmaLinux_9": "CentOS_9",
+      "Almalinux_10": "Almalinux_10",
+      "AlmaLinux_10": "Almalinux_10",
       "xUbuntu_20.04": "xUbuntu_20.04",
       "Ubuntu_20.04": "xUbuntu_20.04",
       "xUbuntu_22.04": "xUbuntu_22.04",
-      "Ubuntu_22.04": "xUbuntu_22.04"
+      "Ubuntu_22.04": "xUbuntu_22.04",
+      "xUbuntu_24.04": "xUbuntu_24.04",
+      "Ubuntu_24.04": "xUbuntu_24.04"
    },
    "default_directoryindex": "index.php index.php8 index.php7 index.php5 index.perl index.pl index.plx index.ppl index.cgi index.jsp index.jp index.phtml index.shtml index.xhtml index.html index.htm index.js",
    "default_php_handler": "cgi",
