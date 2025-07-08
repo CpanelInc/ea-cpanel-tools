@@ -37,7 +37,9 @@ for my $proj ( keys %{ $pre_update->{EA4} } ) {
         }
     }
 
-    @{ $pst_update->{"EA4-production"}{$proj} } = sort @{ $pst_update->{"EA4-production"}{$proj} };
+    if ( defined $pst_update->{"EA4-production"}{$proj} && @{ $pst_update->{"EA4-production"}{$proj} } ) {
+        @{ $pst_update->{"EA4-production"}{$proj} } = sort @{ $pst_update->{"EA4-production"}{$proj} };
+    }
 }
 
 if ($changes) {
