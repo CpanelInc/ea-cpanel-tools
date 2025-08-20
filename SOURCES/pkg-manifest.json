@@ -1,6 +1,6 @@
 {
-   "EA4": {
-      "Almalinux_10": [
+   "EA4" : {
+      "Almalinux_10" : [
          "autotools-latest",
          "autotools-latest-runtime",
          "ea-apache24",
@@ -229,6 +229,7 @@
          "ea-php81-php-ldap",
          "ea-php81-php-litespeed",
          "ea-php81-php-mbstring",
+         "ea-php81-php-memcached",
          "ea-php81-php-mysqlnd",
          "ea-php81-php-odbc",
          "ea-php81-php-opcache",
@@ -276,6 +277,7 @@
          "ea-php82-php-ldap",
          "ea-php82-php-litespeed",
          "ea-php82-php-mbstring",
+         "ea-php82-php-memcached",
          "ea-php82-php-mysqlnd",
          "ea-php82-php-odbc",
          "ea-php82-php-opcache",
@@ -323,6 +325,7 @@
          "ea-php83-php-ldap",
          "ea-php83-php-litespeed",
          "ea-php83-php-mbstring",
+         "ea-php83-php-memcached",
          "ea-php83-php-mysqlnd",
          "ea-php83-php-odbc",
          "ea-php83-php-opcache",
@@ -368,6 +371,7 @@
          "ea-php84-php-ldap",
          "ea-php84-php-litespeed",
          "ea-php84-php-mbstring",
+         "ea-php84-php-memcached",
          "ea-php84-php-mysqlnd",
          "ea-php84-php-odbc",
          "ea-php84-php-opcache",
@@ -397,7 +401,7 @@
          "ea4-experimental",
          "yum-plugin-universal-hooks"
       ],
-      "CentOS_7": [
+      "CentOS_7" : [
          "autotools-latest",
          "autotools-latest-autoconf",
          "autotools-latest-m4",
@@ -1317,7 +1321,7 @@
          "php54-php-zip",
          "yum-plugin-universal-hooks"
       ],
-      "CentOS_8": [
+      "CentOS_8" : [
          "autotools-latest",
          "autotools-latest-autoconf",
          "autotools-latest-m4",
@@ -1937,7 +1941,7 @@
          "ea4-experimental",
          "yum-plugin-universal-hooks"
       ],
-      "CentOS_9": [
+      "CentOS_9" : [
          "autotools-latest",
          "autotools-latest-autoconf",
          "autotools-latest-m4",
@@ -2362,7 +2366,7 @@
          "ea4-delayed",
          "yum-plugin-universal-hooks"
       ],
-      "xUbuntu_20.04": [
+      "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
          "ea-apache24",
          "ea-apache24-config",
@@ -2780,7 +2784,7 @@
          "ea-valkey72",
          "ea4-delayed"
       ],
-      "xUbuntu_22.04": [
+      "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
          "ea-apache24",
          "ea-apache24-config",
@@ -3104,7 +3108,7 @@
          "ea-valkey72",
          "ea4-delayed"
       ],
-      "xUbuntu_24.04": [
+      "xUbuntu_24.04" : [
          "apt-plugin-universal-hooks",
          "ea-apache24",
          "ea-apache24-config",
@@ -3433,8 +3437,8 @@
          "ea4-delayed"
       ]
    },
-   "EA4-experimental": {
-      "CentOS_7": [
+   "EA4-experimental" : {
+      "CentOS_7" : [
          "ea-apache24-mod_wsgi",
          "ea-apache24-mod_xsendfile",
          "ea-memcached",
@@ -3457,7 +3461,7 @@
          "ea-php74-php-psr",
          "ea-php74-php-snuffleupagus"
       ],
-      "CentOS_8": [
+      "CentOS_8" : [
          "ea-apache24-mod-maxminddb",
          "ea-apache24-mod_wsgi",
          "ea-apache24-mod_xsendfile",
@@ -3480,8 +3484,8 @@
          "ea-php74-php-snuffleupagus"
       ]
    },
-   "EA4-production": {
-      "Almalinux_10": [
+   "EA4-production" : {
+      "Almalinux_10" : [
          "autotools-latest",
          "autotools-latest-runtime",
          "ea-apache24",
@@ -3609,6 +3613,8 @@
          "ea-libargon2",
          "ea-libargon2-devel",
          "ea-libc-client",
+         "ea-libicu",
+         "ea-libicu-devel",
          "ea-liblsapi",
          "ea-liblsapi-devel",
          "ea-libmcrypt",
@@ -3714,6 +3720,7 @@
          "ea-php81-php-ldap",
          "ea-php81-php-litespeed",
          "ea-php81-php-mbstring",
+         "ea-php81-php-memcached",
          "ea-php81-php-mysqlnd",
          "ea-php81-php-odbc",
          "ea-php81-php-opcache",
@@ -3761,6 +3768,7 @@
          "ea-php82-php-ldap",
          "ea-php82-php-litespeed",
          "ea-php82-php-mbstring",
+         "ea-php82-php-memcached",
          "ea-php82-php-mysqlnd",
          "ea-php82-php-odbc",
          "ea-php82-php-opcache",
@@ -3808,6 +3816,7 @@
          "ea-php83-php-ldap",
          "ea-php83-php-litespeed",
          "ea-php83-php-mbstring",
+         "ea-php83-php-memcached",
          "ea-php83-php-mysqlnd",
          "ea-php83-php-odbc",
          "ea-php83-php-opcache",
@@ -3853,6 +3862,7 @@
          "ea-php84-php-ldap",
          "ea-php84-php-litespeed",
          "ea-php84-php-mbstring",
+         "ea-php84-php-memcached",
          "ea-php84-php-mysqlnd",
          "ea-php84-php-odbc",
          "ea-php84-php-opcache",
@@ -3882,7 +3892,7 @@
          "ea4-experimental",
          "yum-plugin-universal-hooks"
       ],
-      "CentOS_7": [
+      "CentOS_7" : [
          "autotools-latest",
          "autotools-latest-autoconf",
          "autotools-latest-m4",
@@ -4803,7 +4813,7 @@
          "php54-php-zip",
          "yum-plugin-universal-hooks"
       ],
-      "CentOS_8": [
+      "CentOS_8" : [
          "autotools-latest",
          "autotools-latest-autoconf",
          "autotools-latest-m4",
@@ -5425,7 +5435,7 @@
          "ea4-experimental",
          "yum-plugin-universal-hooks"
       ],
-      "CentOS_9": [
+      "CentOS_9" : [
          "autotools-latest",
          "autotools-latest-autoconf",
          "autotools-latest-m4",
@@ -5854,7 +5864,7 @@
          "ea4-delayed",
          "yum-plugin-universal-hooks"
       ],
-      "xUbuntu_20.04": [
+      "xUbuntu_20.04" : [
          "apt-plugin-universal-hooks",
          "ea-apache24",
          "ea-apache24-config",
@@ -6272,7 +6282,7 @@
          "ea-valkey72",
          "ea4-delayed"
       ],
-      "xUbuntu_22.04": [
+      "xUbuntu_22.04" : [
          "apt-plugin-universal-hooks",
          "ea-apache24",
          "ea-apache24-config",
@@ -6596,7 +6606,7 @@
          "ea-valkey72",
          "ea4-delayed"
       ],
-      "xUbuntu_24.04": [
+      "xUbuntu_24.04" : [
          "apt-plugin-universal-hooks",
          "ea-apache24",
          "ea-apache24-config",
