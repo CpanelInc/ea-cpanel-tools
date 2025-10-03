@@ -28,7 +28,7 @@ Source16:       pkg-manifest.json
 Source17:       recommendations__ea-tomcat85__eol.json
 Source18:       recommendations__ea-apache24-mod_cpanel__eol.json
 
-%if 0%{?rhel} > 7
+%if 0%{?rhel} > 6
 Requires: ea-wappspector
 %endif
 
