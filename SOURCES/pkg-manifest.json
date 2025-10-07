@@ -397,6 +397,7 @@
          "ea-tomcat101",
          "ea-tomcat85",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed",
          "ea4-experimental",
          "yum-plugin-universal-hooks"
@@ -1282,6 +1283,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-tomcat85",
+         "ea-wappspector",
          "ea4-delayed",
          "ea4-experimental",
          "php54-php",
@@ -1937,6 +1939,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed",
          "ea4-experimental",
          "yum-plugin-universal-hooks"
@@ -2363,6 +2366,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed",
          "yum-plugin-universal-hooks"
       ],
@@ -2782,6 +2786,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed"
       ],
       "xUbuntu_22.04" : [
@@ -2917,6 +2922,7 @@
          "ea-nodejs18",
          "ea-nodejs20",
          "ea-nodejs22",
+         "ea-noop-u20",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -3106,6 +3112,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed"
       ],
       "xUbuntu_24.04" : [
@@ -3434,6 +3441,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed"
       ]
    },
@@ -3888,6 +3896,7 @@
          "ea-tomcat101",
          "ea-tomcat85",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed",
          "ea4-experimental",
          "yum-plugin-universal-hooks"
@@ -4774,6 +4783,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-tomcat85",
+         "ea-wappspector",
          "ea4-delayed",
          "ea4-experimental",
          "php54-php",
@@ -5431,6 +5441,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed",
          "ea4-experimental",
          "yum-plugin-universal-hooks"
@@ -5861,6 +5872,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed",
          "yum-plugin-universal-hooks"
       ],
@@ -6280,6 +6292,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed"
       ],
       "xUbuntu_22.04" : [
@@ -6415,6 +6428,7 @@
          "ea-nodejs18",
          "ea-nodejs20",
          "ea-nodejs22",
+         "ea-noop-u20",
          "ea-passenger-runtime",
          "ea-passenger-src",
          "ea-php-cli",
@@ -6604,6 +6618,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed"
       ],
       "xUbuntu_24.04" : [
@@ -6934,6 +6949,7 @@
          "ea-tomcat100",
          "ea-tomcat101",
          "ea-valkey72",
+         "ea-wappspector",
          "ea4-delayed"
       ]
    }
