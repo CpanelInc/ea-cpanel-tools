@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 114
+%define release_prefix 116
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -181,6 +181,12 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Sun Nov 23 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-116
+- EA4-205: Add PHP 8.5 to manifest
+
+* Wed Nov 19 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-115
+- EA4-94: Update ea4 manifest for mod-passenger on A10
+
 * Thu Oct 30 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-114
 - EA4-156: Remove wappspector dep as its moving to update gatherer
 
