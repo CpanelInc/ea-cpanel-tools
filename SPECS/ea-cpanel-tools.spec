@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 116
+%define release_prefix 117
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -181,6 +181,9 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Thu Dec 04 2025 Heekyoung Park <heekyoung.park@webpros.com> - 1.0-117
+- EA4-212: Update default PHP to 8.2
+
 * Sun Nov 23 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-116
 - EA4-205: Add PHP 8.5 to manifest
 
