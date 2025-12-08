@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 116
+%define release_prefix 118
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -27,6 +27,11 @@ Source15:       recommendations__ea-nginx-http2__off.json
 Source16:       pkg-manifest.json
 Source17:       recommendations__ea-tomcat85__eol.json
 Source18:       recommendations__ea-apache24-mod_cpanel__eol.json
+
+# this prevents it from being unsinstalled unintentionally
+%if 0%{?rhel} > 6
+Requires: ea-wappspector
+%endif
 
 # if I do not have autoreq=0, rpm build will recognize that the ea_
 # scripts need perl and some Cpanel pm's to be on the disk.
@@ -181,6 +186,12 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Thu Dec 04 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-118
+- EA4-213: Add wappspector dep back to avoid it getting removed erroneously
+
+* Thu Dec 04 2025 Heekyoung Park <heekyoung.park@webpros.com> - 1.0-117
+- EA4-212: Update default PHP to 8.2
+
 * Sun Nov 23 2025 Dan Muey <daniel.muey@webpros.com> - 1.0-116
 - EA4-205: Add PHP 8.5 to manifest
 
