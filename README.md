@@ -8,7 +8,7 @@ In order to define one create a file in `/etc/cpanel/ea4/additional-pkg-prefixes
 
 For example, if CloudLinux did a subset of their `alt-` packages as a group of web stack specific ones prefixed w/ `altea-`, they would need to ensure `/etc/cpanel/ea4/additional-pkg-prefixes/altea` existed.
 
-It is suggested to include helpful information about the prefix in the prefix’s file.
+The file should be empty unless you are [Doing a subset of a additional-pkg-prefixes prefix](#doing-a-subset-of-a-additional-pkg-prefixes-prefix) per below.
 
 ## ⚠️  Do not create additional-pkg-prefixes that will match packages that are not EA4 related!!
 
