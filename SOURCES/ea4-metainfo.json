@@ -1,4 +1,5 @@
 {
+   "oldest_supported_version": "8.2",
    "container_based_packages": [
       "ea-tomcat100",
       "ea-tomcat101",
