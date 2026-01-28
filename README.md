@@ -24,9 +24,9 @@ That is why we use we used `altea-` as the example above.
 
 ## Doing a subset of a additional-pkg-prefixes prefix
 
-If naming is too difficult you can create a prefix that will match packages that are not EA4 related and limit it to a subset of only the EA4 related packages.
+If naming is too difficult you can create a prefix that will match packages that are not EA4 related and limit it to a subset of only the EA4 related packages for that OS.
 
-You do so by putting the list in the prefix file. One package per line, no surrounding white space, no empty lines, no comments.
+You do so by putting the list in the prefix file. One package per line, no surrounding white space, no empty lines, no comments. The list must match the reality of what is availble on that OS.
 
 Do not install this file unless the cpanel is new enough to support the subset-of-additional-pkg-prefixes feature. You can determine that by ensuring this outputs `0.03` or greater: `/usr/local/cpanel/3rdparty/bin/perl -MCpanel::PackMan -E 'say $Cpanel::PackMan::VERSION'`
 
