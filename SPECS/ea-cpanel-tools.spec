@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 120
+%define release_prefix 121
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -186,6 +186,9 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Fri Feb 20 2026 Julian Brown <julian.brown@webpros.com> - 1.0-121
+- EA4-240: Updated manifest to add ioncube15.
+
 * Fri Jan 09 2026 Heekyoung Park <heekyoung.park@webpros.com> - 1.0-120
 - EA4-210: 8.1 is EOL end of 2025 so 8.2 is correct for 11-2025’s PHP 8.5 release
 
