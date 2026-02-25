@@ -622,7 +622,7 @@ error_log:
   changeable: PHP_INI_ALL
   default: NULL
   multiple: 0
-  note: ''
+  note: 'Path to the PHP error log file (e.g. php_error_log). When empty, errors are sent to the SAPI error logger.'
   section: 'Error Handling and Logging'
   type: string
 error_log_mode:
@@ -1569,7 +1569,7 @@ log_errors:
   changeable: PHP_INI_ALL
   default: 0
   multiple: 0
-  note: ''
+  note: 'Tells whether script error messages should be logged to the server error log or error_log.'
   section: 'Error Handling and Logging'
   type: boolean
 log_errors_max_len:
