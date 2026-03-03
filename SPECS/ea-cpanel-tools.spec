@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 122
+%define release_prefix 123
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -27,6 +27,7 @@ Source15:       recommendations__ea-nginx-http2__off.json
 Source16:       pkg-manifest.json
 Source17:       recommendations__ea-tomcat85__eol.json
 Source18:       recommendations__ea-apache24-mod_cpanel__eol.json
+Source19:       target-os-pkg-renames.json
 
 # this prevents it from being unsinstalled unintentionally
 %if 0%{?rhel} > 6
@@ -71,6 +72,7 @@ rm -rf %{buildroot}
 
 mkdir -p %{buildroot}/etc/cpanel/ea4
 %{__install} %{SOURCE7} %{buildroot}/etc/cpanel/ea4/ea4-metainfo.json
+%{__install} %{SOURCE19} %{buildroot}/etc/cpanel/ea4/target-os-pkg-renames.json
 
 mkdir -p %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2
 %{__install} %{SOURCE14} %{buildroot}/etc/cpanel/ea4/recommendations/ea-nginx-http2/on.json
@@ -167,6 +169,7 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 %defattr(0644,root,root,0755)
 /etc/cpanel/ea4/recommendations
 /etc/cpanel/ea4/ea4-metainfo.json
+/etc/cpanel/ea4/target-os-pkg-renames.json
 /usr/local/cpanel/whostmgr/etc/phpini_directive_links.yaml
 /usr/local/cpanel/whostmgr/etc/phpini_directives.yaml
 
@@ -186,6 +189,10 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Tue Mar 03 2026 Jared Wright <jared.wright@webpros.com> - 1.0-123
+- EA4-249: Add target-os package rename mapping support to ea_current_to_profile
+- EA4-249: Add ignore_deps support to package rename mappings
+
 * Wed Feb 25 2026 Brian Mendoza <brian.mendoza@webpros.com> - 1.0-122
 - CPANEL-48069: Added note fields for error_log and log_errors PHP directives.
 
