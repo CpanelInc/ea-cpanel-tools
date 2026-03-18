@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 121
+%define release_prefix 122
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -186,6 +186,9 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Wed Feb 25 2026 Brian Mendoza <brian.mendoza@webpros.com> - 1.0-122
+- CPANEL-48069: Added note fields for error_log and log_errors PHP directives.
+
 * Fri Feb 20 2026 Julian Brown <julian.brown@webpros.com> - 1.0-121
 - EA4-240: Updated manifest to add ioncube15.
 
