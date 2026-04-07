@@ -1,0 +1,10 @@
+{
+   "CentOS_9" : {
+      "ea-ruby27-mod_passenger" : {
+         "ignore_deps" : [
+            "/^ea-ruby27/"
+         ],
+         "to" : "ea-apache24-mod-passenger"
+      }
+   }
+}

@@ -1,0 +1,321 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+
+# cpanel - elevate_pkg_renames                     Copyright(c) 2026 cPanel, Inc.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+#
+# Utility to manage package rename mappings in SOURCES/target-os-pkg-renames.json
+#
+# Usage:
+#   ./elevate_pkg_renames list [--os=TARGET_OS]
+#   ./elevate_pkg_renames add --os=TARGET_OS --from=OLD_PKG --to=NEW_PKG [--ignore-deps=P1,P2,...]
+#   ./elevate_pkg_renames remove --os=TARGET_OS --from=OLD_PKG
+#   ./elevate_pkg_renames edit --os=TARGET_OS --from=OLD_PKG --to=NEW_PKG [--ignore-deps=P1,P2,...]
+#   ./elevate_pkg_renames add-ignore --os=TARGET_OS --from=OLD_PKG --dep=PATTERN
+#   ./elevate_pkg_renames remove-ignore --os=TARGET_OS --from=OLD_PKG --dep=PATTERN
+
+use cPstrict;
+
+use FindBin;
+use Getopt::Long ();
+use Cpanel::JSON ();
+
+package elevate_pkg_renames;
+
+our $json_file = "$FindBin::Bin/SOURCES/target-os-pkg-renames.json";
+
+exit( run(@ARGV) ) unless caller();
+
+sub run {
+    my (@args) = @_;
+
+    my $command = shift @args || '';
+
+    my %opts;
+    my $help;
+
+    {
+        local @ARGV = @args;
+        Getopt::Long::Configure( 'no_ignore_case', 'pass_through' );
+        Getopt::Long::GetOptions(
+            'os=s'          => \$opts{os},
+            'from=s'        => \$opts{from},
+            'to=s'          => \$opts{to},
+            'dep=s'         => \$opts{dep},
+            'ignore-deps=s' => \$opts{'ignore-deps'},
+            'help|h'        => \$help,
+        );
+
+        if (@ARGV) {
+            die "Unknown argument: $ARGV[0]\n";
+        }
+    }
+
+    if ($help) {
+        usage();
+        return 0;
+    }
+
+    if ( $command eq 'list' ) {
+        cmd_list( $opts{os} );
+    }
+    elsif ( $command eq 'add' ) {
+        require_opts( \%opts, 'add', qw(os from to) );
+        cmd_add( $opts{os}, $opts{from}, $opts{to}, $opts{'ignore-deps'} );
+    }
+    elsif ( $command eq 'remove' ) {
+        require_opts( \%opts, 'remove', qw(os from) );
+        cmd_remove( $opts{os}, $opts{from} );
+    }
+    elsif ( $command eq 'edit' ) {
+        require_opts( \%opts, 'edit', qw(os from to) );
+        cmd_edit( $opts{os}, $opts{from}, $opts{to}, $opts{'ignore-deps'} );
+    }
+    elsif ( $command eq 'add-ignore' ) {
+        require_opts( \%opts, 'add-ignore', qw(os from dep) );
+        cmd_add_ignore( $opts{os}, $opts{from}, $opts{dep} );
+    }
+    elsif ( $command eq 'remove-ignore' ) {
+        require_opts( \%opts, 'remove-ignore', qw(os from dep) );
+        cmd_remove_ignore( $opts{os}, $opts{from}, $opts{dep} );
+    }
+    else {
+        usage();
+        return $command eq '' ? 0 : 1;
+    }
+
+    return 0;
+}
+
+sub load_json {
+    return -f $json_file ? ( Cpanel::JSON::LoadFile($json_file) || {} ) : {};
+}
+
+sub save_json {
+    my ($data) = @_;
+
+    # Remove empty OS keys
+    for my $os ( keys %{$data} ) {
+        if ( ref $data->{$os} eq 'HASH' ) {
+            # Clean up rename entries that have no 'to' and no 'ignore_deps'
+            for my $from ( keys %{ $data->{$os} } ) {
+                my $val = $data->{$os}{$from};
+                if ( ref $val eq 'HASH' ) {
+                    # Remove empty ignore_deps arrays
+                    delete $val->{ignore_deps} if ref $val->{ignore_deps} eq 'ARRAY' && !@{ $val->{ignore_deps} };
+
+                    # Collapse hash with only 'to' back to simple string
+                    if ( scalar keys %{$val} == 1 && exists $val->{to} ) {
+                        $data->{$os}{$from} = $val->{to};
+                    }
+                }
+            }
+            delete $data->{$os} if !%{ $data->{$os} };
+        }
+    }
+
+    open my $fh, '>', $json_file or die "Cannot write $json_file: $!\n";
+    print $fh Cpanel::JSON::pretty_dump($data);
+    close $fh;
+
+    return;
+}
+
+sub _get_to {
+    my ($entry) = @_;
+    return ref $entry eq 'HASH' ? $entry->{to} : $entry;
+}
+
+sub cmd_list {
+    my ($filter_os) = @_;
+
+    my $data = load_json();
+
+    if ( !%{$data} ) {
+        print "No package renames defined.\n";
+        return;
+    }
+
+    for my $os ( sort keys %{$data} ) {
+        next if $filter_os && $os ne $filter_os;
+        my $renames = $data->{$os};
+        print "$os:\n";
+        for my $old ( sort keys %{$renames} ) {
+            my $entry = $renames->{$old};
+            my $to    = _get_to($entry);
+            print "  $old -> $to\n";
+            if ( ref $entry eq 'HASH' && ref $entry->{ignore_deps} eq 'ARRAY' && @{ $entry->{ignore_deps} } ) {
+                for my $dep ( @{ $entry->{ignore_deps} } ) {
+                    print "    ignore: $dep\n";
+                }
+            }
+        }
+    }
+
+    if ( $filter_os && !exists $data->{$filter_os} ) {
+        print "No renames defined for $filter_os.\n";
+    }
+}
+
+sub cmd_add {
+    my ( $os, $from, $to, $ignore_deps_str ) = @_;
+
+    my $data = load_json();
+
+    if ( exists $data->{$os}{$from} ) {
+        my $existing_to = _get_to( $data->{$os}{$from} );
+        die "Mapping already exists: $os: $from -> $existing_to\nUse 'edit' to change it.\n";
+    }
+
+    if ( defined $ignore_deps_str && $ignore_deps_str ne '' ) {
+        my @deps = split( /,/, $ignore_deps_str );
+        $data->{$os}{$from} = { to => $to, ignore_deps => \@deps };
+    }
+    else {
+        $data->{$os}{$from} = $to;
+    }
+
+    save_json($data);
+    print "Added: $os: $from -> $to\n";
+}
+
+sub cmd_remove {
+    my ( $os, $from ) = @_;
+
+    my $data = load_json();
+
+    if ( !exists $data->{$os}{$from} ) {
+        die "No mapping found for $os: $from\n";
+    }
+
+    my $old_to = _get_to( delete $data->{$os}{$from} );
+    save_json($data);
+    print "Removed: $os: $from -> $old_to\n";
+}
+
+sub cmd_edit {
+    my ( $os, $from, $to, $ignore_deps_str ) = @_;
+
+    my $data = load_json();
+
+    if ( !exists $data->{$os}{$from} ) {
+        die "No mapping found for $os: $from\nUse 'add' to create it.\n";
+    }
+
+    my $old_entry = $data->{$os}{$from};
+    my $old_to    = _get_to($old_entry);
+
+    # Preserve existing ignore_deps if not being replaced
+    my $existing_deps = ( ref $old_entry eq 'HASH' && ref $old_entry->{ignore_deps} eq 'ARRAY' )
+        ? $old_entry->{ignore_deps}
+        : [];
+
+    if ( defined $ignore_deps_str ) {
+        my @deps = $ignore_deps_str eq '' ? () : split( /,/, $ignore_deps_str );
+        $data->{$os}{$from} = { to => $to, ignore_deps => \@deps };
+    }
+    elsif ( @{$existing_deps} ) {
+        $data->{$os}{$from} = { to => $to, ignore_deps => $existing_deps };
+    }
+    else {
+        $data->{$os}{$from} = $to;
+    }
+
+    save_json($data);
+    print "Updated: $os: $from -> $old_to (was) => $to (now)\n";
+}
+
+sub cmd_add_ignore {
+    my ( $os, $from, $dep ) = @_;
+
+    my $data = load_json();
+
+    if ( !exists $data->{$os}{$from} ) {
+        die "No mapping found for $os: $from\nUse 'add' to create the rename first.\n";
+    }
+
+    my $entry = $data->{$os}{$from};
+
+    # Promote simple string entry to hash
+    if ( !ref $entry ) {
+        $entry = { to => $entry, ignore_deps => [] };
+    }
+
+    $entry->{ignore_deps} ||= [];
+
+    if ( grep { $_ eq $dep } @{ $entry->{ignore_deps} } ) {
+        die "Ignore pattern already exists for $os: $from: $dep\n";
+    }
+
+    push @{ $entry->{ignore_deps} }, $dep;
+    $data->{$os}{$from} = $entry;
+    save_json($data);
+    print "Added ignore dep: $os: $from: $dep\n";
+}
+
+sub cmd_remove_ignore {
+    my ( $os, $from, $dep ) = @_;
+
+    my $data = load_json();
+
+    if ( !exists $data->{$os}{$from} ) {
+        die "No mapping found for $os: $from\n";
+    }
+
+    my $entry = $data->{$os}{$from};
+
+    if ( !ref $entry || ref $entry ne 'HASH' || !ref $entry->{ignore_deps} || !@{ $entry->{ignore_deps} } ) {
+        die "No ignore_deps defined for $os: $from\n";
+    }
+
+    my @before = @{ $entry->{ignore_deps} };
+    $entry->{ignore_deps} = [ grep { $_ ne $dep } @before ];
+
+    if ( scalar @{ $entry->{ignore_deps} } == scalar @before ) {
+        die "Ignore pattern not found for $os: $from: $dep\n";
+    }
+
+    $data->{$os}{$from} = $entry;
+    save_json($data);
+    print "Removed ignore dep: $os: $from: $dep\n";
+}
+
+sub require_opts {
+    my ( $opts_hr, $cmd, @required ) = @_;
+    for my $opt (@required) {
+        die "'$cmd' requires --$opt=VALUE\n" if !defined $opts_hr->{$opt};
+    }
+}
+
+sub usage {
+    print <<USAGE;
+Usage: $0 COMMAND [OPTIONS]
+
+Manage package rename mappings in SOURCES/target-os-pkg-renames.json
+
+Commands:
+  list           [--os=TARGET_OS]                            List all mappings (optionally filter by OS)
+  add            --os=TARGET_OS --from=OLD_PKG --to=NEW_PKG [--ignore-deps=P1,P2,...]
+                                                             Add a new mapping
+  remove         --os=TARGET_OS --from=OLD_PKG               Remove a mapping
+  edit           --os=TARGET_OS --from=OLD_PKG --to=NEW_PKG [--ignore-deps=P1,P2,...]
+                                                             Change an existing mapping
+  add-ignore     --os=TARGET_OS --from=OLD_PKG --dep=PATTERN Add an ignore_deps pattern
+  remove-ignore  --os=TARGET_OS --from=OLD_PKG --dep=PATTERN Remove an ignore_deps pattern
+
+Patterns for --ignore-deps and --dep can be literal package names or regex
+enclosed in forward slashes (e.g. /^ea-ruby27-ruby/).
+
+Examples:
+  $0 list
+  $0 list --os=CentOS_9
+  $0 add --os=CentOS_9 --from=ea-ruby27-mod_passenger --to=ea-apache24-mod-passenger
+  $0 add --os=CentOS_9 --from=ea-old --to=ea-new --ignore-deps=ea-old-lib,/^ea-old-ruby/
+  $0 remove --os=CentOS_9 --from=ea-ruby27-mod_passenger
+  $0 edit --os=CentOS_9 --from=ea-ruby27-mod_passenger --to=ea-apache24-mod-passenger-v2
+  $0 add-ignore --os=CentOS_9 --from=ea-ruby27-mod_passenger --dep=ea-ruby27-ruby
+  $0 add-ignore --os=CentOS_9 --from=ea-ruby27-mod_passenger --dep=/^ea-ruby27-ruby/
+  $0 remove-ignore --os=CentOS_9 --from=ea-ruby27-mod_passenger --dep=ea-ruby27-ruby
+USAGE
+}
