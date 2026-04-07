@@ -20,6 +20,7 @@ our $_max_attempts    = 20;
 
 our $manifest_file     = "/etc/cpanel/ea4/profiles/pkg-manifest.json";
 our $ea4_metainfo_file = '/etc/cpanel/ea4/ea4-metainfo.json';
+our $pkg_renames_file  = '/etc/cpanel/ea4/target-os-pkg-renames.json';
 
 our %safe_to_ignore = (
     'ea-brotli'            => 1,
@@ -149,6 +150,8 @@ USAGE
             target_os          => $target_os,
             target_obs_project => $manifest_os,
             dropped_pkgs       => {},                        # do it here so it is included even when there are no packages dropped
+            renamed_pkgs       => {},                        # do it here so it is included even when there are no packages renamed
+            ignored_deps       => {},                        # do it here so it is included even when there are no ignored deps
         };
 
         my %manifest     = %{ Cpanel::JSON::LoadFile($manifest_file) };
@@ -163,10 +166,41 @@ USAGE
             }
         }
 
+        my ( $renames_hr, $ignore_deps_hr ) = _load_pkg_renames($manifest_os);
+        my %renames = %{$renames_hr};
+
+        # Pre-compute which renames will fire and collect their ignore_deps patterns
+        my %pkgs_have_lookup = map { _normalize_pkg($_) => 1 } @pkgs_have;
+        my @all_ignore_patterns;
+        for my $old ( keys %renames ) {
+            my $new_name = $renames{$old};
+            if ( exists $pkgs_have_lookup{$old} && exists $lookup{$new_name} && !exists $experimental{$new_name} && exists $ignore_deps_hr->{$old} ) {
+                push @all_ignore_patterns, @{ $ignore_deps_hr->{$old} };
+            }
+        }
+
         my @output_pkgs;
         my @removed_pkgs;
         foreach my $pkg (@pkgs_have) {
             my $npkg = _normalize_pkg($pkg);
+
+            if ( exists $renames{$npkg} ) {
+                my $new_name = $renames{$npkg};
+                if ( exists $lookup{$new_name} && !exists $experimental{$new_name} ) {
+                    print "    $npkg has been renamed to $new_name on $target_os\n";
+                    push( @output_pkgs, $new_name );
+                    $extra_meta{os_upgrade}{renamed_pkgs}{$npkg} = $new_name;
+                    $modified = 1;
+                    next;
+                }
+            }
+
+            # Skip packages that match ignore_deps patterns from active renames
+            if ( @all_ignore_patterns && _pkg_matches_ignore( $npkg, \@all_ignore_patterns ) ) {
+                $extra_meta{os_upgrade}{ignored_deps}{$npkg} = 1;
+                $modified = 1;
+                next;
+            }
 
             if ( !exists $lookup{$npkg} || exists $experimental{$npkg} ) {
                 push( @removed_pkgs, $npkg );
@@ -194,7 +228,7 @@ USAGE
             print "\n" if $flag;
         }
 
-        @pkgs_have = @output_pkgs if (@removed_pkgs);
+        @pkgs_have = @output_pkgs if ( @removed_pkgs || %{ $extra_meta{os_upgrade}{renamed_pkgs} } || %{ $extra_meta{os_upgrade}{ignored_deps} } );
     }
 
     if ( !defined $custom_json ) {
@@ -250,6 +284,51 @@ sub _normalize_pkg {
     $pkg =~ s/_/-/g;
 
     return $pkg;
+}
+
+sub _load_pkg_renames {
+    my ($manifest_os) = @_;
+
+    return ( {}, {} ) if !-f $pkg_renames_file;
+
+    my $all_renames = eval { Cpanel::JSON::LoadFile($pkg_renames_file) } || {};
+
+    my $os_renames = $all_renames->{$manifest_os} || {};
+
+    my %normalized;
+    my %ignore_deps;
+    for my $old ( keys %{$os_renames} ) {
+        my $entry  = $os_renames->{$old};
+        my $n_old  = _normalize_pkg($old);
+
+        if ( ref $entry eq 'HASH' ) {
+            $normalized{$n_old} = _normalize_pkg( $entry->{to} );
+            if ( ref $entry->{ignore_deps} eq 'ARRAY' && @{ $entry->{ignore_deps} } ) {
+                $ignore_deps{$n_old} = $entry->{ignore_deps};
+            }
+        }
+        else {
+            $normalized{$n_old} = _normalize_pkg($entry);
+        }
+    }
+
+    return ( \%normalized, \%ignore_deps );
+}
+
+sub _pkg_matches_ignore {
+    my ( $pkg, $patterns_ar ) = @_;
+
+    for my $pat ( @{$patterns_ar} ) {
+        if ( $pat =~ m{^/(.+)/$} ) {
+            my $re = $1;
+            return 1 if $pkg =~ m/$re/;
+        }
+        else {
+            return 1 if _normalize_pkg($pat) eq $pkg;
+        }
+    }
+
+    return 0;
 }
 
 1;
