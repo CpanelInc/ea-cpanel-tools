@@ -1,7 +1,7 @@
 Name:           ea-cpanel-tools
 Version:        1.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4548 for more details
-%define release_prefix 123
+%define release_prefix 124
 Release:        %{release_prefix}%{?dist}.cpanel
 Summary:        EasyApache4 Tools that interacts with cPanel
 License:        GPL
@@ -189,6 +189,9 @@ chmod 700 %{buildroot}/var/log/cpanel-server-traffic/web
 rm -rf %{buildroot}
 
 %changelog
+* Sat May 16 2026 Dan Muey <daniel.muey@webpros.com> - 1.0-124
+- EA4-260: Update manifest for u26
+
 * Tue Mar 03 2026 Jared Wright <jared.wright@webpros.com> - 1.0-123
 - EA4-249: Add target-os package rename mapping support to ea_current_to_profile
 - EA4-249: Add ignore_deps support to package rename mappings
