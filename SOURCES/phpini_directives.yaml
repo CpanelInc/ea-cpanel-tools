@@ -618,6 +618,14 @@ error_append_string:
   note: ''
   section: 'Error Handling and Logging'
   type: string
+error_include_args:
+  changeable: PHP_INI_ALL
+  added: 8.6
+  default: 0
+  multiple: 0
+  note: "Controls whether PHP will print the actual arguments of a function upon an error. If this is off (or there was an error fetching the arguments), the function providing the error may optionally provide some additional information after the problem function's name."
+  section: 'Error Handling and Logging'
+  type: boolean
 error_log:
   changeable: PHP_INI_ALL
   default: NULL
@@ -1757,6 +1765,24 @@ mbstring.language:
   note: ''
   section: 'Multibyte String'
   type: string
+mbstring.regex_retry_limit:
+  changeable: PHP_INI_ALL
+  default: 1000000
+  multiple: 0
+  note: ''
+  added: 7.4.0
+  deprecated: 8.6
+  section: 'Multibyte String'
+  type: integer
+mbstring.regex_stack_limit:
+  changeable: PHP_INI_ALL
+  default: 100000
+  multiple: 0
+  note: ''
+  added: 7.3.5
+  deprecated: 8.6
+  section: 'Multibyte String'
+  type: integer
 mbstring.script_encoding:
   changeable: PHP_INI_ALL
   default: NULL
@@ -2799,7 +2825,7 @@ session.cookie_domain:
   type: string
 session.cookie_httponly:
   changeable: PHP_INI_ALL
-  default: NULL
+  default: 1
   multiple: 0
   note: ''
   section: 'Session Handling'
@@ -2820,7 +2846,7 @@ session.cookie_path:
   type: string
 session.cookie_samesite:
   changeable: PHP_INI_ALL
-  default: NULL
+  default: Lax
   multiple: 0
   note: ''
   added: 7.3.0
@@ -3021,7 +3047,7 @@ session.use_only_cookies:
   type: boolean
 session.use_strict_mode:
   changeable: PHP_INI_ALL
-  default: 0
+  default: 1
   multiple: 0
   note: ''
   added: 5.5.2
