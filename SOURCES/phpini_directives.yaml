@@ -2829,7 +2829,7 @@ session.cookie_httponly:
   multiple: 0
   note: ''
   section: 'Session Handling'
-  type: string
+  type: boolean
 session.cookie_lifetime:
   changeable: PHP_INI_ALL
   default: 0
