@@ -191,6 +191,7 @@ rm -rf %{buildroot}
 %changelog
 * Thu Nov 12 2026 Dan Muey <daniel.muey@webpros.com> - 1.0-126
 - EA4-406: Update INI data for PHP 8.6 INI changes
+- EA4-406: Add Ubuntu 26.04 aliases to ea4-metainfo.json
 
 * Tue May 26 2026 Dan Muey <daniel.muey@webpros.com> - 1.0-125
 - EA4-278: Update manifest for u26 production
