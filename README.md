@@ -59,3 +59,4 @@ Like the other prefix file it should be: One package per line, no surrounding wh
 ## When a PHP version is updated
 
 1. Update the PHP INI meta info if needed.
+
